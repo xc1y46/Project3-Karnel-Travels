@@ -30,15 +30,20 @@ CREATE TABLE City(
 	CountryId INT NOT NULL,
 	PostalCode NVARCHAR(20) NOT NULL,	--Ma~ buu chinh cho shipping, refund,...
 )
+ON [PRIMARY]
 GO
 
+
+INSERT INTO City(CityId, CityName, 
+
+Go
 
 IF OBJECT_ID('dbo.Facility', 'U') IS NOT NULL
   DROP TABLE dbo.Facility
 CREATE TABLE Facility(					-- Co so vat chat(khach san, nha` hang`,...)
 	FacilityId NVARCHAR(40) PRIMARY KEY,
-	FacilityTypeId NVARCHAR(10) NOT NULL,
 	FacilityName NVARCHAR(255) NOT NULL,
+	FacilityTypeId NVARCHAR(10) NOT NULL,	
 	FacilityLocation NVARCHAR(255) NOT NULL,
 	CityId NVARCHAR(40) NOT NULL,
 	FacilityPrice MONEY NOT NULL,
@@ -53,7 +58,7 @@ GO
 
 
 INSERT INTO Facility(FacilityId, FacilityTypeId, FacilityName, FacilityLocation, CityId, FacilityPrice, FacilityQuality, Quantity, FacilityAvailability) VALUES
- (N'NONE_F' ,N'NONE_FT', N'None', N'None', N'None', 0, 0, 0, 0)		--Ban ghi rong
+ (N'none',N'UNTP', N'TempFacility', N'none', N'none', 0, 0, 0, 0)		--Ban ghi rong
 
 GO
 
@@ -70,7 +75,7 @@ ON [PRIMARY]
 GO
 
 INSERT INTO FacilityType(FacilityTypeId, FacilityTypeName) VALUES
-(N'NONE_FT', N'Uncategorized'),
+(N'UNTP', N'Untyped'),
 (N'HTEL', N'Hotel'),
 (N'RSRT', N'Resort'),
 (N'LODG', N'Lodging house'),
@@ -99,8 +104,8 @@ ON [PRIMARY]
 GO
 
 
-INSERT INTO TouristSpot(TouristSpotName, CityId, CategoryId, Rating, TouristSpotAvailability) VALUES
- (N'None', 0, 0, 0, 0)	--Ban ghi rong
+INSERT INTO TouristSpot(TouristSpotId, TouristSpotName, CityId, CategoryId, Rating, TouristSpotAvailability) VALUES
+ (N'none' ,N'TempTouristSpot', N'none', N'UNCG', 0, 0)	--Ban ghi rong
 
 
 GO
@@ -115,8 +120,13 @@ CREATE TABLE Category(
 	DeleteFlag BIT NOT NULL DEFAULT 0
 )
 
+ON [PRIMARY]
 GO
 
+INSERT INTO FacilityType(FacilityTypeId, FacilityTypeName) VALUES
+(N'UNCG', N'Uncategorized')
+
+GO
 
 IF OBJECT_ID('dbo.Tour', 'U') IS NOT NULL
   DROP TABLE dbo.Tour
