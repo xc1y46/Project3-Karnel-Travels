@@ -248,3 +248,4 @@ INSERT INTO AdminRole(RoleId, RoleName, RoleDescription) VALUES
 (N'SN_MG', N'Senior Maneger', N'Have access to all divisions, including admin accounts')
 
 GO
+ 
