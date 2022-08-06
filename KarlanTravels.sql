@@ -27,16 +27,12 @@ IF OBJECT_ID('dbo.City', 'U') IS NOT NULL
 CREATE TABLE City(
 	CityId NVARCHAR(40) PRIMARY KEY,
 	CityName NVARCHAR(255) NOT NULL,
-	CountryId INT NOT NULL,
+	CountryId NVARCHAR(40) NOT NULL,
 	PostalCode NVARCHAR(20) NOT NULL,	--Ma~ buu chinh cho shipping, refund,...
 )
 ON [PRIMARY]
 GO
 
-
-INSERT INTO City(CityId, CityName, 
-
-Go
 
 IF OBJECT_ID('dbo.Facility', 'U') IS NOT NULL
   DROP TABLE dbo.Facility
@@ -94,7 +90,7 @@ CREATE TABLE TouristSpot(
 	TouristSpotId NVARCHAR(40) PRIMARY KEY,
 	TouristSpotName NVARCHAR(255) NOT NULL,
 	CityId NVARCHAR(40) NOT NULL,
-	CategoryId INT NOT NULL,
+	CategoryId NVARCHAR(40) NOT NULL,
 	Rating FLOAT NOT NULL DEFAULT 1,	--Cham diem tu 1-10 (float)
 	TouristSpotAvailability BIT NOT NULL DEFAULT 0,
 	DeleteFlag BIT NOT NULL DEFAULT 0
@@ -214,8 +210,8 @@ IF OBJECT_ID('dbo.[Admin]', 'U') IS NOT NULL
 CREATE TABLE [Admin](
 	AdminId INT PRIMARY KEY IDENTITY (1,1),
 	AdminName NVARCHAR(30) NOT NULL,
-	AdminPassword NVARCHAR(20) NOT NULL,
-	RoleId INT NOT NULL,
+	AdminPassword NVARCHAR(255) NOT NULL,
+	RoleId NVARCHAR(40) NOT NULL,
 	DeleteFlag BIT NOT NULL DEFAULT 0
 )
 
@@ -248,4 +244,3 @@ INSERT INTO AdminRole(RoleId, RoleName, RoleDescription) VALUES
 (N'SN_MG', N'Senior Maneger', N'Have access to all divisions, including admin accounts')
 
 GO
- 
