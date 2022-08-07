@@ -30,10 +30,8 @@ IF OBJECT_ID('dbo.City', 'U') IS NOT NULL
 CREATE TABLE City(
 	CityId NVARCHAR(40) PRIMARY KEY,
 	CityName NVARCHAR(255) NOT NULL,
-	CountryId NVARCHAR(40) NOT NULL,
+	CountryId NVARCHAR(40) FOREIGN KEY REFERENCES Country(CountryId) NOT NULL,
 	PostalCode NVARCHAR(20) NOT NULL,	--Ma~ buu chinh cho shipping, refund,...
-
-	CONSTRAINT FK_CountryId FOREIGN KEY (CountryId) REFERENCES Country(CountryId)
 )
 
 ON [PRIMARY]
@@ -136,11 +134,9 @@ CREATE TABLE Customer(
 	Username NVARCHAR(255) NOT NULL,
 	Email NVARCHAR(255) NOT NULL,
 	Phone NVARCHAR(20) NOT NULL,
-	CityId NVARCHAR(40) NOT NULL,
+	CityId NVARCHAR(40) FOREIGN KEY REFERENCES City(CityId) NOT NULL,
 	UserPassword NVARCHAR(20) NOT NULL,	
 	DeleteFlag BIT NOT NULL DEFAULT 0,
-
-	CONSTRAINT FK_CityId1 FOREIGN KEY (CityId) REFERENCES City(CityId)
 )
 
 GO
@@ -154,8 +150,6 @@ CREATE TABLE [Admin](
 	AdminPassword NVARCHAR(255) NOT NULL,
 	RoleId NVARCHAR(40) NOT NULL FOREIGN KEY REFERENCES AdminRole(RoleId),
 	DeleteFlag BIT NOT NULL DEFAULT 0,
-
-	CONSTRAINT FK_RoleId FOREIGN KEY (RoleId) REFERENCES AdminRole(RoleId)
 )
 
 ON [PRIMARY]
@@ -175,18 +169,15 @@ IF OBJECT_ID('dbo.Facility', 'U') IS NOT NULL	-- Co so vat chat(khach san, nha` 
 CREATE TABLE Facility(					
 	FacilityId NVARCHAR(40) PRIMARY KEY,
 	FacilityName NVARCHAR(255) NOT NULL,
-	FacilityTypeId NVARCHAR(40) NOT NULL,	
+	FacilityTypeId NVARCHAR(40) FOREIGN KEY REFERENCES FacilityType(FacilityTypeId) NOT NULL,	
 	FacilityLocation NVARCHAR(255) NOT NULL,
-	CityId NVARCHAR(40) NOT NULL,
+	CityId NVARCHAR(40) FOREIGN KEY REFERENCES City(CityId) NOT NULL,
 	FacilityPrice MONEY NOT NULL,
 	FacilityQuality FLOAT NOT NULL DEFAULT 1,	--Cham' diem? tu 1-10 (float)
 	Quantity INT NOT NULL DEFAULT 0,
 	FacilityDescription NVARCHAR(255) NULL,
 	FacilityAvailability BIT NOT NULL DEFAULT 0,	--Do kha? dung. hien tai (boolean)
 	DeleteFlag BIT NOT NULL DEFAULT 0	--Truong danh dau xoa' (boolean)
-
-	CONSTRAINT FK_FacilityTypeId FOREIGN KEY (FacilityTypeId) REFERENCES FacilityType(FacilityTypeId),
-	CONSTRAINT FK_CityId2 FOREIGN KEY (CityId) REFERENCES City(CityId)
 )
 
 ON [PRIMARY]
@@ -203,15 +194,11 @@ IF OBJECT_ID('dbo.TouristSpot', 'U') IS NOT NULL	--Diem du lich(bai bien Nha Tra
 CREATE TABLE TouristSpot(
 	TouristSpotId NVARCHAR(40) PRIMARY KEY,
 	TouristSpotName NVARCHAR(255) NOT NULL,
-	CityId NVARCHAR(40) NOT NULL,
-	CategoryId NVARCHAR(40) NOT NULL,
+	CityId NVARCHAR(40) FOREIGN KEY REFERENCES City(CityId) NOT NULL,
+	CategoryId NVARCHAR(40) FOREIGN KEY REFERENCES Category(CategoryId) NOT NULL,
 	Rating FLOAT NOT NULL DEFAULT 1,	--Cham diem tu 1-10 (float)
 	TouristSpotAvailability BIT NOT NULL DEFAULT 0,
 	DeleteFlag BIT NOT NULL DEFAULT 0
-
-	CONSTRAINT FK_CategoryId FOREIGN KEY (CategoryId) REFERENCES Category(CategoryId),
-	CONSTRAINT FK_CityId3 FOREIGN KEY (CityId) REFERENCES City(CityId)
-
 )
 
 ON [PRIMARY]
@@ -244,7 +231,7 @@ IF OBJECT_ID('dbo.TourDetails', 'U') IS NOT NULL	--Cac hoat dong trong tour(chec
   DROP TABLE dbo.TourDetails
 CREATE TABLE TourDetails(
 	TourDetailsId NVARCHAR(40) PRIMARY KEY,
-	TourId NVARCHAR(40) NOT NULL,
+	TourId NVARCHAR(40) NOT NULL FOREIGN KEY REFERENCES Tour(TourId),
 	TourDetailsName NVARCHAR(255) NOT NULL,
 	TouristSpotId NVARCHAR(40) NOT NULL DEFAULT 0 FOREIGN KEY REFERENCES TouristSpot(TouristSpotId),
 	FacilityId NVARCHAR(40) NOT NULL DEFAULT 0 FOREIGN KEY REFERENCES Facility(FacilityId),
@@ -253,10 +240,6 @@ CREATE TABLE TourDetails(
 	ActivityTimeEnd NVARCHAR(30) NOT NULL,	
 	TourNote NVARCHAR(255) NULL,
 	DeleteFlag BIT NOT NULL DEFAULT 0
-
-	CONSTRAINT FK_TourId1 FOREIGN KEY (TourId) REFERENCES Tour(TourId),
-	CONSTRAINT FK_TouristSpotId FOREIGN KEY (TouristSpotId) REFERENCES TouristSpot(TouristSpotId),
-	CONSTRAINT FK_FacilityId FOREIGN KEY (FacilityId) REFERENCES Facility(FacilityId)
 )
 
 GO
@@ -265,17 +248,12 @@ IF OBJECT_ID('dbo.TransactionsRecords', 'U') IS NOT NULL
   DROP TABLE dbo.TransactionsRecords	--Ban ghi cac giao dich
 CREATE TABLE TransactionsRecords(
 	RecordId NVARCHAR(40) PRIMARY KEY,
-	TransactionTypeId NVARCHAR(40) NOT NULL,
-	TourId NVARCHAR(40) NOT NULL,
-	CustomerID INT NOT NULL,	--Nguoi mua
+	TransactionTypeId NVARCHAR(40) FOREIGN KEY REFERENCES TransactionType(TransactionTypeId) NOT NULL,
+	TourId NVARCHAR(40) FOREIGN KEY REFERENCES Tour(TourId) NOT NULL,
+	CustomerID INT FOREIGN KEY REFERENCES Customer(CustomerID) NOT NULL,	--Nguoi mua
 	TransactionFee MONEY NOT NULL,
-	AdminID INT NOT NULL,		--Nguoi edit ban ghi
+	AdminID INT FOREIGN KEY REFERENCES [Admin](AdminID) NOT NULL,		--Nguoi edit ban ghi
 	DeleteFlag BIT NOT NULL DEFAULT 0
-
-	CONSTRAINT FK_TransactionTypeId FOREIGN KEY (TransactionTypeId) REFERENCES TransactionType(TransactionTypeId),
-	CONSTRAINT FK_TourId2 FOREIGN KEY (TourId) REFERENCES Tour(TourId),
-	CONSTRAINT FK_CustomerID FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID),
-	CONSTRAINT FK_AdminID FOREIGN KEY (AdminID) REFERENCES [Admin](AdminID)
 )
 
 GO
