@@ -103,7 +103,7 @@ GO
 
 
 INSERT INTO TransactionType(TransactionTypeId, TransactionTypeName, TransactionDescription, TransactionPriceRate) VALUES
-(N'DEPOSIT', N'Leave a deposit', N'Leave an amount of money as a deposit', 0),	--Dat. coc.
+--(N'DEPOSIT', N'Leave a deposit', N'Leave an amount of money as a deposit', 0),	--Dat. coc.
 (N'PURCHSE', N'Purchase tour', N'Normal tour price', 1),
 (N'CANCL_EARL', N'Cancel tour early', N'No fee charges, full refund', 0),
 (N'CANCL_LATE', N'Cancel tour late', N'(Few days before tour starts) Half refund', 0.5)
