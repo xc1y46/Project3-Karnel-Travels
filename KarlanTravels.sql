@@ -181,6 +181,7 @@ CREATE TABLE Facility(
 	FacilityPrice MONEY NOT NULL,
 	FacilityQuality FLOAT NOT NULL DEFAULT 1,	--Cham' diem? tu 1-10 (float)
 	Quantity INT NOT NULL DEFAULT 0,
+	FacilityDescription NVARCHAR(255) NULL,
 	FacilityAvailability BIT NOT NULL DEFAULT 0,	--Do kha? dung. hien tai (boolean)
 	DeleteFlag BIT NOT NULL DEFAULT 0	--Truong danh dau xoa' (boolean)
 
@@ -193,7 +194,7 @@ GO
 
 
 INSERT INTO Facility(FacilityId, FacilityTypeId, FacilityName, FacilityLocation, CityId, FacilityPrice, FacilityQuality, Quantity, FacilityAvailability) VALUES
- (N'none',N'UNTP', N'TempFacility', N'none', N'none', 0, 0, 0, 0)		--Ban ghi rong
+(N'none',N'UNTP', N'TempFacility', N'none', N'none', 0, 0, 0, 0) --Ban ghi rong
 
 GO
 
