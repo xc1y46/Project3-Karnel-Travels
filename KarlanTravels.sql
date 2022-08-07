@@ -44,7 +44,7 @@ INSERT INTO City(CityId, CityName, CountryId, PostalCode) VALUES
 
 GO
 
-IF OBJECT_ID('dbo.FacilityType', 'U') IS NOT NULL
+IF OBJECT_ID('dbo.FacilityType', 'U') IS NOT NULL	--Co so vat chat(di chuyen, an uong, nghi ngoi,...)
   DROP TABLE dbo.FacilityType
 CREATE TABLE FacilityType(
 	FacilityTypeId NVARCHAR(40) PRIMARY KEY,
@@ -71,7 +71,7 @@ INSERT INTO FacilityType(FacilityTypeId, FacilityTypeName) VALUES
 GO
 
 
-IF OBJECT_ID('dbo.Category', 'U') IS NOT NULL
+IF OBJECT_ID('dbo.Category', 'U') IS NOT NULL	--Loai diem du lich(bai bien, chua`, thu vien,...)
   DROP TABLE dbo.Category
 CREATE TABLE Category(
 	CategoryId NVARCHAR(40) PRIMARY kEY,
@@ -89,7 +89,7 @@ INSERT INTO Category(CategoryId, CategoryName) VALUES
 GO
 
 
-IF OBJECT_ID('dbo.TransactionType', 'U') IS NOT NULL
+IF OBJECT_ID('dbo.TransactionType', 'U') IS NOT NULL	--Loai giao dich(mua, huy?, hoan` tien)
   DROP TABLE dbo.TransactionType
 CREATE TABLE TransactionType(
 	TransactionTypeId NVARCHAR(40) PRIMARY KEY,
@@ -170,9 +170,9 @@ INSERT INTO [Admin](AdminName, AdminPassword ,RoleId) VALUES
 GO
 
 
-IF OBJECT_ID('dbo.Facility', 'U') IS NOT NULL
+IF OBJECT_ID('dbo.Facility', 'U') IS NOT NULL	-- Co so vat chat(khach san, nha` hang`,...)
   DROP TABLE dbo.Facility
-CREATE TABLE Facility(					-- Co so vat chat(khach san, nha` hang`,...)
+CREATE TABLE Facility(					
 	FacilityId NVARCHAR(40) PRIMARY KEY,
 	FacilityName NVARCHAR(255) NOT NULL,
 	FacilityTypeId NVARCHAR(40) NOT NULL,	
@@ -197,7 +197,7 @@ INSERT INTO Facility(FacilityId, FacilityTypeId, FacilityName, FacilityLocation,
 
 GO
 
-IF OBJECT_ID('dbo.TouristSpot', 'U') IS NOT NULL
+IF OBJECT_ID('dbo.TouristSpot', 'U') IS NOT NULL	--Diem du lich(bai bien Nha Trang, chua` 1 cot, bao tang quoc gia,...)
   DROP TABLE dbo.TouristSpot
 CREATE TABLE TouristSpot(
 	TouristSpotId NVARCHAR(40) PRIMARY KEY,
@@ -223,7 +223,7 @@ INSERT INTO TouristSpot(TouristSpotId, TouristSpotName, CityId, CategoryId, Rati
 
 GO
 
-IF OBJECT_ID('dbo.Tour', 'U') IS NOT NULL
+IF OBJECT_ID('dbo.Tour', 'U') IS NOT NULL	--Cac tour du lich(1 vong mien nam, du lich Quang ninh,...)
   DROP TABLE dbo.Tour
 CREATE TABLE Tour(
 	TourId NVARCHAR(40) PRIMARY KEY,
@@ -239,7 +239,7 @@ CREATE TABLE Tour(
 GO
 
 
-IF OBJECT_ID('dbo.TourDetails', 'U') IS NOT NULL
+IF OBJECT_ID('dbo.TourDetails', 'U') IS NOT NULL	--Cac hoat dong trong tour(checkin khach san, di tam bien)
   DROP TABLE dbo.TourDetails
 CREATE TABLE TourDetails(
 	TourDetailsId NVARCHAR(40) PRIMARY KEY,
@@ -248,7 +248,8 @@ CREATE TABLE TourDetails(
 	TouristSpotId NVARCHAR(40) NOT NULL DEFAULT 0 FOREIGN KEY REFERENCES TouristSpot(TouristSpotId),
 	FacilityId NVARCHAR(40) NOT NULL DEFAULT 0 FOREIGN KEY REFERENCES Facility(FacilityId),
 	Activity NVARCHAR(100) NOT NULL,
-	ActivityTime NVARCHAR(30) NOT NULL,
+	ActivityTimeStart NVARCHAR(30) NOT NULL,
+	ActivityTimeEnd NVARCHAR(30) NOT NULL,	
 	TourNote NVARCHAR(255) NULL,
 	DeleteFlag BIT NOT NULL DEFAULT 0
 
