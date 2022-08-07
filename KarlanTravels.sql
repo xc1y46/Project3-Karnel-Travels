@@ -268,6 +268,7 @@ CREATE TABLE TransactionsRecords(
 	TransactionTypeId NVARCHAR(40) NOT NULL,
 	TourId NVARCHAR(40) NOT NULL,
 	CustomerID INT NOT NULL,	--Nguoi mua
+	TransactionFee MONEY NOT NULL,
 	AdminID INT NOT NULL,		--Nguoi edit ban ghi
 	DeleteFlag BIT NOT NULL DEFAULT 0
 
