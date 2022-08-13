@@ -201,6 +201,15 @@ INSERT INTO City(CityId, CityName, CountryId, PostalCode) VALUES
 (N'VN_MC', N'Mai Châu', N'VN', N'350000'),
 (N'VN_VY', N'Vĩnh Yên', N'VN', N'280000')
 
+INSERT INTO AdminRole(RoleId, RoleName, RoleNote) VALUES
+(N'SALE_MG',N'Saler', N'Manage sales, trasactions and user accounts, cannot access tour database'),
+(N'TOUR_MG', N'Tour Manager', N'Manage the tour database, cannot access sales and transactions records'),
+(N'SN_MG', N'Senior Maneger', N'Have access to all divisions, including admin accounts')
+
+INSERT INTO [Admin](AdminName, AdminPassword ,RoleId) VALUES
+(N'NTA', N'40bd001563085fc35165329ea1ff5c5ecbdbbeef', N'SN_MG'),
+(N'VHL', N'51eac6b471a284d3341d8c0c63d0f1a286262a18', N'SALE_MG'),
+(N'VCM', N'fc1200c7a7aa52109d762a9f005b149abef01479', N'TOUR_MG')
 
 INSERT INTO TransactionType(TransactionTypeId, TransactionTypeName, TransactionTypeNote, TransactionPriceRate) VALUES
 (N'PURCHSE', N'Purchase tour', N'Normal tour price', 1),
