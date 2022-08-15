@@ -1,0 +1,66 @@
+﻿@model KarlanTravels_Adm.Models.Admin
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Admin</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AdminRole.RoleName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AdminRole.RoleName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AdminName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AdminName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AdminPassword)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AdminPassword)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AdminNote)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AdminNote)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeleteFlag)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeleteFlag)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.AdminId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,80 @@
+﻿@model KarlanTravels_Adm.Models.TouristSpot
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>TouristSpot</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.CategoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.CategoryName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.City.CityName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City.CityName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TouristSpotName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TouristSpotName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TouristSpotAvailability)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TouristSpotAvailability)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TouristSpotNote)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TouristSpotNote)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeleteFlag)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeleteFlag)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

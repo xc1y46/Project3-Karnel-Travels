@@ -1,0 +1,74 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link href='https://fonts.googleapis.com/css?family=Telex' rel='stylesheet'>
+    <style>
+        * {
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Telex';
+        }
+
+        .logForm {
+            margin: 200px auto;
+            width: 20%;
+            height: 200px;
+            border: 3px solid gray;
+            border-radius: 10px;
+            background-color: lightskyblue;
+        }
+
+        form {
+            width: 100%;
+            margin: 5px auto;
+            text-align: center;
+        }
+
+        p {
+            color: red;
+        }
+
+        input {
+            border: 3px solid gray;
+            margin: 20px 5px auto auto;
+            height: 30px;
+            font: 16px arial;
+        }
+
+        .Logbtn {
+            font: bold 20px arial;
+            border-radius: 7px;
+            border: 2px solid gray;
+        }
+
+        span {
+            font: bold 15px arial;
+        }
+    </style>
+    <script>
+        function mess() {
+            @TempData["LoginResult"] = "";
+        }
+    </script>
+</head>
+<body>
+    <div class="logForm">
+        <form action="LoginStart" method="post">
+            <span>Username</span>
+            <input type="text" name="AdminName" />
+            <br />
+            <span>Password</span>
+            <input type="password" name="AdminPassword" />
+            <br />
+            <input type="submit" value="LOGIN" onclick="mess()" class="Logbtn"/>
+            <p>@TempData["LoginResult"]</p>
+        </form>
+    </div>
+</body>
+</html>

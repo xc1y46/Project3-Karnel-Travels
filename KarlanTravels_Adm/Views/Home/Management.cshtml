@@ -1,0 +1,132 @@
+﻿@{
+    Layout = null;
+}
+@using KarlanTravels_Adm.Models
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Karlan Travels Administrative</title>
+    <link href='https://fonts.googleapis.com/css?family=Telex' rel='stylesheet'>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Telex';
+            text-decoration: none;
+        }
+
+        .navbar-header {
+            height: 50px;
+            background-color: #373535;
+        }
+
+        .welcome, .logout {
+            display: inline-block;
+            color: white;
+        }
+
+        .welcome {
+            margin: 15px 0 0 200px;
+        }
+
+        .logout {
+            margin: 5px 100px 0 100px;
+            float: right;
+        }
+
+        .logout input {
+            height: 40px;
+            border-radius: 10px;
+            border: 2px solid gray;
+            font: bold 14px;
+        }
+        .body-content{
+            width: 50%;
+            margin: 30px auto;
+        }
+        .task {
+            display: block;
+            margin-bottom: 20px;
+        }
+            .task:hover {
+                background-image: linear-gradient(to right, #6DCCFC, #FFFFFF);
+                text-decoration: underline;
+            }
+       
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="navbar-header">
+            <div class="welcome"><h3>@TempData["WelcomeMessage"]</h3></div>
+            <div class="logout">
+                <form action="LogOut" method="post">
+                    <input type="submit" value="LOG OUT"/>
+                </form>
+            </div>
+        </div>
+        <div class="body-content">
+            <h2>USERS AND SALES</h2>
+            <div class="task" id="sale">
+
+                @if (Session["AdminRole"].ToString() == "Senior Maneger" || Session["AdminRole"].ToString() == "Saler")
+                {
+                    @Html.ActionLink("Transactions", "Index", "TransactionRecords")
+                    <br />
+                    @Html.ActionLink("Customers", "Index", "Customers")
+                    <br />
+                    @Html.ActionLink("Cites", "Index", "Cities")
+                    <br />
+                    @Html.ActionLink("Countries", "Index", "Countries")
+                }
+                else
+                {
+                    <span>ACTION IS NOT AVAILABLE</span>
+                }
+            </div>
+            <h2>TOURS AND FACILITIES</h2>
+            <div class="task" id="tour">
+
+                @if (Session["AdminRole"].ToString() == "Senior Maneger" || Session["AdminRole"].ToString() == "Tour Manager")
+                {
+                    @Html.ActionLink("Tourist Spots", "Index", "TouristSpots")
+                    <br />
+                    @Html.ActionLink("Category", "Index", "Categories")
+                    <br />
+                    @Html.ActionLink("Facilities", "Index", "Facilities")
+                    <br />
+                    @Html.ActionLink("Faciliies Types", "Index", "FacilityTypes")
+                    <br />
+                    @Html.ActionLink("Tours", "Index", "Tours")
+                    <br />
+                    @Html.ActionLink("Tours Details", "Index", "TourDetails")
+                    <br />
+                    @Html.ActionLink("Cites", "Index", "Cities")
+                    <br />
+                    @Html.ActionLink("Countries", "Index", "Countries")
+                }
+                else
+                {
+                    <span>ACTION IS NOT AVAILABLE</span>
+                }
+            </div>
+            <h2>HR</h2>
+            <div class="task" id="senior">
+
+                @if (Session["AdminRole"].ToString() == "Senior Maneger")
+                {
+                    @Html.ActionLink("Admins", "Index", "Admins")
+                }
+                else
+                {
+                    <span>ACTION IS NOT AVAILABLE</span>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>

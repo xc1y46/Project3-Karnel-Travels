@@ -1,0 +1,75 @@
+﻿@model IEnumerable<KarlanTravels_Adm.Models.TransactionRecord>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Admin.AdminName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tour.TourName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TransactionType.TransactionTypeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TransactionFee)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Paid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TransactionNote)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DeleteFlag)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Admin.AdminName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer.Username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tour.TourName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TransactionType.TransactionTypeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TransactionFee)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Paid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TransactionNote)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DeleteFlag)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.TransactionRecordId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.TransactionRecordId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.TransactionRecordId })
+        </td>
+    </tr>
+}
+
+</table>

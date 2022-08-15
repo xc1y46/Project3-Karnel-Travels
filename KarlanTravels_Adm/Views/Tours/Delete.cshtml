@@ -1,0 +1,80 @@
+﻿@model KarlanTravels_Adm.Models.Tour
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Tour</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TourName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TourName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TourAvailability)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TourAvailability)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TourStart)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TourStart)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TourEnd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TourEnd)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TourPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TourPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TourNote)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TourNote)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeleteFlag)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeleteFlag)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

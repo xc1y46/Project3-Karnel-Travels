@@ -1,0 +1,69 @@
+﻿@model IEnumerable<KarlanTravels_Adm.Models.Tour>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TourName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TourAvailability)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TourStart)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TourEnd)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TourPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TourNote)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DeleteFlag)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TourName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TourAvailability)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TourStart)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TourEnd)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TourPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TourNote)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DeleteFlag)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.TourId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.TourId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.TourId })
+        </td>
+    </tr>
+}
+
+</table>
