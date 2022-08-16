@@ -15,7 +15,7 @@
 # Nếu lúc pull git cái project adm mà bị lỗi phiên bản Newtonsoft.Json thì fix như sau
 
 	1. Tools -> NuGet package manager -> Package manager console
-	2. Gõ update-package Newtonsoft.Json -reinstall r enter
+	2. Gõ update-package Newtonsoft.Json -reinstall rồi enter
 	(Nếu muốn cụ thể phiên bản thì gõ -version 6.0.0 trước -reinstall)
 	3. Đợi chạy xong thì vào web.config, xóa phần này
 		<dependentAssembly>
