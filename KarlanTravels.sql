@@ -61,7 +61,7 @@ CREATE TABLE TransactionType(
 	TransactionTypeId NVARCHAR(40) PRIMARY KEY,
 	TransactionTypeName NVARCHAR(40) NOT NULL,
 	TransactionTypeNote NVARCHAR(255) NULL,
-	TransactionPriceRate FLOAT NOT NULL DEFAULT 0
+	TransactionPriceRate FLOAT NOT NULL
 )
 
 GO
@@ -76,6 +76,28 @@ CREATE TABLE AdminRole(
 
 GO
 
+IF OBJECT_ID('dbo.Bank', 'U') IS NOT NULL
+  DROP TABLE dbo.Bank
+CREATE TABLE Bank(
+	BankId NVARCHAR(40) PRIMARY KEY,
+	BankName NVARCHAR(255) NOT NULL UNIQUE,
+	SwiftCode NVARCHAR(255) NOT NULL UNIQUE,
+	CountryId NVARCHAR(40) FOREIGN KEY REFERENCES Country(CountryId) NOT NULL
+)
+
+GO
+
+IF OBJECT_ID('dbo.BankAccount', 'U') IS NOT NULL
+  DROP TABLE dbo.BankAccount
+CREATE TABLE BankAccount(
+	BankAccountId INT PRIMARY KEY IDENTITY (1,1),
+	AccountName NVARCHAR(255) NOT NULL,
+	AccountNumber NVARCHAR(40) NOT NULL UNIQUE,
+	BankId NVARCHAR(40) FOREIGN KEY REFERENCES Bank(BankId) NOT NULL
+)
+
+GO
+
 IF OBJECT_ID('dbo.Customer', 'U') IS NOT NULL
   DROP TABLE dbo.Customer
 CREATE TABLE Customer(
@@ -83,8 +105,9 @@ CREATE TABLE Customer(
 	Username NVARCHAR(255) UNIQUE NOT NULL,
 	Email NVARCHAR(255) UNIQUE NOT NULL,
 	Phone NVARCHAR(20) UNIQUE NOT NULL,
+	BankAccountId INT FOREIGN KEY REFERENCES BankAccount(BankAccountId) NULL,
 	CityId NVARCHAR(40) FOREIGN KEY REFERENCES City(CityId) NOT NULL,
-	UserPassword NVARCHAR(20) NOT NULL,	
+	UserPassword NVARCHAR(20) NOT NULL,
 	AmountToPay MONEY NOT NULL DEFAULT 0,
 	CustomerNote NVARCHAR(255) NULL,
 	DeleteFlag BIT NOT NULL DEFAULT 0
@@ -114,10 +137,9 @@ CREATE TABLE Facility(
 	FacilityTypeId NVARCHAR(40) FOREIGN KEY REFERENCES FacilityType(FacilityTypeId) NOT NULL,	
 	FacilityLocation NVARCHAR(255) NOT NULL,
 	CityId NVARCHAR(40) FOREIGN KEY REFERENCES City(CityId) NOT NULL,
-	FacilityPrice MONEY NOT NULL,
-	FacilityQuality FLOAT NOT NULL DEFAULT 1,
 	Quantity INT NOT NULL DEFAULT 0,
-	FacilityNote NVARCHAR(255) NULL,
+	FacilityImage NVARCHAR(255) NULL,
+	ServiceNote NVARCHAR(255) NULL,
 	FacilityAvailability BIT NOT NULL DEFAULT 0,
 	DeleteFlag BIT NOT NULL DEFAULT 0
 )
@@ -131,8 +153,9 @@ CREATE TABLE TouristSpot(
 	TouristSpotName NVARCHAR(255) NOT NULL,
 	CityId NVARCHAR(40) FOREIGN KEY REFERENCES City(CityId) NOT NULL,
 	CategoryId NVARCHAR(40) FOREIGN KEY REFERENCES Category(CategoryId) NOT NULL,
-	Rating FLOAT NOT NULL DEFAULT 1,
+	TouristSpotRating FLOAT NOT NULL DEFAULT 1,
 	TouristSpotAvailability BIT NOT NULL DEFAULT 0,
+	TouristSpotImage NVARCHAR(255) NULL,
 	TouristSpotNote NVARCHAR(255) NULL,
 	DeleteFlag BIT NOT NULL DEFAULT 0
 )
@@ -148,6 +171,8 @@ CREATE TABLE Tour(
 	TourStart DATETIME NOT NULL,
 	TourEnd DATETIME NOT NULL,
 	TourPrice MONEY NOT NULL,
+	TourRating FLOAT NOT NULL DEFAULT 1,
+	TourImage NVARCHAR(255) NULL,
 	TourNote NVARCHAR(255) NULL,
 	DeleteFlag BIT NOT NULL DEFAULT 0
 )
@@ -180,7 +205,8 @@ CREATE TABLE TransactionRecord(
 	CustomerID INT FOREIGN KEY REFERENCES Customer(CustomerID) NOT NULL,
 	TransactionFee MONEY NOT NULL,
 	Paid BIT NOT NULL DEFAULT 0,
-	AdminID INT FOREIGN KEY REFERENCES [Admin](AdminID) NOT NULL,
+	RecoredTime DATETIME NOT NULL,
+	AdminID INT FOREIGN KEY REFERENCES [Admin](AdminID) NULL,
 	TransactionNote NVARCHAR(255) NULL,
 	DeleteFlag BIT NOT NULL DEFAULT 0
 )
@@ -192,7 +218,8 @@ GO
 
 INSERT INTO Country(CountryId, CountryName, Continent, CountryCode) VALUES
 (N'none', N'none', N'none', N'none'),
-(N'VN', N'Việt Nam', N'Asia', N'+84')
+(N'VN', N'VietNam', N'Asia', N'+84'),
+(N'CN', N'China', N'Asia', N'+86')
 
 
 INSERT INTO City(CityId, CityName, CountryId, PostalCode) VALUES
@@ -202,26 +229,39 @@ INSERT INTO City(CityId, CityName, CountryId, PostalCode) VALUES
 (N'VN_MC', N'Mai Châu', N'VN', N'350000'),
 (N'VN_VY', N'Vĩnh Yên', N'VN', N'280000')
 
+
+INSERT INTO Bank(BankId, BankName, SwiftCode, CountryId) VALUES
+(N'B_VN_TCB', N'TECHCOMBANK', N'VTCBVNVX', N'VN'),
+(N'B_VN_VCB', N'VIETCOMBANK', N'BFTVVNVX', N'VN'),
+(N'B_VN_BIVD', N'BIDV', N'BIDVVNVX', N'VN'),
+(N'B_CN_JCB', N'JPMORGAN CHASE BANK', N'CHASCN22', N'CN'),
+(N'B_CN_BOK', N'BANK OF KUNLUN', N'CKLBCNBJ', N'CN'),
+(N'B_CN_BIVD', N'CHINA CONSTRUCTION BANK', N'PCBCCNBJ', N'CN')
+
+
 INSERT INTO AdminRole(RoleId, RoleName, RoleNote) VALUES
 (N'SALE_MG',N'Saler', N'Manage sales, trasactions and user accounts, cannot access tour database'),
 (N'TOUR_MG', N'Tour Manager', N'Manage the tour database, cannot access sales and transactions records'),
 (N'SN_MG', N'Senior Maneger', N'Have access to all divisions, including admin accounts')
+
 
 INSERT INTO [Admin](AdminName, AdminPassword ,RoleId) VALUES
 (N'NTA', N'40bd001563085fc35165329ea1ff5c5ecbdbbeef', N'SN_MG'),
 (N'VHL', N'51eac6b471a284d3341d8c0c63d0f1a286262a18', N'SALE_MG'),
 (N'VCM', N'fc1200c7a7aa52109d762a9f005b149abef01479', N'TOUR_MG')
 
+
 INSERT INTO TransactionType(TransactionTypeId, TransactionTypeName, TransactionTypeNote, TransactionPriceRate) VALUES
-(N'PURCHSE', N'Purchase tour', N'Normal tour price', 1),
+(N'DEPOSIT', N'Put a deposit', N'Leave 30% of the tour price as a deposit', 0.3),
+(N'PURCHSE', N'Purchase tour', N'Normal tour price', 0.7),
 (N'CANCL_EARL', N'Cancel tour early', N'No fee charges, full refund', 0),
-(N'CANCL_LATE', N'Cancel tour late', N'(Few days before tour starts) Half refund', 0.5)
+(N'CANCL_LATE', N'Cancel tour late', N'(Few days before tour starts) Half refund', 0.3)
 
 
-INSERT INTO Tour(TourId, TourName, TourAvailability, TourStart, TourEnd, TourPrice, TourNote) VALUES
-(N'T_HNtoCB01', N'Hà Nội - Cao Bằng', 1, CAST(N'2022-08-12T06:00:00.000' AS DateTime), CAST(N'2022-08-13T22:00:00.000' AS DateTime), 2350000.0000, NULL),
-(N'T_HNtoMC01', N'Hà Nội - Mộc Châu', 1, CAST(N'2022-09-13T06:00:00.000' AS DateTime), CAST(N'2022-09-14T18:00:00.000' AS DateTime), 1580000.0000, NULL),
-(N'T_HNtoTD01', N'Hà Nội - Tam Đảo', 1, CAST(N'2022-10-21T07:00:00.000' AS DateTime), CAST(N'2022-10-22T18:00:00.000' AS DateTime), 1350000.0000, NULL)
+INSERT INTO Tour(TourId, TourName, TourAvailability, TourStart, TourEnd, TourPrice, TourNote, TourImage, TourRating) VALUES
+(N'T_HNtoCB01', N'Hà Nội - Cao Bằng', 1, CAST(N'2022-08-03T06:00:00.000' AS DateTime), CAST(N'2022-08-04T21:00:00.000' AS DateTime), 2350000.0000, NULL, '~/Images/T_HNCB.jpg', 8.2),
+(N'T_HNtoMC01', N'Hà Nội - Mai Châu', 1, CAST(N'2022-09-12T07:00:00.000' AS DateTime), CAST(N'2022-09-13T18:00:00.000' AS DateTime), 1580000.0000, NULL, '~/Images/T_HNMC.jpg', 7.6),
+(N'T_HNtoTD01', N'Hà Nội - Tam Đảo', 1, CAST(N'2022-12-04T07:00:00.000' AS DateTime), CAST(N'2022-12-05T18:30:00.000' AS DateTime), 1350000.0000, NULL, '~/Images/T_HNCB.jpg', 6.9)
 
 
 INSERT INTO FacilityType(FacilityTypeId, FacilityTypeName) VALUES
@@ -247,36 +287,36 @@ INSERT INTO Category(CategoryId, CategoryName, CategoryNote) VALUES
 (N'HGHLN', N'Highlands', N'Mountains, hills')
 
 
-INSERT INTO TouristSpot(TouristSpotId, TouristSpotName, CityId, CategoryId, Rating, TouristSpotAvailability) VALUES 
-(N'none', N'none', N'none', N'UNCG', 0, 1),
-(N'TS_CB_BB01', N'Ba Bể Lake', N'VN_CB', N'WTER', 5, 1),
-(N'TS_HN_TMC01', N'Trái tim Mộc Châu Tea Hill', N'VN_HN', N'HGHLN', 5, 1),
-(N'TS_HN_B01', N'Bạc Waterfall', N'VN_HN', N'WTER', 5, 1),
-(N'TS_HN_CC01', N'Cát Cát Village', N'VN_HN', N'CULTR', 5, 1),
-(N'TS_CB_PTL01', N'Phật tích Trúc Lâm Pagoda of Bản Giốc', N'VN_CB', N'HIST', 5, 1),
-(N'TS_CB_NN01', N'Ngườm Ngao Cave', N'VN_CB', N'CAVE', 5, 1),
-(N'TS_CB_BG02', N'Bản Giốc Waterfall', N'VN_CB', N'WTER', 5, 1),
-(N'TS_CB_D01', N'Đuổm Buddhist Temple', N'VN_CB', N'HIST', 5, 1),
-(N'TS_CB_AM01', N'An Mã Buddhist Temple', N'VN_CB', N'HIST', 5, 1),
-(N'TS_HN_P01', N'Puông Cave', N'VN_HN', N'CAVE', 6, 1),
-(N'TS_MC_TK01', N'Thung Khe Pass', N'VN_MC', N'HGHLN', 5, 1),
-(N'TS_HN_DY01', N'Dải Yếm Waterfall', N'VN_HN', N'WTER', 5, 0)
+INSERT INTO TouristSpot(TouristSpotId, TouristSpotName, CityId, CategoryId, TouristSpotRating, TouristSpotAvailability, TouristSpotImage) VALUES 
+(N'none', N'none', N'none', N'UNCG', 0, 1, NULL),
+(N'TS_CB_BB01', N'Ba Bể Lake', N'VN_CB', N'WTER', 7, 1, NULL),
+(N'TS_HN_TMC01', N'Trái tim Mộc Châu Tea Hill', N'VN_HN', N'HGHLN', 8, 1, NULL),
+(N'TS_HN_B01', N'Bạc Waterfall', N'VN_HN', N'WTER', 7.8, 1, NULL),
+(N'TS_HN_CC01', N'Cát Cát Village', N'VN_HN', N'CULTR', 7.6, 1, NULL),
+(N'TS_CB_PTL01', N'Phật tích Trúc Lâm Pagoda of Bản Giốc', N'VN_CB', N'HIST', 6.9, 1, NULL),
+(N'TS_CB_NN01', N'Ngườm Ngao Cave', N'VN_CB', N'CAVE', 8, 1, NULL),
+(N'TS_CB_BG02', N'Bản Giốc Waterfall', N'VN_CB', N'WTER', 7.3, 1, NULL),
+(N'TS_CB_D01', N'Đuổm Buddhist Temple', N'VN_CB', N'HIST', 8, 1, NULL),
+(N'TS_CB_AM01', N'An Mã Buddhist Temple', N'VN_CB', N'HIST', 4.5, 1, NULL),
+(N'TS_HN_P01', N'Puông Cave', N'VN_HN', N'CAVE', 6, 1, NULL),
+(N'TS_MC_TK01', N'Thung Khe Pass', N'VN_MC', N'HGHLN', 5, 1, NULL),
+(N'TS_HN_DY01', N'Dải Yếm Waterfall', N'VN_HN', N'WTER', 5, 0, NULL)
 
 
-INSERT INTO Facility(FacilityId, FacilityName, FacilityTypeId, FacilityLocation, CityId, FacilityPrice, FacilityQuality, Quantity, FacilityNote, FacilityAvailability) VALUES
-(N'none', N'none', N'UNTP', N'', N'none', 0, 0, 0, NULL, 1),
-(N'FC_HN_HV01', N'Hải Vân Bus Station', N'STA_VHC', N'23, Nguyễn Khuyến road', N'VN_HN', 0.0000, 5, 20, N'29 seats per 20 bus', 1),
-(N'FC_HN_NN01', N'Nguyễn Nhật Bus Station', N'STA_VHC', N'25 Văn Quán street', N'VN_HN', 0.0000, 3, 7, N'16 seats per 7 bus', 1),
-(N'FC_MC_HT01', N'Hợp Thủy Restaurant', N'RSTR', N'Subdivision 2, Mai Châu district', N'VN_MC', 0.0000, 0, 20, N'4 seats per 20 tables', 1),
-(N'FC_VY_NA01', N'Nguyệt Anh Hotel', N'HTEL', N'Block 1, Tam Đảo district', N'VN_VY', 0.0000, 0, 12, N'12 single rooms, 15 tables with 4 seats', 1),
-(N'FC_VY_GTD01', N'Gió Tam Đảo Cafe', N'RSTR', N'Tam Đảo district, Vĩnh Phúc province', N'VN_VY', 0.0000, 0, 16, N'3 seats per 16 tables', 1),
-(N'FC_VY_PN01', N'Phố Núi Restaurant', N'RSTR', N'Near Hợp Châu town''s people''s Committee , Tam Đảo district', N'VN_VY', 0.0000, 0, 6, N'3 seats per 6 tables', 1),
-(N'FC_HN_BND01', N'Bảo Ngọc Diamond Hotel', N'HTEL', N'1st floor, 124 Bế Văn Đàn street, Hợp Giang sub-district', N'VN_CB', 0.0000, 3, 10, N'10 double rooms, 12 four seats tables', 1),
-(N'FC_CB_TL01', N'Thành Loan Hotel', N'HTEL', N'131 Vườn Cam street', N'VN_CB', 0.0000, 9, 9, N'9 triple rooms, 4 ten seats tables', 1),
-(N'FC_HN_TN01', N'Thành Nam Bus Station', N'STA_VHC', N'29 Mộ Lao street', N'VN_HN', 0.0000, 5, 16, N'42 seats per 16 buses', 1),
-(N'FC_CB_BG01', N'Bản Giốc Restaurant', N'RSTR', N'Bản Giốc hamlet, Đàm Thủy commune, Trùng Khánh district', N'VN_CB', 0.0000, 4, 18, N'3 seats per 18 tables', 1),
-(N'FC_MC_EE01', N'88 Hotel', N'HTEL', N'102 Hoàng Quốc Việt street', N'VN_MC', 0.0000, 0, 5, N'5 double rooms, 2 seats per 5 tables', 1),
-(N'FC_MC_BCE01', N'Ba Chị Em Restaurant', N'RSTR', N'Chiềng Sại hamlet', N'VN_MC', 0.0000, 0, 15, N'2 seats per 15 tables', 1)
+INSERT INTO Facility(FacilityId, FacilityName, FacilityTypeId, FacilityLocation, CityId, Quantity, ServiceNote, FacilityAvailability) VALUES
+(N'none', N'none', N'UNTP', N'', N'none', 0, NULL, 1),
+(N'FC_HN_HV01', N'Hải Vân Bus Station', N'STA_VHC', N'23, Nguyễn Khuyến road', N'VN_HN', 20, N'29 seats per 20 bus', 1),
+(N'FC_HN_NN01', N'Nguyễn Nhật Bus Station', N'STA_VHC', N'25 Văn Quán street', N'VN_HN', 7, N'16 seats per 7 bus', 1),
+(N'FC_MC_HT01', N'Hợp Thủy Restaurant', N'RSTR', N'Subdivision 2, Mai Châu district', N'VN_MC', 20, N'4 seats per 20 tables', 1),
+(N'FC_VY_NA01', N'Nguyệt Anh Hotel', N'HTEL', N'Block 1, Tam Đảo district', N'VN_VY', 12, N'12 single rooms, 15 tables with 4 seats', 1),
+(N'FC_VY_GTD01', N'Gió Tam Đảo Cafe', N'RSTR', N'Tam Đảo district, Vĩnh Phúc province', N'VN_VY', 16, N'3 seats per 16 tables', 1),
+(N'FC_VY_PN01', N'Phố Núi Restaurant', N'RSTR', N'Near Hợp Châu town''s people''s Committee , Tam Đảo district', N'VN_VY', 6, N'3 seats per 6 tables', 1),
+(N'FC_HN_BND01', N'Bảo Ngọc Diamond Hotel', N'HTEL', N'1st floor, 124 Bế Văn Đàn street, Hợp Giang sub-district', N'VN_CB', 10, N'10 double rooms, 12 four seats tables', 1),
+(N'FC_CB_TL01', N'Thành Loan Hotel', N'HTEL', N'131 Vườn Cam street', N'VN_CB', 9, N'9 triple rooms, 4 ten seats tables', 1),
+(N'FC_HN_TN01', N'Thành Nam Bus Station', N'STA_VHC', N'29 Mộ Lao street', N'VN_HN', 16, N'42 seats per 16 buses', 1),
+(N'FC_CB_BG01', N'Bản Giốc Restaurant', N'RSTR', N'Bản Giốc hamlet, Đàm Thủy commune, Trùng Khánh district', N'VN_CB', 18, N'3 seats per 18 tables', 1),
+(N'FC_MC_EE01', N'88 Hotel', N'HTEL', N'102 Hoàng Quốc Việt street', N'VN_MC', 5, N'5 double rooms, 2 seats per 5 tables', 1),
+(N'FC_MC_BCE01', N'Ba Chị Em Restaurant', N'RSTR', N'Chiềng Sại hamlet', N'VN_MC', 15, N'2 seats per 15 tables', 1)
 
 
 INSERT INTO TourDetail(TourId, TourDetailName, TouristSpotId, FacilityId, Activity, ActivityTimeStart, ActivityTimeEnd, ActivityNote) VALUES
