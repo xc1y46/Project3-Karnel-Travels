@@ -1,6 +1,6 @@
 # Lúc tải project và chạy file sql nhớ sửa lại connection string của cái dataContext trong file config
 
-# Nếu lúc pull git cái project adm mà bị lỗi Package NuGet CodeDom.Provider.DotNetCompiler.... thì fix như sau
+# Nếu lúc pull git project adm mà bị lỗi Package NuGet CodeDom.Provider.DotNetCompiler.... thì fix như sau
 	1. Chuột phải project, chọn unload project
 	2. Chuột phải lại project, chọn edit file project (file .csproj)
 	3. Kéo xuống gần cuối xóa cái này 
@@ -12,7 +12,7 @@
 		</Target>
 	4. Save rồi chuột phải project rồi reload
 
-# Nếu lúc pull git cái project adm mà bị lỗi phiên bản Newtonsoft.Json thì fix như sau
+# Nếu lúc pull git project adm mà bị lỗi phiên bản Newtonsoft.Json thì fix như sau
 
 	1. Tools -> NuGet package manager -> Package manager console
 	2. Gõ update-package Newtonsoft.Json -reinstall rồi enter
