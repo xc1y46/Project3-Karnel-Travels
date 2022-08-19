@@ -11,19 +11,19 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Category.CategoryName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Category.CategoryName)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.City.CityName)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.City.CityName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubCategory.SubCategoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubCategory.SubCategoryName)
         </dd>
 
         <dt>
@@ -35,11 +35,35 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Rating)
+            @Html.DisplayNameFor(model => model.TouristSpotLocation)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Rating)
+            @Html.DisplayFor(model => model.TouristSpotLocation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TouristSpotRating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TouristSpotRating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OpenHour)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OpenHour)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ClosingHour)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ClosingHour)
         </dd>
 
         <dt>
@@ -51,6 +75,14 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.TouristSpotImage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TouristSpotImage)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.TouristSpotNote)
         </dt>
 
@@ -59,11 +91,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DeleteFlag)
+            @Html.DisplayNameFor(model => model.Deleted)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DeleteFlag)
+            @Html.DisplayFor(model => model.Deleted)
         </dd>
 
     </dl>

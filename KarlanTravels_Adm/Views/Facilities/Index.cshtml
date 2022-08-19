@@ -24,22 +24,19 @@
             @Html.DisplayNameFor(model => model.FacilityLocation)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FacilityPrice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FacilityQuality)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Quantity)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FacilityNote)
+            @Html.DisplayNameFor(model => model.FacilityImage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ServiceNote)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FacilityAvailability)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DeleteFlag)
+            @Html.DisplayNameFor(model => model.Deleted)
         </th>
         <th></th>
     </tr>
@@ -59,22 +56,19 @@
             @Html.DisplayFor(modelItem => item.FacilityLocation)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.FacilityPrice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FacilityQuality)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Quantity)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.FacilityNote)
+            @Html.DisplayFor(modelItem => item.FacilityImage)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ServiceNote)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.FacilityAvailability)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DeleteFlag)
+            @Html.DisplayFor(modelItem => item.Deleted)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.FacilityId }) |

@@ -30,10 +30,13 @@
             @Html.DisplayNameFor(model => model.Paid)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.RecorededTime)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.TransactionNote)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DeleteFlag)
+            @Html.DisplayNameFor(model => model.Deleted)
         </th>
         <th></th>
     </tr>
@@ -59,10 +62,13 @@
             @Html.DisplayFor(modelItem => item.Paid)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.RecorededTime)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.TransactionNote)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DeleteFlag)
+            @Html.DisplayFor(modelItem => item.Deleted)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.TransactionRecordId }) |

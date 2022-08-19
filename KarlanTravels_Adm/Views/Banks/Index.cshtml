@@ -1,0 +1,51 @@
+﻿@model IEnumerable<KarlanTravels_Adm.Models.Bank>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Country.CountryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BankName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SwiftCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Deleted)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Country.CountryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BankName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SwiftCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Deleted)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.BankId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.BankId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.BankId })
+        </td>
+    </tr>
+}
+
+</table>

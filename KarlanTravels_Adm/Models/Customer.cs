@@ -12,7 +12,7 @@ namespace KarlanTravels_Adm.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Customer()
         {
-            TransactionRecord = new HashSet<TransactionRecord>();
+            TransactionRecords = new HashSet<TransactionRecord>();
         }
 
         public int CustomerId { get; set; }
@@ -29,6 +29,8 @@ namespace KarlanTravels_Adm.Models
         [StringLength(20)]
         public string Phone { get; set; }
 
+        public int? BankAccountId { get; set; }
+
         [Required]
         [StringLength(40)]
         public string CityId { get; set; }
@@ -43,11 +45,13 @@ namespace KarlanTravels_Adm.Models
         [StringLength(255)]
         public string CustomerNote { get; set; }
 
-        public bool DeleteFlag { get; set; }
+        public bool Deleted { get; set; }
+
+        public virtual BankAccount BankAccount { get; set; }
 
         public virtual City City { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TransactionRecord> TransactionRecord { get; set; }
+        public virtual ICollection<TransactionRecord> TransactionRecords { get; set; }
     }
 }

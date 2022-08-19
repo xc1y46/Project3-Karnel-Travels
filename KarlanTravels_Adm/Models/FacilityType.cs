@@ -12,7 +12,7 @@ namespace KarlanTravels_Adm.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public FacilityType()
         {
-            Facility = new HashSet<Facility>();
+            Facilities = new HashSet<Facility>();
         }
 
         [StringLength(40)]
@@ -25,9 +25,9 @@ namespace KarlanTravels_Adm.Models
         [StringLength(255)]
         public string FacilityTypeNote { get; set; }
 
-        public bool DeleteFlag { get; set; }
+        public bool Deleted { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Facility> Facility { get; set; }
+        public virtual ICollection<Facility> Facilities { get; set; }
     }
 }

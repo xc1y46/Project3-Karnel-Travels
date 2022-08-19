@@ -38,7 +38,7 @@ namespace KarlanTravels_Adm.Models
         [StringLength(40)]
         public string TourId { get; set; }
 
-        public bool DeleteFlag { get; set; }
+        public bool Deleted { get; set; }
 
         public virtual Facility Facility { get; set; }
 

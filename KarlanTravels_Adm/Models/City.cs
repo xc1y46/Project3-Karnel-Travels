@@ -12,9 +12,9 @@ namespace KarlanTravels_Adm.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public City()
         {
-            Customer = new HashSet<Customer>();
-            Facility = new HashSet<Facility>();
-            TouristSpot = new HashSet<TouristSpot>();
+            Customers = new HashSet<Customer>();
+            Facilities = new HashSet<Facility>();
+            TouristSpots = new HashSet<TouristSpot>();
         }
 
         [StringLength(40)]
@@ -35,15 +35,17 @@ namespace KarlanTravels_Adm.Models
         [StringLength(255)]
         public string CityNote { get; set; }
 
+        public bool Deleted { get; set; }
+
         public virtual Country Country { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Customer> Customer { get; set; }
+        public virtual ICollection<Customer> Customers { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Facility> Facility { get; set; }
+        public virtual ICollection<Facility> Facilities { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TouristSpot> TouristSpot { get; set; }
+        public virtual ICollection<TouristSpot> TouristSpots { get; set; }
     }
 }

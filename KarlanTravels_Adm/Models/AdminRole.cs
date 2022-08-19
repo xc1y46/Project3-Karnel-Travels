@@ -12,7 +12,7 @@ namespace KarlanTravels_Adm.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AdminRole()
         {
-            Admin = new HashSet<Admin>();
+            Admins = new HashSet<Admin>();
         }
 
         [Key]
@@ -27,6 +27,6 @@ namespace KarlanTravels_Adm.Models
         public string RoleNote { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Admin> Admin { get; set; }
+        public virtual ICollection<Admin> Admins { get; set; }
     }
 }

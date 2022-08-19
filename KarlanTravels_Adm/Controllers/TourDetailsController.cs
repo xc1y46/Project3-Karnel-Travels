@@ -17,8 +17,8 @@ namespace KarlanTravels_Adm.Controllers
         // GET: TourDetails
         public ActionResult Index()
         {
-            var tourDetail = db.TourDetail.Include(t => t.Facility).Include(t => t.Tour).Include(t => t.TouristSpot);
-            return View(tourDetail.ToList());
+            var tourDetails = db.TourDetails.Include(t => t.Facility).Include(t => t.Tour).Include(t => t.TouristSpot);
+            return View(tourDetails.ToList());
         }
 
         // GET: TourDetails/Details/5
@@ -28,7 +28,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TourDetail tourDetail = db.TourDetail.Find(id);
+            TourDetail tourDetail = db.TourDetails.Find(id);
             if (tourDetail == null)
             {
                 return HttpNotFound();
@@ -39,9 +39,9 @@ namespace KarlanTravels_Adm.Controllers
         // GET: TourDetails/Create
         public ActionResult Create()
         {
-            ViewBag.FacilityId = new SelectList(db.Facility, "FacilityId", "FacilityName");
-            ViewBag.TourId = new SelectList(db.Tour, "TourId", "TourName");
-            ViewBag.TouristSpotId = new SelectList(db.TouristSpot, "TouristSpotId", "TouristSpotName");
+            ViewBag.FacilityId = new SelectList(db.Facilities, "FacilityId", "FacilityName");
+            ViewBag.TourId = new SelectList(db.Tours, "TourId", "TourName");
+            ViewBag.TouristSpotId = new SelectList(db.TouristSpots, "TouristSpotId", "TouristSpotName");
             return View();
         }
 
@@ -50,18 +50,18 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TourDetailId,TourDetailName,Activity,ActivityTimeStart,ActivityTimeEnd,TouristSpotId,FacilityId,ActivityNote,TourId,DeleteFlag")] TourDetail tourDetail)
+        public ActionResult Create([Bind(Include = "TourDetailId,TourDetailName,Activity,ActivityTimeStart,ActivityTimeEnd,TouristSpotId,FacilityId,ActivityNote,TourId,Deleted")] TourDetail tourDetail)
         {
             if (ModelState.IsValid)
             {
-                db.TourDetail.Add(tourDetail);
+                db.TourDetails.Add(tourDetail);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.FacilityId = new SelectList(db.Facility, "FacilityId", "FacilityName", tourDetail.FacilityId);
-            ViewBag.TourId = new SelectList(db.Tour, "TourId", "TourName", tourDetail.TourId);
-            ViewBag.TouristSpotId = new SelectList(db.TouristSpot, "TouristSpotId", "TouristSpotName", tourDetail.TouristSpotId);
+            ViewBag.FacilityId = new SelectList(db.Facilities, "FacilityId", "FacilityName", tourDetail.FacilityId);
+            ViewBag.TourId = new SelectList(db.Tours, "TourId", "TourName", tourDetail.TourId);
+            ViewBag.TouristSpotId = new SelectList(db.TouristSpots, "TouristSpotId", "TouristSpotName", tourDetail.TouristSpotId);
             return View(tourDetail);
         }
 
@@ -72,14 +72,14 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TourDetail tourDetail = db.TourDetail.Find(id);
+            TourDetail tourDetail = db.TourDetails.Find(id);
             if (tourDetail == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.FacilityId = new SelectList(db.Facility, "FacilityId", "FacilityName", tourDetail.FacilityId);
-            ViewBag.TourId = new SelectList(db.Tour, "TourId", "TourName", tourDetail.TourId);
-            ViewBag.TouristSpotId = new SelectList(db.TouristSpot, "TouristSpotId", "TouristSpotName", tourDetail.TouristSpotId);
+            ViewBag.FacilityId = new SelectList(db.Facilities, "FacilityId", "FacilityName", tourDetail.FacilityId);
+            ViewBag.TourId = new SelectList(db.Tours, "TourId", "TourName", tourDetail.TourId);
+            ViewBag.TouristSpotId = new SelectList(db.TouristSpots, "TouristSpotId", "TouristSpotName", tourDetail.TouristSpotId);
             return View(tourDetail);
         }
 
@@ -88,7 +88,7 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TourDetailId,TourDetailName,Activity,ActivityTimeStart,ActivityTimeEnd,TouristSpotId,FacilityId,ActivityNote,TourId,DeleteFlag")] TourDetail tourDetail)
+        public ActionResult Edit([Bind(Include = "TourDetailId,TourDetailName,Activity,ActivityTimeStart,ActivityTimeEnd,TouristSpotId,FacilityId,ActivityNote,TourId,Deleted")] TourDetail tourDetail)
         {
             if (ModelState.IsValid)
             {
@@ -96,9 +96,9 @@ namespace KarlanTravels_Adm.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.FacilityId = new SelectList(db.Facility, "FacilityId", "FacilityName", tourDetail.FacilityId);
-            ViewBag.TourId = new SelectList(db.Tour, "TourId", "TourName", tourDetail.TourId);
-            ViewBag.TouristSpotId = new SelectList(db.TouristSpot, "TouristSpotId", "TouristSpotName", tourDetail.TouristSpotId);
+            ViewBag.FacilityId = new SelectList(db.Facilities, "FacilityId", "FacilityName", tourDetail.FacilityId);
+            ViewBag.TourId = new SelectList(db.Tours, "TourId", "TourName", tourDetail.TourId);
+            ViewBag.TouristSpotId = new SelectList(db.TouristSpots, "TouristSpotId", "TouristSpotName", tourDetail.TouristSpotId);
             return View(tourDetail);
         }
 
@@ -109,7 +109,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TourDetail tourDetail = db.TourDetail.Find(id);
+            TourDetail tourDetail = db.TourDetails.Find(id);
             if (tourDetail == null)
             {
                 return HttpNotFound();
@@ -122,8 +122,8 @@ namespace KarlanTravels_Adm.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            TourDetail tourDetail = db.TourDetail.Find(id);
-            db.TourDetail.Remove(tourDetail);
+            TourDetail tourDetail = db.TourDetails.Find(id);
+            db.TourDetails.Remove(tourDetail);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

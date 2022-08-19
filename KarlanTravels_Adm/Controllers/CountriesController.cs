@@ -17,7 +17,7 @@ namespace KarlanTravels_Adm.Controllers
         // GET: Countries
         public ActionResult Index()
         {
-            return View(db.Country.ToList());
+            return View(db.Countries.ToList());
         }
 
         // GET: Countries/Details/5
@@ -27,7 +27,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Country country = db.Country.Find(id);
+            Country country = db.Countries.Find(id);
             if (country == null)
             {
                 return HttpNotFound();
@@ -46,11 +46,11 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CountryId,CountryName,Continent,CountryCode")] Country country)
+        public ActionResult Create([Bind(Include = "CountryId,CountryName,Continent,CountryCode,Deleted")] Country country)
         {
             if (ModelState.IsValid)
             {
-                db.Country.Add(country);
+                db.Countries.Add(country);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -65,7 +65,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Country country = db.Country.Find(id);
+            Country country = db.Countries.Find(id);
             if (country == null)
             {
                 return HttpNotFound();
@@ -78,7 +78,7 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CountryId,CountryName,Continent,CountryCode")] Country country)
+        public ActionResult Edit([Bind(Include = "CountryId,CountryName,Continent,CountryCode,Deleted")] Country country)
         {
             if (ModelState.IsValid)
             {
@@ -96,7 +96,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Country country = db.Country.Find(id);
+            Country country = db.Countries.Find(id);
             if (country == null)
             {
                 return HttpNotFound();
@@ -109,8 +109,8 @@ namespace KarlanTravels_Adm.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Country country = db.Country.Find(id);
-            db.Country.Remove(country);
+            Country country = db.Countries.Find(id);
+            db.Countries.Remove(country);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

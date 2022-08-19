@@ -17,8 +17,8 @@ namespace KarlanTravels_Adm.Controllers
         // GET: Cities
         public ActionResult Index()
         {
-            var city = db.City.Include(c => c.Country);
-            return View(city.ToList());
+            var cities = db.Cities.Include(c => c.Country);
+            return View(cities.ToList());
         }
 
         // GET: Cities/Details/5
@@ -28,7 +28,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            City city = db.City.Find(id);
+            City city = db.Cities.Find(id);
             if (city == null)
             {
                 return HttpNotFound();
@@ -39,7 +39,7 @@ namespace KarlanTravels_Adm.Controllers
         // GET: Cities/Create
         public ActionResult Create()
         {
-            ViewBag.CountryId = new SelectList(db.Country, "CountryId", "CountryName");
+            ViewBag.CountryId = new SelectList(db.Countries, "CountryId", "CountryName");
             return View();
         }
 
@@ -48,16 +48,16 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CityId,CityName,CountryId,PostalCode,CityNote")] City city)
+        public ActionResult Create([Bind(Include = "CityId,CityName,CountryId,PostalCode,CityNote,Deleted")] City city)
         {
             if (ModelState.IsValid)
             {
-                db.City.Add(city);
+                db.Cities.Add(city);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CountryId = new SelectList(db.Country, "CountryId", "CountryName", city.CountryId);
+            ViewBag.CountryId = new SelectList(db.Countries, "CountryId", "CountryName", city.CountryId);
             return View(city);
         }
 
@@ -68,12 +68,12 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            City city = db.City.Find(id);
+            City city = db.Cities.Find(id);
             if (city == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CountryId = new SelectList(db.Country, "CountryId", "CountryName", city.CountryId);
+            ViewBag.CountryId = new SelectList(db.Countries, "CountryId", "CountryName", city.CountryId);
             return View(city);
         }
 
@@ -82,7 +82,7 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CityId,CityName,CountryId,PostalCode,CityNote")] City city)
+        public ActionResult Edit([Bind(Include = "CityId,CityName,CountryId,PostalCode,CityNote,Deleted")] City city)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace KarlanTravels_Adm.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CountryId = new SelectList(db.Country, "CountryId", "CountryName", city.CountryId);
+            ViewBag.CountryId = new SelectList(db.Countries, "CountryId", "CountryName", city.CountryId);
             return View(city);
         }
 
@@ -101,7 +101,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            City city = db.City.Find(id);
+            City city = db.Cities.Find(id);
             if (city == null)
             {
                 return HttpNotFound();
@@ -114,8 +114,8 @@ namespace KarlanTravels_Adm.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            City city = db.City.Find(id);
-            db.City.Remove(city);
+            City city = db.Cities.Find(id);
+            db.Cities.Remove(city);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

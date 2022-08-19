@@ -17,8 +17,8 @@ namespace KarlanTravels_Adm.Controllers
         // GET: Admins
         public ActionResult Index()
         {
-            var admin = db.Admin.Include(a => a.AdminRole);
-            return View(admin.ToList());
+            var admins = db.Admins.Include(a => a.AdminRole);
+            return View(admins.ToList());
         }
 
         // GET: Admins/Details/5
@@ -28,7 +28,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Admin admin = db.Admin.Find(id);
+            Admin admin = db.Admins.Find(id);
             if (admin == null)
             {
                 return HttpNotFound();
@@ -39,7 +39,7 @@ namespace KarlanTravels_Adm.Controllers
         // GET: Admins/Create
         public ActionResult Create()
         {
-            ViewBag.RoleId = new SelectList(db.AdminRole, "RoleId", "RoleName");
+            ViewBag.RoleId = new SelectList(db.AdminRoles, "RoleId", "RoleName");
             return View();
         }
 
@@ -48,16 +48,16 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AdminId,AdminName,AdminPassword,RoleId,AdminNote,IsActive,DeleteFlag")] Admin admin)
+        public ActionResult Create([Bind(Include = "AdminId,AdminName,AdminPassword,RoleId,AdminNote,IsActive,Deleted")] Admin admin)
         {
             if (ModelState.IsValid)
             {
-                db.Admin.Add(admin);
+                db.Admins.Add(admin);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.RoleId = new SelectList(db.AdminRole, "RoleId", "RoleName", admin.RoleId);
+            ViewBag.RoleId = new SelectList(db.AdminRoles, "RoleId", "RoleName", admin.RoleId);
             return View(admin);
         }
 
@@ -68,12 +68,12 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Admin admin = db.Admin.Find(id);
+            Admin admin = db.Admins.Find(id);
             if (admin == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.RoleId = new SelectList(db.AdminRole, "RoleId", "RoleName", admin.RoleId);
+            ViewBag.RoleId = new SelectList(db.AdminRoles, "RoleId", "RoleName", admin.RoleId);
             return View(admin);
         }
 
@@ -82,7 +82,7 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AdminId,AdminName,AdminPassword,RoleId,AdminNote,IsActive,DeleteFlag")] Admin admin)
+        public ActionResult Edit([Bind(Include = "AdminId,AdminName,AdminPassword,RoleId,AdminNote,IsActive,Deleted")] Admin admin)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace KarlanTravels_Adm.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.RoleId = new SelectList(db.AdminRole, "RoleId", "RoleName", admin.RoleId);
+            ViewBag.RoleId = new SelectList(db.AdminRoles, "RoleId", "RoleName", admin.RoleId);
             return View(admin);
         }
 
@@ -101,7 +101,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Admin admin = db.Admin.Find(id);
+            Admin admin = db.Admins.Find(id);
             if (admin == null)
             {
                 return HttpNotFound();
@@ -114,8 +114,8 @@ namespace KarlanTravels_Adm.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Admin admin = db.Admin.Find(id);
-            db.Admin.Remove(admin);
+            Admin admin = db.Admins.Find(id);
+            db.Admins.Remove(admin);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

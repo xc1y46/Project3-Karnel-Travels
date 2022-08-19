@@ -17,8 +17,8 @@ namespace KarlanTravels_Adm.Controllers
         // GET: Customers
         public ActionResult Index()
         {
-            var customer = db.Customer.Include(c => c.City);
-            return View(customer.ToList());
+            var customers = db.Customers.Include(c => c.BankAccount).Include(c => c.City);
+            return View(customers.ToList());
         }
 
         // GET: Customers/Details/5
@@ -28,7 +28,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Customer customer = db.Customer.Find(id);
+            Customer customer = db.Customers.Find(id);
             if (customer == null)
             {
                 return HttpNotFound();
@@ -39,7 +39,8 @@ namespace KarlanTravels_Adm.Controllers
         // GET: Customers/Create
         public ActionResult Create()
         {
-            ViewBag.CityId = new SelectList(db.City, "CityId", "CityName");
+            ViewBag.BankAccountId = new SelectList(db.BankAccounts, "BankAccountId", "AccountName");
+            ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName");
             return View();
         }
 
@@ -48,16 +49,17 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CustomerId,Username,Email,Phone,CityId,UserPassword,AmountToPay,CustomerNote,DeleteFlag")] Customer customer)
+        public ActionResult Create([Bind(Include = "CustomerId,Username,Email,Phone,BankAccountId,CityId,UserPassword,AmountToPay,CustomerNote,Deleted")] Customer customer)
         {
             if (ModelState.IsValid)
             {
-                db.Customer.Add(customer);
+                db.Customers.Add(customer);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CityId = new SelectList(db.City, "CityId", "CityName", customer.CityId);
+            ViewBag.BankAccountId = new SelectList(db.BankAccounts, "BankAccountId", "AccountName", customer.BankAccountId);
+            ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", customer.CityId);
             return View(customer);
         }
 
@@ -68,12 +70,13 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Customer customer = db.Customer.Find(id);
+            Customer customer = db.Customers.Find(id);
             if (customer == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CityId = new SelectList(db.City, "CityId", "CityName", customer.CityId);
+            ViewBag.BankAccountId = new SelectList(db.BankAccounts, "BankAccountId", "AccountName", customer.BankAccountId);
+            ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", customer.CityId);
             return View(customer);
         }
 
@@ -82,7 +85,7 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CustomerId,Username,Email,Phone,CityId,UserPassword,AmountToPay,CustomerNote,DeleteFlag")] Customer customer)
+        public ActionResult Edit([Bind(Include = "CustomerId,Username,Email,Phone,BankAccountId,CityId,UserPassword,AmountToPay,CustomerNote,Deleted")] Customer customer)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +93,8 @@ namespace KarlanTravels_Adm.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CityId = new SelectList(db.City, "CityId", "CityName", customer.CityId);
+            ViewBag.BankAccountId = new SelectList(db.BankAccounts, "BankAccountId", "AccountName", customer.BankAccountId);
+            ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", customer.CityId);
             return View(customer);
         }
 
@@ -101,7 +105,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Customer customer = db.Customer.Find(id);
+            Customer customer = db.Customers.Find(id);
             if (customer == null)
             {
                 return HttpNotFound();
@@ -114,8 +118,8 @@ namespace KarlanTravels_Adm.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Customer customer = db.Customer.Find(id);
-            db.Customer.Remove(customer);
+            Customer customer = db.Customers.Find(id);
+            db.Customers.Remove(customer);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

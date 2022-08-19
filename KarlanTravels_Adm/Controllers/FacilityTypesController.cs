@@ -17,7 +17,7 @@ namespace KarlanTravels_Adm.Controllers
         // GET: FacilityTypes
         public ActionResult Index()
         {
-            return View(db.FacilityType.ToList());
+            return View(db.FacilityTypes.ToList());
         }
 
         // GET: FacilityTypes/Details/5
@@ -27,7 +27,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            FacilityType facilityType = db.FacilityType.Find(id);
+            FacilityType facilityType = db.FacilityTypes.Find(id);
             if (facilityType == null)
             {
                 return HttpNotFound();
@@ -46,11 +46,11 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "FacilityTypeId,FacilityTypeName,FacilityTypeNote,DeleteFlag")] FacilityType facilityType)
+        public ActionResult Create([Bind(Include = "FacilityTypeId,FacilityTypeName,FacilityTypeNote,Deleted")] FacilityType facilityType)
         {
             if (ModelState.IsValid)
             {
-                db.FacilityType.Add(facilityType);
+                db.FacilityTypes.Add(facilityType);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -65,7 +65,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            FacilityType facilityType = db.FacilityType.Find(id);
+            FacilityType facilityType = db.FacilityTypes.Find(id);
             if (facilityType == null)
             {
                 return HttpNotFound();
@@ -78,7 +78,7 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FacilityTypeId,FacilityTypeName,FacilityTypeNote,DeleteFlag")] FacilityType facilityType)
+        public ActionResult Edit([Bind(Include = "FacilityTypeId,FacilityTypeName,FacilityTypeNote,Deleted")] FacilityType facilityType)
         {
             if (ModelState.IsValid)
             {
@@ -96,7 +96,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            FacilityType facilityType = db.FacilityType.Find(id);
+            FacilityType facilityType = db.FacilityTypes.Find(id);
             if (facilityType == null)
             {
                 return HttpNotFound();
@@ -109,8 +109,8 @@ namespace KarlanTravels_Adm.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            FacilityType facilityType = db.FacilityType.Find(id);
-            db.FacilityType.Remove(facilityType);
+            FacilityType facilityType = db.FacilityTypes.Find(id);
+            db.FacilityTypes.Remove(facilityType);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

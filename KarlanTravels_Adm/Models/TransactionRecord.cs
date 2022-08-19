@@ -26,12 +26,14 @@ namespace KarlanTravels_Adm.Models
 
         public bool Paid { get; set; }
 
-        public int AdminID { get; set; }
+        public DateTime RecorededTime { get; set; }
+
+        public int? AdminID { get; set; }
 
         [StringLength(255)]
         public string TransactionNote { get; set; }
 
-        public bool DeleteFlag { get; set; }
+        public bool Deleted { get; set; }
 
         public virtual Admin Admin { get; set; }
 

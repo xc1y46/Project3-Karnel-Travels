@@ -26,7 +26,7 @@ namespace KarlanTravels.Controllers
         {
 
             TempData["LoginResult"] = "";
-            var CurrentAdmin = db.Admin.Include(a => a.AdminRole);
+            var CurrentAdmin = db.Admins.Include(a => a.AdminRole);
 
             if (String.IsNullOrEmpty(AdminPassword))
             {
@@ -72,7 +72,7 @@ namespace KarlanTravels.Controllers
             {
                 TempData["WelcomeMessage"] = $"Welcome {Session["AdminRole"]} {Session["AdminName"]}";
 
-                Admin adm = db.Admin.Find(Session["CurrentAdminId"]);
+                Admin adm = db.Admins.Find(Session["CurrentAdminId"]);
                 adm.IsActive = true;
                 db.Entry(adm).State = EntityState.Modified;
                 db.SaveChanges();
@@ -80,7 +80,7 @@ namespace KarlanTravels.Controllers
             }
             else
             {
-                TempData["LoginResult"] = "Something went wrong";
+                TempData["LoginResult"] = "";
                 return RedirectToAction("Login");
             }
         }
@@ -101,7 +101,7 @@ namespace KarlanTravels.Controllers
         [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult LogOut()
         {
-            Admin adm = db.Admin.Find(Session["CurrentAdminId"]);
+            Admin adm = db.Admins.Find(Session["CurrentAdminId"]);
             adm.IsActive = false;
             db.Entry(adm).State = EntityState.Modified;
             db.SaveChanges();

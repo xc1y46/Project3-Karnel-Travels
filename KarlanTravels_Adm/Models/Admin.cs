@@ -12,7 +12,7 @@ namespace KarlanTravels_Adm.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Admin()
         {
-            TransactionRecord = new HashSet<TransactionRecord>();
+            TransactionRecords = new HashSet<TransactionRecord>();
         }
 
         public int AdminId { get; set; }
@@ -34,11 +34,11 @@ namespace KarlanTravels_Adm.Models
 
         public bool IsActive { get; set; }
 
-        public bool DeleteFlag { get; set; }
+        public bool Deleted { get; set; }
 
         public virtual AdminRole AdminRole { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TransactionRecord> TransactionRecord { get; set; }
+        public virtual ICollection<TransactionRecord> TransactionRecords { get; set; }
     }
 }

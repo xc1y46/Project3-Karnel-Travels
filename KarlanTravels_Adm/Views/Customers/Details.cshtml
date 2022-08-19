@@ -11,6 +11,14 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.BankAccount.AccountName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BankAccount.AccountName)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.City.CityName)
         </dt>
 
@@ -67,11 +75,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DeleteFlag)
+            @Html.DisplayNameFor(model => model.Deleted)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DeleteFlag)
+            @Html.DisplayFor(model => model.Deleted)
         </dd>
 
     </dl>

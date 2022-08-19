@@ -12,6 +12,9 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.BankAccount.AccountName)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.City.CityName)
         </th>
         <th>
@@ -33,13 +36,16 @@
             @Html.DisplayNameFor(model => model.CustomerNote)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DeleteFlag)
+            @Html.DisplayNameFor(model => model.Deleted)
         </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BankAccount.AccountName)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.City.CityName)
         </td>
@@ -62,7 +68,7 @@
             @Html.DisplayFor(modelItem => item.CustomerNote)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DeleteFlag)
+            @Html.DisplayFor(modelItem => item.Deleted)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.CustomerId }) |

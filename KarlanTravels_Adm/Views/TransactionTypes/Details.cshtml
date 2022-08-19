@@ -1,0 +1,42 @@
+﻿@model KarlanTravels_Adm.Models.TransactionType
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TransactionType</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TransactionTypeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TransactionTypeName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TransactionTypeNote)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TransactionTypeNote)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TransactionPriceRate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TransactionPriceRate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TransactionTypeId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

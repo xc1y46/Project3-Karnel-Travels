@@ -12,6 +12,12 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.Category.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category1.CategoryName)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.TourName)
         </th>
         <th>
@@ -27,16 +33,34 @@
             @Html.DisplayNameFor(model => model.TourPrice)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.MaxBooking)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BookTimeLimit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TourRating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TourImage)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.TourNote)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DeleteFlag)
+            @Html.DisplayNameFor(model => model.Deleted)
         </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category.CategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category1.CategoryName)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.TourName)
         </td>
@@ -53,10 +77,22 @@
             @Html.DisplayFor(modelItem => item.TourPrice)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.MaxBooking)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BookTimeLimit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TourRating)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TourImage)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.TourNote)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DeleteFlag)
+            @Html.DisplayFor(modelItem => item.Deleted)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.TourId }) |

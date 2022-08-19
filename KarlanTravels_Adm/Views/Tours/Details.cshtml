@@ -11,6 +11,22 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.Category.CategoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.CategoryName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Category1.CategoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category1.CategoryName)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.TourName)
         </dt>
 
@@ -51,6 +67,38 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.MaxBooking)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaxBooking)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BookTimeLimit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BookTimeLimit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TourRating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TourRating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TourImage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TourImage)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.TourNote)
         </dt>
 
@@ -59,11 +107,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DeleteFlag)
+            @Html.DisplayNameFor(model => model.Deleted)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DeleteFlag)
+            @Html.DisplayFor(model => model.Deleted)
         </dd>
 
     </dl>

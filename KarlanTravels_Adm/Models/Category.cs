@@ -12,10 +12,11 @@ namespace KarlanTravels_Adm.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Category()
         {
-            TouristSpot = new HashSet<TouristSpot>();
+            SubCategories = new HashSet<SubCategory>();
+            Tours = new HashSet<Tour>();
+            Tours1 = new HashSet<Tour>();
         }
 
-        [Required]
         [StringLength(40)]
         public string CategoryId { get; set; }
 
@@ -26,9 +27,15 @@ namespace KarlanTravels_Adm.Models
         [StringLength(255)]
         public string CategoryNote { get; set; }
 
-        public bool DeleteFlag { get; set; }
+        public bool Deleted { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TouristSpot> TouristSpot { get; set; }
+        public virtual ICollection<SubCategory> SubCategories { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tour> Tours { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tour> Tours1 { get; set; }
     }
 }

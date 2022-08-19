@@ -17,8 +17,8 @@ namespace KarlanTravels_Adm.Controllers
         // GET: TouristSpots
         public ActionResult Index()
         {
-            var touristSpot = db.TouristSpot.Include(t => t.Category).Include(t => t.City);
-            return View(touristSpot.ToList());
+            var touristSpots = db.TouristSpots.Include(t => t.City).Include(t => t.SubCategory);
+            return View(touristSpots.ToList());
         }
 
         // GET: TouristSpots/Details/5
@@ -28,7 +28,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TouristSpot touristSpot = db.TouristSpot.Find(id);
+            TouristSpot touristSpot = db.TouristSpots.Find(id);
             if (touristSpot == null)
             {
                 return HttpNotFound();
@@ -39,8 +39,8 @@ namespace KarlanTravels_Adm.Controllers
         // GET: TouristSpots/Create
         public ActionResult Create()
         {
-            ViewBag.CategoryId = new SelectList(db.Category, "CategoryId", "CategoryName");
-            ViewBag.CityId = new SelectList(db.City, "CityId", "CityName");
+            ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName");
+            ViewBag.SubCategoryId = new SelectList(db.SubCategories, "SubCategoryId", "SubCategoryName");
             return View();
         }
 
@@ -49,17 +49,17 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TouristSpotId,TouristSpotName,CityId,CategoryId,Rating,TouristSpotAvailability,TouristSpotNote,DeleteFlag")] TouristSpot touristSpot)
+        public ActionResult Create([Bind(Include = "TouristSpotId,TouristSpotName,CityId,SubCategoryId,TouristSpotLocation,TouristSpotRating,OpenHour,ClosingHour,TouristSpotAvailability,TouristSpotImage,TouristSpotNote,Deleted")] TouristSpot touristSpot)
         {
             if (ModelState.IsValid)
             {
-                db.TouristSpot.Add(touristSpot);
+                db.TouristSpots.Add(touristSpot);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CategoryId = new SelectList(db.Category, "CategoryId", "CategoryName", touristSpot.CategoryId);
-            ViewBag.CityId = new SelectList(db.City, "CityId", "CityName", touristSpot.CityId);
+            ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", touristSpot.CityId);
+            ViewBag.SubCategoryId = new SelectList(db.SubCategories, "SubCategoryId", "SubCategoryName", touristSpot.SubCategoryId);
             return View(touristSpot);
         }
 
@@ -70,13 +70,13 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TouristSpot touristSpot = db.TouristSpot.Find(id);
+            TouristSpot touristSpot = db.TouristSpots.Find(id);
             if (touristSpot == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CategoryId = new SelectList(db.Category, "CategoryId", "CategoryName", touristSpot.CategoryId);
-            ViewBag.CityId = new SelectList(db.City, "CityId", "CityName", touristSpot.CityId);
+            ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", touristSpot.CityId);
+            ViewBag.SubCategoryId = new SelectList(db.SubCategories, "SubCategoryId", "SubCategoryName", touristSpot.SubCategoryId);
             return View(touristSpot);
         }
 
@@ -85,7 +85,7 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TouristSpotId,TouristSpotName,CityId,CategoryId,Rating,TouristSpotAvailability,TouristSpotNote,DeleteFlag")] TouristSpot touristSpot)
+        public ActionResult Edit([Bind(Include = "TouristSpotId,TouristSpotName,CityId,SubCategoryId,TouristSpotLocation,TouristSpotRating,OpenHour,ClosingHour,TouristSpotAvailability,TouristSpotImage,TouristSpotNote,Deleted")] TouristSpot touristSpot)
         {
             if (ModelState.IsValid)
             {
@@ -93,8 +93,8 @@ namespace KarlanTravels_Adm.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CategoryId = new SelectList(db.Category, "CategoryId", "CategoryName", touristSpot.CategoryId);
-            ViewBag.CityId = new SelectList(db.City, "CityId", "CityName", touristSpot.CityId);
+            ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", touristSpot.CityId);
+            ViewBag.SubCategoryId = new SelectList(db.SubCategories, "SubCategoryId", "SubCategoryName", touristSpot.SubCategoryId);
             return View(touristSpot);
         }
 
@@ -105,7 +105,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TouristSpot touristSpot = db.TouristSpot.Find(id);
+            TouristSpot touristSpot = db.TouristSpots.Find(id);
             if (touristSpot == null)
             {
                 return HttpNotFound();
@@ -118,8 +118,8 @@ namespace KarlanTravels_Adm.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            TouristSpot touristSpot = db.TouristSpot.Find(id);
-            db.TouristSpot.Remove(touristSpot);
+            TouristSpot touristSpot = db.TouristSpots.Find(id);
+            db.TouristSpots.Remove(touristSpot);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

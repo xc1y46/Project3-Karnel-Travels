@@ -17,8 +17,8 @@ namespace KarlanTravels_Adm.Controllers
         // GET: Facilities
         public ActionResult Index()
         {
-            var facility = db.Facility.Include(f => f.City).Include(f => f.FacilityType);
-            return View(facility.ToList());
+            var facilities = db.Facilities.Include(f => f.City).Include(f => f.FacilityType);
+            return View(facilities.ToList());
         }
 
         // GET: Facilities/Details/5
@@ -28,7 +28,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Facility facility = db.Facility.Find(id);
+            Facility facility = db.Facilities.Find(id);
             if (facility == null)
             {
                 return HttpNotFound();
@@ -39,8 +39,8 @@ namespace KarlanTravels_Adm.Controllers
         // GET: Facilities/Create
         public ActionResult Create()
         {
-            ViewBag.CityId = new SelectList(db.City, "CityId", "CityName");
-            ViewBag.FacilityTypeId = new SelectList(db.FacilityType, "FacilityTypeId", "FacilityTypeName");
+            ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName");
+            ViewBag.FacilityTypeId = new SelectList(db.FacilityTypes, "FacilityTypeId", "FacilityTypeName");
             return View();
         }
 
@@ -49,17 +49,17 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "FacilityId,FacilityName,FacilityTypeId,FacilityLocation,CityId,FacilityPrice,FacilityQuality,Quantity,FacilityNote,FacilityAvailability,DeleteFlag")] Facility facility)
+        public ActionResult Create([Bind(Include = "FacilityId,FacilityName,FacilityTypeId,FacilityLocation,CityId,Quantity,FacilityImage,ServiceNote,FacilityAvailability,Deleted")] Facility facility)
         {
             if (ModelState.IsValid)
             {
-                db.Facility.Add(facility);
+                db.Facilities.Add(facility);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CityId = new SelectList(db.City, "CityId", "CityName", facility.CityId);
-            ViewBag.FacilityTypeId = new SelectList(db.FacilityType, "FacilityTypeId", "FacilityTypeName", facility.FacilityTypeId);
+            ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", facility.CityId);
+            ViewBag.FacilityTypeId = new SelectList(db.FacilityTypes, "FacilityTypeId", "FacilityTypeName", facility.FacilityTypeId);
             return View(facility);
         }
 
@@ -70,13 +70,13 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Facility facility = db.Facility.Find(id);
+            Facility facility = db.Facilities.Find(id);
             if (facility == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CityId = new SelectList(db.City, "CityId", "CityName", facility.CityId);
-            ViewBag.FacilityTypeId = new SelectList(db.FacilityType, "FacilityTypeId", "FacilityTypeName", facility.FacilityTypeId);
+            ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", facility.CityId);
+            ViewBag.FacilityTypeId = new SelectList(db.FacilityTypes, "FacilityTypeId", "FacilityTypeName", facility.FacilityTypeId);
             return View(facility);
         }
 
@@ -85,7 +85,7 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FacilityId,FacilityName,FacilityTypeId,FacilityLocation,CityId,FacilityPrice,FacilityQuality,Quantity,FacilityNote,FacilityAvailability,DeleteFlag")] Facility facility)
+        public ActionResult Edit([Bind(Include = "FacilityId,FacilityName,FacilityTypeId,FacilityLocation,CityId,Quantity,FacilityImage,ServiceNote,FacilityAvailability,Deleted")] Facility facility)
         {
             if (ModelState.IsValid)
             {
@@ -93,8 +93,8 @@ namespace KarlanTravels_Adm.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CityId = new SelectList(db.City, "CityId", "CityName", facility.CityId);
-            ViewBag.FacilityTypeId = new SelectList(db.FacilityType, "FacilityTypeId", "FacilityTypeName", facility.FacilityTypeId);
+            ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", facility.CityId);
+            ViewBag.FacilityTypeId = new SelectList(db.FacilityTypes, "FacilityTypeId", "FacilityTypeName", facility.FacilityTypeId);
             return View(facility);
         }
 
@@ -105,7 +105,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Facility facility = db.Facility.Find(id);
+            Facility facility = db.Facilities.Find(id);
             if (facility == null)
             {
                 return HttpNotFound();
@@ -118,8 +118,8 @@ namespace KarlanTravels_Adm.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Facility facility = db.Facility.Find(id);
-            db.Facility.Remove(facility);
+            Facility facility = db.Facilities.Find(id);
+            db.Facilities.Remove(facility);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

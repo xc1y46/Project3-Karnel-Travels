@@ -7,30 +7,17 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using KarlanTravels_Adm.Models;
-using KarlanTravels_Adm.Controllers;
 
 namespace KarlanTravels_Adm.Controllers
 {
     public class CategoriesController : Controller
     {
         private ContextModel db = new ContextModel();
-        private SessionCheck SesCheck = new SessionCheck();
+
         // GET: Categories
-        public ActionResult Index(string ShowDel)
+        public ActionResult Index()
         {
-            if (SesCheck.SessionChecking())
-            {
-                if(ShowDel == "ShowDeleted")
-                {
-                    return View(db.Category.ToList());
-                }
-                var categories = from c in db.Category where c.DeleteFlag == false select c;
-                return View(categories.ToList());
-            }
-            else
-            {
-                return View("~Views/Home/Login.cshtml");
-            }
+            return View(db.Categories.ToList());
         }
 
         // GET: Categories/Details/5
@@ -40,7 +27,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Category.Find(id);
+            Category category = db.Categories.Find(id);
             if (category == null)
             {
                 return HttpNotFound();
@@ -51,7 +38,7 @@ namespace KarlanTravels_Adm.Controllers
         // GET: Categories/Create
         public ActionResult Create()
         {
-            return View();            
+            return View();
         }
 
         // POST: Categories/Create
@@ -59,14 +46,15 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CategoryId,CategoryName,CategoryNote")] Category category)
+        public ActionResult Create([Bind(Include = "CategoryId,CategoryName,CategoryNote,Deleted")] Category category)
         {
             if (ModelState.IsValid)
             {
-                db.Category.Add(category);
+                db.Categories.Add(category);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
             return View(category);
         }
 
@@ -77,7 +65,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Category.Find(id);
+            Category category = db.Categories.Find(id);
             if (category == null)
             {
                 return HttpNotFound();
@@ -90,7 +78,7 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CategoryId,CategoryName,CategoryNote,DeleteFlag")] Category category)
+        public ActionResult Edit([Bind(Include = "CategoryId,CategoryName,CategoryNote,Deleted")] Category category)
         {
             if (ModelState.IsValid)
             {
@@ -108,7 +96,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Category.Find(id);
+            Category category = db.Categories.Find(id);
             if (category == null)
             {
                 return HttpNotFound();
@@ -121,9 +109,8 @@ namespace KarlanTravels_Adm.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Category category = db.Category.Find(id);
-            category.DeleteFlag = true;
-            db.Entry(category).State = EntityState.Modified;
+            Category category = db.Categories.Find(id);
+            db.Categories.Remove(category);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

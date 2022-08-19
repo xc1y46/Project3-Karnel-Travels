@@ -12,7 +12,8 @@ namespace KarlanTravels_Adm.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Country()
         {
-            City = new HashSet<City>();
+            Banks = new HashSet<Bank>();
+            Cities = new HashSet<City>();
         }
 
         [StringLength(40)]
@@ -30,7 +31,12 @@ namespace KarlanTravels_Adm.Models
         [StringLength(20)]
         public string CountryCode { get; set; }
 
+        public bool Deleted { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<City> City { get; set; }
+        public virtual ICollection<Bank> Banks { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<City> Cities { get; set; }
     }
 }

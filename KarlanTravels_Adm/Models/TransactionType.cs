@@ -12,7 +12,7 @@ namespace KarlanTravels_Adm.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TransactionType()
         {
-            TransactionRecord = new HashSet<TransactionRecord>();
+            TransactionRecords = new HashSet<TransactionRecord>();
         }
 
         [StringLength(40)]
@@ -28,6 +28,6 @@ namespace KarlanTravels_Adm.Models
         public double TransactionPriceRate { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TransactionRecord> TransactionRecord { get; set; }
+        public virtual ICollection<TransactionRecord> TransactionRecords { get; set; }
     }
 }

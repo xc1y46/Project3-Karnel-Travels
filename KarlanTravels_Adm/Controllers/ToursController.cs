@@ -17,7 +17,8 @@ namespace KarlanTravels_Adm.Controllers
         // GET: Tours
         public ActionResult Index()
         {
-            return View(db.Tour.ToList());
+            var tours = db.Tours.Include(t => t.Category).Include(t => t.Category1);
+            return View(tours.ToList());
         }
 
         // GET: Tours/Details/5
@@ -27,7 +28,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tour tour = db.Tour.Find(id);
+            Tour tour = db.Tours.Find(id);
             if (tour == null)
             {
                 return HttpNotFound();
@@ -38,6 +39,8 @@ namespace KarlanTravels_Adm.Controllers
         // GET: Tours/Create
         public ActionResult Create()
         {
+            ViewBag.CategoryId1 = new SelectList(db.Categories, "CategoryId", "CategoryName");
+            ViewBag.CategoryId2 = new SelectList(db.Categories, "CategoryId", "CategoryName");
             return View();
         }
 
@@ -46,15 +49,17 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TourId,TourName,TourAvailability,TourStart,TourEnd,TourPrice,TourNote,DeleteFlag")] Tour tour)
+        public ActionResult Create([Bind(Include = "TourId,TourName,TourAvailability,TourStart,TourEnd,TourPrice,CategoryId1,CategoryId2,MaxBooking,BookTimeLimit,TourRating,TourImage,TourNote,Deleted")] Tour tour)
         {
             if (ModelState.IsValid)
             {
-                db.Tour.Add(tour);
+                db.Tours.Add(tour);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
+            ViewBag.CategoryId1 = new SelectList(db.Categories, "CategoryId", "CategoryName", tour.CategoryId1);
+            ViewBag.CategoryId2 = new SelectList(db.Categories, "CategoryId", "CategoryName", tour.CategoryId2);
             return View(tour);
         }
 
@@ -65,11 +70,13 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tour tour = db.Tour.Find(id);
+            Tour tour = db.Tours.Find(id);
             if (tour == null)
             {
                 return HttpNotFound();
             }
+            ViewBag.CategoryId1 = new SelectList(db.Categories, "CategoryId", "CategoryName", tour.CategoryId1);
+            ViewBag.CategoryId2 = new SelectList(db.Categories, "CategoryId", "CategoryName", tour.CategoryId2);
             return View(tour);
         }
 
@@ -78,7 +85,7 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TourId,TourName,TourAvailability,TourStart,TourEnd,TourPrice,TourNote,DeleteFlag")] Tour tour)
+        public ActionResult Edit([Bind(Include = "TourId,TourName,TourAvailability,TourStart,TourEnd,TourPrice,CategoryId1,CategoryId2,MaxBooking,BookTimeLimit,TourRating,TourImage,TourNote,Deleted")] Tour tour)
         {
             if (ModelState.IsValid)
             {
@@ -86,6 +93,8 @@ namespace KarlanTravels_Adm.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.CategoryId1 = new SelectList(db.Categories, "CategoryId", "CategoryName", tour.CategoryId1);
+            ViewBag.CategoryId2 = new SelectList(db.Categories, "CategoryId", "CategoryName", tour.CategoryId2);
             return View(tour);
         }
 
@@ -96,7 +105,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tour tour = db.Tour.Find(id);
+            Tour tour = db.Tours.Find(id);
             if (tour == null)
             {
                 return HttpNotFound();
@@ -109,8 +118,8 @@ namespace KarlanTravels_Adm.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Tour tour = db.Tour.Find(id);
-            db.Tour.Remove(tour);
+            Tour tour = db.Tours.Find(id);
+            db.Tours.Remove(tour);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

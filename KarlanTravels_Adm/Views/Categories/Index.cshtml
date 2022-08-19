@@ -4,36 +4,11 @@
     ViewBag.Title = "Index";
 }
 
-<style>
-    #filter {
-        display: block;
-    }
+<h2>Index</h2>
 
-    form {
-        text-align: right;
-    }
-
-    form input {
-        margin-left: 10px;
-    }
-</style>
-
-
-<br />
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<br />
-
-<div id="filter">
-    <form method="post">
-        <span>Show deleted</span>
-        <input type="checkbox" value="ShowDeleted" name="ShowDel" />
-        <input type="submit" value="FILTER" />
-    </form>
-</div>
-
-
 <table class="table">
     <tr>
         <th>
@@ -43,29 +18,28 @@
             @Html.DisplayNameFor(model => model.CategoryNote)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DeleteFlag)
+            @Html.DisplayNameFor(model => model.Deleted)
         </th>
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CategoryName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CategoryNote)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeleteFlag)
-            </td>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CategoryNote)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Deleted)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CategoryId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CategoryId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CategoryId })
+        </td>
+    </tr>
+}
 
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.CategoryId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.CategoryId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.CategoryId })
-            </td>
-        </tr>
-    }
 </table>

@@ -12,25 +12,37 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Category.CategoryName)
+            @Html.DisplayNameFor(model => model.City.CityName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.City.CityName)
+            @Html.DisplayNameFor(model => model.SubCategory.SubCategoryName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.TouristSpotName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Rating)
+            @Html.DisplayNameFor(model => model.TouristSpotLocation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TouristSpotRating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OpenHour)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ClosingHour)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.TouristSpotAvailability)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.TouristSpotImage)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.TouristSpotNote)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DeleteFlag)
+            @Html.DisplayNameFor(model => model.Deleted)
         </th>
         <th></th>
     </tr>
@@ -38,25 +50,37 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            @Html.DisplayFor(modelItem => item.City.CityName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.City.CityName)
+            @Html.DisplayFor(modelItem => item.SubCategory.SubCategoryName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.TouristSpotName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Rating)
+            @Html.DisplayFor(modelItem => item.TouristSpotLocation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TouristSpotRating)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OpenHour)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ClosingHour)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.TouristSpotAvailability)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.TouristSpotImage)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.TouristSpotNote)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DeleteFlag)
+            @Html.DisplayFor(modelItem => item.Deleted)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.TouristSpotId }) |

@@ -17,8 +17,8 @@ namespace KarlanTravels_Adm.Controllers
         // GET: TransactionRecords
         public ActionResult Index()
         {
-            var transactionRecord = db.TransactionRecord.Include(t => t.Admin).Include(t => t.Customer).Include(t => t.Tour).Include(t => t.TransactionType);
-            return View(transactionRecord.ToList());
+            var transactionRecords = db.TransactionRecords.Include(t => t.Admin).Include(t => t.Customer).Include(t => t.Tour).Include(t => t.TransactionType);
+            return View(transactionRecords.ToList());
         }
 
         // GET: TransactionRecords/Details/5
@@ -28,7 +28,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TransactionRecord transactionRecord = db.TransactionRecord.Find(id);
+            TransactionRecord transactionRecord = db.TransactionRecords.Find(id);
             if (transactionRecord == null)
             {
                 return HttpNotFound();
@@ -39,10 +39,10 @@ namespace KarlanTravels_Adm.Controllers
         // GET: TransactionRecords/Create
         public ActionResult Create()
         {
-            ViewBag.AdminID = new SelectList(db.Admin, "AdminId", "AdminName");
-            ViewBag.CustomerID = new SelectList(db.Customer, "CustomerId", "Username");
-            ViewBag.TourId = new SelectList(db.Tour, "TourId", "TourName");
-            ViewBag.TransactionTypeId = new SelectList(db.TransactionType, "TransactionTypeId", "TransactionTypeName");
+            ViewBag.AdminID = new SelectList(db.Admins, "AdminId", "AdminName");
+            ViewBag.CustomerID = new SelectList(db.Customers, "CustomerId", "Username");
+            ViewBag.TourId = new SelectList(db.Tours, "TourId", "TourName");
+            ViewBag.TransactionTypeId = new SelectList(db.TransactionTypes, "TransactionTypeId", "TransactionTypeName");
             return View();
         }
 
@@ -51,19 +51,19 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TransactionRecordId,TransactionTypeId,TourId,CustomerID,TransactionFee,Paid,AdminID,TransactionNote,DeleteFlag")] TransactionRecord transactionRecord)
+        public ActionResult Create([Bind(Include = "TransactionRecordId,TransactionTypeId,TourId,CustomerID,TransactionFee,Paid,RecorededTime,AdminID,TransactionNote,Deleted")] TransactionRecord transactionRecord)
         {
             if (ModelState.IsValid)
             {
-                db.TransactionRecord.Add(transactionRecord);
+                db.TransactionRecords.Add(transactionRecord);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.AdminID = new SelectList(db.Admin, "AdminId", "AdminName", transactionRecord.AdminID);
-            ViewBag.CustomerID = new SelectList(db.Customer, "CustomerId", "Username", transactionRecord.CustomerID);
-            ViewBag.TourId = new SelectList(db.Tour, "TourId", "TourName", transactionRecord.TourId);
-            ViewBag.TransactionTypeId = new SelectList(db.TransactionType, "TransactionTypeId", "TransactionTypeName", transactionRecord.TransactionTypeId);
+            ViewBag.AdminID = new SelectList(db.Admins, "AdminId", "AdminName", transactionRecord.AdminID);
+            ViewBag.CustomerID = new SelectList(db.Customers, "CustomerId", "Username", transactionRecord.CustomerID);
+            ViewBag.TourId = new SelectList(db.Tours, "TourId", "TourName", transactionRecord.TourId);
+            ViewBag.TransactionTypeId = new SelectList(db.TransactionTypes, "TransactionTypeId", "TransactionTypeName", transactionRecord.TransactionTypeId);
             return View(transactionRecord);
         }
 
@@ -74,15 +74,15 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TransactionRecord transactionRecord = db.TransactionRecord.Find(id);
+            TransactionRecord transactionRecord = db.TransactionRecords.Find(id);
             if (transactionRecord == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.AdminID = new SelectList(db.Admin, "AdminId", "AdminName", transactionRecord.AdminID);
-            ViewBag.CustomerID = new SelectList(db.Customer, "CustomerId", "Username", transactionRecord.CustomerID);
-            ViewBag.TourId = new SelectList(db.Tour, "TourId", "TourName", transactionRecord.TourId);
-            ViewBag.TransactionTypeId = new SelectList(db.TransactionType, "TransactionTypeId", "TransactionTypeName", transactionRecord.TransactionTypeId);
+            ViewBag.AdminID = new SelectList(db.Admins, "AdminId", "AdminName", transactionRecord.AdminID);
+            ViewBag.CustomerID = new SelectList(db.Customers, "CustomerId", "Username", transactionRecord.CustomerID);
+            ViewBag.TourId = new SelectList(db.Tours, "TourId", "TourName", transactionRecord.TourId);
+            ViewBag.TransactionTypeId = new SelectList(db.TransactionTypes, "TransactionTypeId", "TransactionTypeName", transactionRecord.TransactionTypeId);
             return View(transactionRecord);
         }
 
@@ -91,7 +91,7 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TransactionRecordId,TransactionTypeId,TourId,CustomerID,TransactionFee,Paid,AdminID,TransactionNote,DeleteFlag")] TransactionRecord transactionRecord)
+        public ActionResult Edit([Bind(Include = "TransactionRecordId,TransactionTypeId,TourId,CustomerID,TransactionFee,Paid,RecorededTime,AdminID,TransactionNote,Deleted")] TransactionRecord transactionRecord)
         {
             if (ModelState.IsValid)
             {
@@ -99,10 +99,10 @@ namespace KarlanTravels_Adm.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.AdminID = new SelectList(db.Admin, "AdminId", "AdminName", transactionRecord.AdminID);
-            ViewBag.CustomerID = new SelectList(db.Customer, "CustomerId", "Username", transactionRecord.CustomerID);
-            ViewBag.TourId = new SelectList(db.Tour, "TourId", "TourName", transactionRecord.TourId);
-            ViewBag.TransactionTypeId = new SelectList(db.TransactionType, "TransactionTypeId", "TransactionTypeName", transactionRecord.TransactionTypeId);
+            ViewBag.AdminID = new SelectList(db.Admins, "AdminId", "AdminName", transactionRecord.AdminID);
+            ViewBag.CustomerID = new SelectList(db.Customers, "CustomerId", "Username", transactionRecord.CustomerID);
+            ViewBag.TourId = new SelectList(db.Tours, "TourId", "TourName", transactionRecord.TourId);
+            ViewBag.TransactionTypeId = new SelectList(db.TransactionTypes, "TransactionTypeId", "TransactionTypeName", transactionRecord.TransactionTypeId);
             return View(transactionRecord);
         }
 
@@ -113,7 +113,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TransactionRecord transactionRecord = db.TransactionRecord.Find(id);
+            TransactionRecord transactionRecord = db.TransactionRecords.Find(id);
             if (transactionRecord == null)
             {
                 return HttpNotFound();
@@ -126,8 +126,8 @@ namespace KarlanTravels_Adm.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            TransactionRecord transactionRecord = db.TransactionRecord.Find(id);
-            db.TransactionRecord.Remove(transactionRecord);
+            TransactionRecord transactionRecord = db.TransactionRecords.Find(id);
+            db.TransactionRecords.Remove(transactionRecord);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
