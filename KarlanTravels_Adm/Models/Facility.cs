@@ -30,10 +30,23 @@ namespace KarlanTravels_Adm.Models
         [StringLength(255)]
         public string FacilityLocation { get; set; }
 
+        [StringLength(255)]
+        [DataType(DataType.Url)]
+        public string FacilitySocials { get; set; }
+
+        [StringLength(255)]
+        [DataType(DataType.PhoneNumber)]
+        public string FacilityPhone { get; set; }
+
+        [StringLength(255)]
+        [DataType(DataType.EmailAddress)]
+        public string FacilityEmail { get; set; }
+
         [Required]
         [StringLength(40)]
         public string CityId { get; set; }
 
+        [Display(Name = "Service's quantity")]
         public int Quantity { get; set; }
 
         [StringLength(255)]

@@ -25,8 +25,10 @@ namespace KarlanTravels_Adm.Models
 
         public bool TourAvailability { get; set; }
 
+        [Required]
         public DateTime TourStart { get; set; }
 
+        [Required]
         public DateTime TourEnd { get; set; }
 
         [Column(TypeName = "money")]
@@ -34,16 +36,19 @@ namespace KarlanTravels_Adm.Models
 
         [Required]
         [StringLength(40)]
+        [Display(Name = "Category 1")]
         public string CategoryId1 { get; set; }
 
         [StringLength(40)]
+        [Display(Name = "Category 2")]
         public string CategoryId2 { get; set; }
 
         public int MaxBooking { get; set; }
 
+        [Display(Name = "Limited boking time(days)")]
         public int BookTimeLimit { get; set; }
 
-        public double TourRating { get; set; }
+        public float TourRating { get; set; }
 
         [StringLength(255)]
         public string TourImage { get; set; }

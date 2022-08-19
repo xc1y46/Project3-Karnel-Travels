@@ -29,7 +29,7 @@ namespace KarlanTravels_Adm.Models
 
         [Required]
         [StringLength(20)]
-        public string CountryCode { get; set; }
+        public string RegionCode { get; set; }
 
         public bool Deleted { get; set; }
 

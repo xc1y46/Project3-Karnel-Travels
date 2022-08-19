@@ -30,6 +30,7 @@ namespace KarlanTravels_Adm.Models
 
         [Required]
         [StringLength(20)]
+        [DataType(DataType.PostalCode)]
         public string PostalCode { get; set; }
 
         [StringLength(255)]

@@ -8,7 +8,7 @@ namespace KarlanTravels_Adm.Models
     public partial class ContextModel : DbContext
     {
         public ContextModel()
-            : base("name=ContextModel")
+            : base("name=Model1")
         {
         }
 

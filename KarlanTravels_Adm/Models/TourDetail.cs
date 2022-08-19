@@ -19,8 +19,10 @@ namespace KarlanTravels_Adm.Models
         [StringLength(255)]
         public string Activity { get; set; }
 
+        [Required]
         public DateTime ActivityTimeStart { get; set; }
 
+        [Required]
         public DateTime ActivityTimeEnd { get; set; }
 
         [Required]

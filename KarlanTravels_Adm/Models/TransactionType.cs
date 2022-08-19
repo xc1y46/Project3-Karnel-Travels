@@ -25,7 +25,8 @@ namespace KarlanTravels_Adm.Models
         [StringLength(255)]
         public string TransactionTypeNote { get; set; }
 
-        public double TransactionPriceRate { get; set; }
+        [Required]
+        public float TransactionPriceRate { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TransactionRecord> TransactionRecords { get; set; }

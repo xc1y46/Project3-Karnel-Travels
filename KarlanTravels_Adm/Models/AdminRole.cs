@@ -21,6 +21,7 @@ namespace KarlanTravels_Adm.Models
 
         [Required]
         [StringLength(50)]
+        [Display(Name = "Role")]
         public string RoleName { get; set; }
 
         [StringLength(255)]

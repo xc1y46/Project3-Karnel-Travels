@@ -34,11 +34,14 @@ namespace KarlanTravels_Adm.Models
         [StringLength(255)]
         public string TouristSpotLocation { get; set; }
 
-        public double TouristSpotRating { get; set; }
+        [Required]
+        public float TouristSpotRating { get; set; }
 
-        public double OpenHour { get; set; }
+        [Required]
+        public float OpenHour { get; set; }
 
-        public double? ClosingHour { get; set; }
+        [Required]
+        public float? ClosingHour { get; set; }
 
         public bool TouristSpotAvailability { get; set; }
 

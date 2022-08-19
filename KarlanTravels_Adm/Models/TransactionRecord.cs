@@ -21,11 +21,13 @@ namespace KarlanTravels_Adm.Models
 
         public int CustomerID { get; set; }
 
+        [Required]
         [Column(TypeName = "money")]
         public decimal TransactionFee { get; set; }
 
         public bool Paid { get; set; }
 
+        [Required]
         public DateTime RecorededTime { get; set; }
 
         public int? AdminID { get; set; }

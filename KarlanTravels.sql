@@ -16,7 +16,7 @@ CREATE TABLE Country(
 	CountryId NVARCHAR(40) PRIMARY KEY,
 	CountryName NVARCHAR(255) NOT NULL,
 	Continent NVARCHAR(40) NOT NULL,
-	CountryCode NVARCHAR(20) NOT NULL,
+	RegionCode NVARCHAR(20) NOT NULL,
 	Deleted BIT NOT NULL DEFAULT 0
 )
 
@@ -150,6 +150,9 @@ CREATE TABLE Facility(
 	FacilityName NVARCHAR(255) NOT NULL,
 	FacilityTypeId NVARCHAR(40) FOREIGN KEY REFERENCES FacilityType(FacilityTypeId) NOT NULL,	
 	FacilityLocation NVARCHAR(255) NOT NULL,
+	FacilitySocials NVARCHAR(255) NULL,
+	FacilityPhone NVARCHAR(255) NULL,
+	FacilityEmail NVARCHAR(255) NULL,
 	CityId NVARCHAR(40) FOREIGN KEY REFERENCES City(CityId) NOT NULL,
 	Quantity INT NOT NULL DEFAULT 0,
 	FacilityImage NVARCHAR(255) NULL,
@@ -237,7 +240,7 @@ ON [PRIMARY]
 GO
 
 
-INSERT INTO Country(CountryId, CountryName, Continent, CountryCode) VALUES
+INSERT INTO Country(CountryId, CountryName, Continent, RegionCode) VALUES
 (N'none', N'none', N'none', N'none'),
 (N'VN', N'VietNam', N'Asia', N'+84'),
 (N'CN', N'China', N'Asia', N'+86')

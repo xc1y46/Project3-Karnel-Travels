@@ -53,7 +53,15 @@
         }
             .task:hover {
                 background-image: linear-gradient(to right, #6DCCFC, #FFFFFF);
+            }
+
+        .taskText {
+            color: black;
+        }
+
+            .taskText:hover {
                 text-decoration: underline;
+                color: blue;
             }
        
     </style>
@@ -75,13 +83,17 @@
 
                 @if (Session["AdminRole"].ToString() == "Senior Maneger" || Session["AdminRole"].ToString() == "Saler")
                 {
-                    @Html.ActionLink("Transactions", "Index", "TransactionRecords")
+                    @Html.ActionLink("Transactions", "Index", "TransactionRecords", new {@class = "taskText"})
                     <br />
-                    @Html.ActionLink("Customers", "Index", "Customers")
+                    @Html.ActionLink("Customers", "Index", "Customers", new { @class = "taskText" })
                     <br />
-                    @Html.ActionLink("Cites", "Index", "Cities")
+                    @Html.ActionLink("Cites", "Index", "Cities", new { @class = "taskText" })
                     <br />
-                    @Html.ActionLink("Countries", "Index", "Countries")
+                    @Html.ActionLink("Countries", "Index", "Countries", new { @class = "taskText" })
+                    <br />
+                    @Html.ActionLink("Bank accounts", "Index", "Countries", new { @class = "taskText" })
+                    <br />
+                    @Html.ActionLink("Banks", "Index", "Banks", new { @class = "taskText" })
                 }
                 else
                 {
@@ -93,21 +105,23 @@
 
                 @if (Session["AdminRole"].ToString() == "Senior Maneger" || Session["AdminRole"].ToString() == "Tour Manager")
                 {
-                    @Html.ActionLink("Tourist Spots", "Index", "TouristSpots")
+                    @Html.ActionLink("Tour categories", "Index", "Categories", new { @class = "taskText" })
                     <br />
-                    @Html.ActionLink("Category", "Index", "Categories")
+                    @Html.ActionLink("Sub categories", "Index", "SubCategories", new { @class = "taskText" })
                     <br />
-                    @Html.ActionLink("Facilities", "Index", "Facilities")
+                    @Html.ActionLink("Tourist Spots", "Index", "TouristSpots", new { @class = "taskText" })
                     <br />
-                    @Html.ActionLink("Faciliies Types", "Index", "FacilityTypes")
+                    @Html.ActionLink("Facilities", "Index", "Facilities", new { @class = "taskText" })
                     <br />
-                    @Html.ActionLink("Tours", "Index", "Tours")
+                    @Html.ActionLink("Faciliies Types", "Index", "FacilityTypes", new { @class = "taskText" })
                     <br />
-                    @Html.ActionLink("Tours Details", "Index", "TourDetails")
+                    @Html.ActionLink("Tours", "Index", "Tours", new { @class = "taskText" })
                     <br />
-                    @Html.ActionLink("Cites", "Index", "Cities")
+                    @Html.ActionLink("Tours Details", "Index", "TourDetails", new { @class = "taskText" })
                     <br />
-                    @Html.ActionLink("Countries", "Index", "Countries")
+                    @Html.ActionLink("Cites", "Index", "Cities", new { @class = "taskText" })
+                    <br />
+                    @Html.ActionLink("Countries", "Index", "Countries", new { @class = "taskText" })
                 }
                 else
                 {
@@ -119,7 +133,9 @@
 
                 @if (Session["AdminRole"].ToString() == "Senior Maneger")
                 {
-                    @Html.ActionLink("Admins", "Index", "Admins")
+                    @Html.ActionLink("Admins", "Index", "Admins", new { @class = "taskText" })
+                    <br />
+                    @Html.ActionLink("Roles", "Index", "AdminRoles", new { @class = "taskText" })
                 }
                 else
                 {
