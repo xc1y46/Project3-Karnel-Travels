@@ -16,7 +16,8 @@ CREATE TABLE Country(
 	CountryId NVARCHAR(40) PRIMARY KEY,
 	CountryName NVARCHAR(255) NOT NULL,
 	Continent NVARCHAR(40) NOT NULL,
-	CountryCode NVARCHAR(20) NOT NULL
+	CountryCode NVARCHAR(20) NOT NULL,
+	Deleted BIT NOT NULL DEFAULT 0
 )
 
 GO
@@ -28,7 +29,8 @@ CREATE TABLE City(
 	CityName NVARCHAR(255) NOT NULL,
 	CountryId NVARCHAR(40) FOREIGN KEY REFERENCES Country(CountryId) NOT NULL,
 	PostalCode NVARCHAR(20) NOT NULL,
-	CityNote NVARCHAR(255) NULL
+	CityNote NVARCHAR(255) NULL,
+	Deleted BIT NOT NULL DEFAULT 0
 )
 
 GO
@@ -39,7 +41,7 @@ CREATE TABLE FacilityType(
 	FacilityTypeId NVARCHAR(40) PRIMARY KEY,
 	FacilityTypeName NVARCHAR(255) NOT NULL,
 	FacilityTypeNote NVARCHAR(255) NULL,
-	DeleteFlag BIT NOT NULL DEFAULT 0
+	Deleted BIT NOT NULL DEFAULT 0
 )
 
 GO
@@ -50,7 +52,17 @@ CREATE TABLE Category(
 	CategoryId NVARCHAR(40) PRIMARY KEY,
 	CategoryName NVARCHAR(255) NOT NULL,
 	CategoryNote NVARCHAR(255) NULL,
-	DeleteFlag BIT NOT NULL DEFAULT 0
+	Deleted BIT NOT NULL DEFAULT 0
+)
+
+IF OBJECT_ID('dbo.SubCategory', 'U') IS NOT NULL
+  DROP TABLE dbo.SubCategory
+CREATE TABLE SubCategory(
+	SubCategoryId NVARCHAR(40) PRIMARY KEY,
+	SubCategoryName NVARCHAR(255) NOT NULL,
+	SubCategoryNote NVARCHAR(255) NULL,
+	CategoryId NVARCHAR(40) FOREIGN KEY REFERENCES Category(CategoryId) NOT NULL,
+	Deleted BIT NOT NULL DEFAULT 0
 )
 
 GO
@@ -82,7 +94,8 @@ CREATE TABLE Bank(
 	BankId NVARCHAR(40) PRIMARY KEY,
 	BankName NVARCHAR(255) NOT NULL UNIQUE,
 	SwiftCode NVARCHAR(255) NOT NULL UNIQUE,
-	CountryId NVARCHAR(40) FOREIGN KEY REFERENCES Country(CountryId) NOT NULL
+	CountryId NVARCHAR(40) FOREIGN KEY REFERENCES Country(CountryId) NOT NULL,
+	Deleted BIT NOT NULL DEFAULT 0
 )
 
 GO
@@ -93,7 +106,8 @@ CREATE TABLE BankAccount(
 	BankAccountId INT PRIMARY KEY IDENTITY (1,1),
 	AccountName NVARCHAR(255) NOT NULL,
 	AccountNumber NVARCHAR(40) NOT NULL UNIQUE,
-	BankId NVARCHAR(40) FOREIGN KEY REFERENCES Bank(BankId) NOT NULL
+	BankId NVARCHAR(40) FOREIGN KEY REFERENCES Bank(BankId) NOT NULL,
+	Deleted BIT NOT NULL DEFAULT 0
 )
 
 GO
@@ -110,7 +124,7 @@ CREATE TABLE Customer(
 	UserPassword NVARCHAR(20) NOT NULL,
 	AmountToPay MONEY NOT NULL DEFAULT 0,
 	CustomerNote NVARCHAR(255) NULL,
-	DeleteFlag BIT NOT NULL DEFAULT 0
+	Deleted BIT NOT NULL DEFAULT 0
 )
 
 GO
@@ -124,7 +138,7 @@ CREATE TABLE [Admin](
 	RoleId NVARCHAR(40) NOT NULL FOREIGN KEY REFERENCES AdminRole(RoleId),
 	AdminNote NVARCHAR(255) NULL,
 	IsActive BIT NOT NULL DEFAULT 0,
-	DeleteFlag BIT NOT NULL DEFAULT 0
+	Deleted BIT NOT NULL DEFAULT 0
 )
 
 GO
@@ -141,7 +155,7 @@ CREATE TABLE Facility(
 	FacilityImage NVARCHAR(255) NULL,
 	ServiceNote NVARCHAR(255) NULL,
 	FacilityAvailability BIT NOT NULL DEFAULT 0,
-	DeleteFlag BIT NOT NULL DEFAULT 0
+	Deleted BIT NOT NULL DEFAULT 0
 )
 
 GO
@@ -152,7 +166,7 @@ CREATE TABLE TouristSpot(
 	TouristSpotId NVARCHAR(40) PRIMARY KEY,
 	TouristSpotName NVARCHAR(255) NOT NULL,
 	CityId NVARCHAR(40) FOREIGN KEY REFERENCES City(CityId) NOT NULL,
-	CategoryId NVARCHAR(40) FOREIGN KEY REFERENCES Category(CategoryId) NOT NULL,
+	SubCategoryId NVARCHAR(40) FOREIGN KEY REFERENCES SubCategory(SubCategoryId) NOT NULL,
 	TouristSpotLocation NVARCHAR(255) NOT NULL,
 	TouristSpotRating FLOAT NOT NULL DEFAULT 1,
 	OpenHour FLOAT NOT NULL,
@@ -160,7 +174,7 @@ CREATE TABLE TouristSpot(
 	TouristSpotAvailability BIT NOT NULL DEFAULT 0,
 	TouristSpotImage NVARCHAR(255) NULL,
 	TouristSpotNote NVARCHAR(255) NULL,
-	DeleteFlag BIT NOT NULL DEFAULT 0
+	Deleted BIT NOT NULL DEFAULT 0
 )
 
 GO
@@ -174,12 +188,14 @@ CREATE TABLE Tour(
 	TourStart DATETIME NOT NULL,
 	TourEnd DATETIME NOT NULL,
 	TourPrice MONEY NOT NULL,
+	CategoryId1 NVARCHAR(40) FOREIGN KEY REFERENCES Category(CategoryId) NOT NULL,
+	CategoryId2 NVARCHAR(40) FOREIGN KEY REFERENCES Category(CategoryId) NULL,
 	MaxBooking INT NOT NULL,
 	BookTimeLimit INT NOT NULL,
 	TourRating FLOAT NOT NULL DEFAULT 1,
 	TourImage NVARCHAR(255) NULL,
 	TourNote NVARCHAR(255) NULL,
-	DeleteFlag BIT NOT NULL DEFAULT 0
+	Deleted BIT NOT NULL DEFAULT 0
 )
 
 GO
@@ -196,7 +212,7 @@ CREATE TABLE TourDetail(
 	FacilityId NVARCHAR(40) NOT NULL DEFAULT 0 FOREIGN KEY REFERENCES Facility(FacilityId),
 	ActivityNote NVARCHAR(255) NULL,
 	TourId NVARCHAR(40) NOT NULL FOREIGN KEY REFERENCES Tour(TourId),
-	DeleteFlag BIT NOT NULL DEFAULT 0
+	Deleted BIT NOT NULL DEFAULT 0
 )
 
 GO
@@ -213,7 +229,7 @@ CREATE TABLE TransactionRecord(
 	RecorededTime DATETIME NOT NULL,
 	AdminID INT FOREIGN KEY REFERENCES [Admin](AdminID) NULL,
 	TransactionNote NVARCHAR(255) NULL,
-	DeleteFlag BIT NOT NULL DEFAULT 0
+	Deleted BIT NOT NULL DEFAULT 0
 )
 
 
@@ -264,12 +280,6 @@ INSERT INTO TransactionType(TransactionTypeId, TransactionTypeName, TransactionT
 (N'CANCL_LATE', N'Cancel tour late', N'(Few days before tour starts) Half refund', 0.3)
 
 
-INSERT INTO Tour(TourId, TourName, TourAvailability, TourStart, TourEnd, TourPrice, TourNote, TourImage, TourRating, MaxBooking, BookTimeLimit) VALUES
-(N'T_HNtoCB01', N'Hà Nội - Cao Bằng', 1, CAST(N'2022-08-03T06:00:00.000' AS DateTime), CAST(N'2022-08-04T21:00:00.000' AS DateTime), 2350000.0000, NULL, '~/Images/T_HNCB.jpg', 4.2, 60, 60),
-(N'T_HNtoMC01', N'Hà Nội - Mai Châu', 1, CAST(N'2022-09-12T07:00:00.000' AS DateTime), CAST(N'2022-09-13T18:00:00.000' AS DateTime), 1580000.0000, NULL, '~/Images/T_HNMC.jpg', 3.6, 40, 30),
-(N'T_HNtoTD01', N'Hà Nội - Tam Đảo', 1, CAST(N'2022-12-04T07:00:00.000' AS DateTime), CAST(N'2022-12-05T18:30:00.000' AS DateTime), 1350000.0000, NULL, '~/Images/T_HNCB.jpg', 4.9, 30, 30)
-
-
 INSERT INTO FacilityType(FacilityTypeId, FacilityTypeName) VALUES
 (N'UNTP', N'Untyped'),
 (N'HTEL', N'Hotel'),
@@ -286,24 +296,37 @@ INSERT INTO FacilityType(FacilityTypeId, FacilityTypeName) VALUES
 
 INSERT INTO Category(CategoryId, CategoryName, CategoryNote) VALUES
 (N'UNCG', N'Uncategorized', NULL),
-(N'WTER', N'Bodies of water', N'Rivers, lakes, ponds, waterfalls,...'),
-(N'HIST', N'Historical structure', NULL),
-(N'CAVE', N'Caves, grottos', NULL),
-(N'CULTR', N'Cultural attractions', N'Museums, libraries, old streets,...'),
-(N'HGHLN', N'Highlands', N'Mountains, hills')
+(N'NATR', N'Natural', N'Water bodies, highlands, caves,...'),
+(N'HIST', N'Historical', N'Pagodas, temples, museums...'),
+(N'CULTR', N'Cultural', N'Villages, festival sites,...')
 
 
-INSERT INTO TouristSpot(TouristSpotId, TouristSpotName, CityId, CategoryId, TouristSpotRating, TouristSpotAvailability, TouristSpotLocation, TouristSpotImage, OpenHour, ClosingHour) VALUES 
-(N'none', N'none', N'none', N'UNCG', 0, 1, N'none', NULL, 0, NULL),
+INSERT INTO SubCategory(SubCategoryId, SubCategoryName, SubCategoryNote, CategoryId) VALUES
+(N'UNSCG', N'Uncategorized', NULL, N'UNCG'),
+(N'WTER', N'Water bodies', N'Rivers, lakes, ponds, waterfalls,...', N'NATR'),
+(N'TEMPL', N'Temples/Pagodas', NULL, N'HIST'),
+(N'CAVE', N'Caves/grottos', NULL, N'NATR'),
+(N'VILLG', N'Villages', NULL, N'CULTR'),
+(N'HGHLN', N'Highlands', N'Mountains, hills', N'NATR')
+
+
+INSERT INTO Tour(TourId, TourName, TourAvailability, TourStart, TourEnd, TourPrice, TourNote, TourImage, TourRating, MaxBooking, BookTimeLimit, CategoryId1, CategoryId2) VALUES
+(N'T_HNtoCB01', N'Hà Nội - Cao Bằng', 1, CAST(N'2022-08-03T06:00:00.000' AS DateTime), CAST(N'2022-08-04T21:00:00.000' AS DateTime), 2350000.0000, NULL, '~/Images/T_HNCB.jpg', 4.2, 60, 60, N'NATR', N'HIST'),
+(N'T_HNtoMC01', N'Hà Nội - Mai Châu', 1, CAST(N'2022-09-12T07:00:00.000' AS DateTime), CAST(N'2022-09-13T18:00:00.000' AS DateTime), 1580000.0000, NULL, '~/Images/T_HNMC.jpg', 3.6, 40, 30, N'NATR', N'CULTR'),
+(N'T_HNtoTD01', N'Hà Nội - Tam Đảo', 1, CAST(N'2022-12-04T07:00:00.000' AS DateTime), CAST(N'2022-12-05T18:30:00.000' AS DateTime), 1350000.0000, NULL, '~/Images/T_HNCB.jpg', 4.9, 30, 30, N'NATR', N'CULTR')
+
+
+INSERT INTO TouristSpot(TouristSpotId, TouristSpotName, CityId, SubCategoryId, TouristSpotRating, TouristSpotAvailability, TouristSpotLocation, TouristSpotImage, OpenHour, ClosingHour) VALUES 
+(N'none', N'none', N'none', N'UNSCG', 0, 1, N'none', NULL, 0, NULL),
 (N'TS_CB_BB01', N'Ba Bể Lake', N'VN_CB', N'WTER', 4, 1, N'At the center of The National Garden of Ba Bể, Nam Mẫu Commune, Ba Bể District', N'~/Images/TS_CB_BB01.png', 7, 19),
 (N'TS_HN_TMC01', N'Trái tim Mộc Châu Tea Hill', N'VN_HN', N'HGHLN', 4.5, 1, N'VMRP+7HQ, Unnamed Road, TT. NT Mộc Châu, Mộc Châu', N'~/Images/TS_HN_TMC01.png', 0, NULL),
 (N'TS_HN_B01', N'Bạc Waterfall,  Sao stream', N'VN_HN', N'WTER', 4.9, 1, N'XCQR+QXM, Provincial Road 446, Yên Bình, Thạch Thất', N'~/Images/TS_HN_B01.png', 7, 18),
-(N'TS_HN_CC01', N'Cát Cát Village', N'VN_HN', N'CULTR', 3.6, 1, N'San Sả Hồ, Sa Pa', N'~/Images/TS_HN_CC01.png', 6, 18),
-(N'TS_CB_PTL01', N'Phật tích Trúc Lâm Pagoda of Bản Giốc', N'VN_CB', N'HIST', 2.5, 1, N'Old National Highway 3, Sông Hiến Ward', N'~/Images/TS_CB_PTL01.png', 0, NULL),
+(N'TS_HN_CC01', N'Cát Cát Village', N'VN_HN', N'VILLG', 3.6, 1, N'San Sả Hồ, Sa Pa', N'~/Images/TS_HN_CC01.png', 6, 18),
+(N'TS_CB_PTL01', N'Phật tích Trúc Lâm Pagoda of Bản Giốc', N'VN_CB', N'TEMPL', 2.5, 1, N'Old National Highway 3, Sông Hiến Ward', N'~/Images/TS_CB_PTL01.png', 0, NULL),
 (N'TS_CB_NN01', N'Ngườm Ngao Cave', N'VN_CB', N'CAVE', 4.2, 1, N'Ngườm Ngao cave entrance, Đàm Thuỷ, Trùng Khánh', N'~/Images/TS_CB_NN01.png', 7, 18),
 (N'TS_CB_BG02', N'Bản Giốc Waterfall', N'VN_CB', N'WTER', 3.8, 1, N'TL 211, Đàm Thuỷ, Trùng Khánh', N'~/Images/TS_CB_BG02.png', 0, NULL),
-(N'TS_CB_D01', N'Đuổm Buddhist Temple', N'VN_CB', N'HIST', 3.3, 1, N'QP34+4MH, Chảo village, Phú Lương, Thái Nguyên, Bắc Kạn', N'~/Images/TS_CB_D01.png', 0, NULL),
-(N'TS_CB_AM01', N'An Mã Buddhist Temple', N'VN_CB', N'HIST', 4.4, 1, N'CJ68+R59, Nam Mẫu, Ba Bể, Bắc Kạn', N'~/Images/TS_CB_AM01.png', 0, NULL),
+(N'TS_CB_D01', N'Đuổm Buddhist Temple', N'VN_CB', N'TEMPL', 3.3, 1, N'QP34+4MH, Chảo village, Phú Lương, Thái Nguyên, Bắc Kạn', N'~/Images/TS_CB_D01.png', 0, NULL),
+(N'TS_CB_AM01', N'An Mã Buddhist Temple', N'VN_CB', N'TEMPL', 4.4, 1, N'CJ68+R59, Nam Mẫu, Ba Bể, Bắc Kạn', N'~/Images/TS_CB_AM01.png', 0, NULL),
 (N'TS_HN_P01', N'Puông Cave', N'VN_HN', N'CAVE', 4.7, 1, N'FM63+V9F, Khang Ninh, Ba Bể, Bắc Kạn', N'~/Images/TS_HN_P01.png',  9, 17),
 (N'TS_MC_TK01', N'Thung Khe Pass', N'VN_MC', N'HGHLN', 2.5, 1, N'M47P+XRX, Phú Cường, Tân Lạc, Hòa Bình', N'~/Images/TS_MC_TK01.png', 12, 23.59),
 (N'TS_HN_DY01', N'Dải Yếm Waterfall', N'VN_HN', N'WTER', 4.1, 1, N'RH8R+3WM, QL43, Mường Sang, Mộc Châu, Sơn La', N'~/Images/TS_HN_DY01.png',  0, NULL)
