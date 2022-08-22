@@ -22,3 +22,8 @@
 			<assemblyIdentity name="Newtonsoft.Json" publicKeyToken="30ad4fe6b2a6aeed" culture="neutral" />
 			<bindingRedirect oldVersion="0.0.0.0-6.0.0.0" newVersion="6.0.0.0" />
 		</dependentAssembly>
+		
+# Bị mấy lỗi khác như trên mà ko tìm được cách sửa thì có thể thử cách này
+	1. Vào %LocalAppData% \Microsoft\WebsiteCache
+	2. Xóa hết folder
+	3. Vẫn lỗi package nào thì xóa đi tải lại
