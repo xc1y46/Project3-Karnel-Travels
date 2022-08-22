@@ -38,9 +38,11 @@ namespace KarlanTravels_Adm.Models
         public string CityId { get; set; }
 
         [Required]
-        [StringLength(20)]
+        [StringLength(255)]
+        [DataType(DataType.Password)]
         public string UserPassword { get; set; }
 
+        [Required]
         [Column(TypeName = "money")]
         public decimal AmountToPay { get; set; }
 

@@ -16,6 +16,7 @@ namespace KarlanTravels_Adm.Models
             TransactionRecords = new HashSet<TransactionRecord>();
         }
 
+        [Required]
         [StringLength(40)]
         public string TourId { get; set; }
 
@@ -26,9 +27,13 @@ namespace KarlanTravels_Adm.Models
         public bool TourAvailability { get; set; }
 
         [Required]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime TourStart { get; set; }
 
         [Required]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime TourEnd { get; set; }
 
         [Column(TypeName = "money")]
@@ -43,12 +48,15 @@ namespace KarlanTravels_Adm.Models
         [Display(Name = "Category 2")]
         public string CategoryId2 { get; set; }
 
+        [Required]
         public int MaxBooking { get; set; }
 
-        [Display(Name = "Limited boking time(days)")]
+        [Display(Name = "Booking time(days)")]
         public int BookTimeLimit { get; set; }
 
-        public float TourRating { get; set; }
+        [Required]
+        [Range(1,5)]
+        public double TourRating { get; set; }
 
         [StringLength(255)]
         public string TourImage { get; set; }

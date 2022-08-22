@@ -1,0 +1,192 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<KarlanTravels_Adm.Models.Tour>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var True = true;
+        var False = false;
+        $('#SortOpt').val('@ViewBag.CurrentSortOpt');
+        $('#SortOdr').val('@ViewBag.CurrentSortOdr');
+        $('#PageSize').val(@ViewBag.PageSize);
+        $('#ShowDel').prop('checked', @ViewBag.ShowDelCheck);
+    });
+</script>
+
+<h2>Index</h2>
+
+<br />
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<br />
+<br />
+<form action="Index" method="post">
+    <span>Search by name</span>
+    @Html.TextBox("SearchStringName", ViewBag.CurrentSearchName as string)
+    &nbsp;
+    <span>Search by category</span>
+    @Html.TextBox("SearchStringCategory", ViewBag.CurrentSearchCategory as string)
+    <br /><br />
+    <span>(Leave empty to load all)</span>
+    <br /><br />
+
+    <span>Sort by</span>
+    <select name="SortOpt" id="SortOpt">
+        <option value="Name">Name</option>
+        <option value="TourStart">Start time</option>
+        <option value="TourEnd">End time</option>
+        <option value="Category">Category</option>
+        <option value="Price">Price</option>
+        <option value="MaxBook">Max Booking</option>
+        <option value="BookTime">Book time limit</option>
+        <option value="Rating">Rating</option>
+        <option value="Availablity">Availablity</option>
+    </select>
+
+    <select name="SortOdr" id="SortOdr">
+        <option value="Des">Descending</option>
+        <option value="Asc">Ascending</option>
+    </select>
+    <br />
+    <br />
+
+    <span>Rows per page</span>
+    <select name="PageSize" id="PageSize">
+        <option value=3>3</option>
+        <option value=4>4</option>
+        <option value=5>5</option>
+        <option value=6>6</option>
+        <option value=7>7</option>
+        <option value=8>8</option>
+        <option value=9>9</option>
+        <option value=10>10</option>
+    </select>
+    <br />
+    <br />
+
+    @if (Session["AdminRole"].ToString() == "Senior Manager")
+    {
+        <span>Show deleted</span>
+        <input type="checkbox" name="ShowDel" id="ShowDel" value="ShowDel">
+        <br />
+        <br />
+    }
+
+    <input type="submit" value="FILTER" />
+</form>
+<br />
+<br />
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().TourName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().TourAvailability)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().TourStart)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().TourEnd)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Category.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Category1.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().TourPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().MaxBooking)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().BookTimeLimit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().TourRating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().TourImage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().TourNote)
+        </th>
+        @if (Session["AdminRole"].ToString() == "Senior Manager")
+        {
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Deleted)
+            </th>
+        }
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TourName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TourAvailability)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TourStart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TourEnd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category1.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TourPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaxBooking)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookTimeLimit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TourRating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TourImage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TourNote)
+            </td>
+            @if (Session["AdminRole"].ToString() == "Senior Manager")
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.Deleted)
+                </td>
+            }
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.TourId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.TourId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.TourId })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<div class="pagination" style="margin-left: 400px">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, Page => Url.Action("Index", new { Page, SortOpt = ViewBag.CurrentSortOpt, SortOdr = ViewBag.CurrentSortOdr, CurrentShowDel = ViewBag.CurrentShowDel, PageSize = ViewBag.PageSize, CurrentSearchName = ViewBag.CurrentSearchName, CurrentSearchCategory = ViewBag.CurrentSearchCategory }))
+</div>

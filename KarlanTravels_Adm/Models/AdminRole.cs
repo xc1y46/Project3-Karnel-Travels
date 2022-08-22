@@ -16,6 +16,7 @@ namespace KarlanTravels_Adm.Models
         }
 
         [Key]
+        [Required]
         [StringLength(40)]
         public string RoleId { get; set; }
 
@@ -26,6 +27,8 @@ namespace KarlanTravels_Adm.Models
 
         [StringLength(255)]
         public string RoleNote { get; set; }
+
+        public bool Deleted { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Admin> Admins { get; set; }

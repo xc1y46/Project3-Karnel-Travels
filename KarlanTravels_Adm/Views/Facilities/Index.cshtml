@@ -1,0 +1,187 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<KarlanTravels_Adm.Models.Facility>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var True = true;
+        var False = false;
+        $('#SortOpt').val('@ViewBag.CurrentSortOpt');
+        $('#SortOdr').val('@ViewBag.CurrentSortOdr');
+        $('#PageSize').val(@ViewBag.PageSize);
+        $('#ShowDel').prop('checked', @ViewBag.ShowDelCheck);
+    });
+</script>
+
+<h2>Index</h2>
+
+<br />
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<br />
+<br />
+<form action="Index" method="post">
+    <span>Search by name</span>
+    @Html.TextBox("SearchStringName", ViewBag.CurrentSearchName as string)
+    &nbsp;
+    <span>Search by city</span>
+    @Html.TextBox("SearchStringCity", ViewBag.CurrentSearchCity as string)
+    <br /><br />
+    <span>Search by facility type</span>
+    @Html.TextBox("SearchStringFacilityType", ViewBag.CurrentSearchFacilityType as string)
+    <br /><br />
+    <span>(Leave empty to load all)</span>
+    <br /><br />
+
+    <span>Sort by</span>
+    <select name="SortOpt" id="SortOpt">
+        <option value="Name">Name</option>
+        <option value="Type">Type</option>
+        <option value="Location">Location</option>
+        <option value="City">City</option>
+        <option value="Quantity">Service's quantity</option>
+        <option value="Note">Service note</option>
+        <option value="Availability">Availability</option>
+    </select>
+
+    <select name="SortOdr" id="SortOdr">
+        <option value="Des">Descending</option>
+        <option value="Asc">Ascending</option>
+    </select>
+    <br />
+    <br />
+
+    <span>Rows per page</span>
+    <select name="PageSize" id="PageSize">
+        <option value=3>3</option>
+        <option value=4>4</option>
+        <option value=5>5</option>
+        <option value=6>6</option>
+        <option value=7>7</option>
+        <option value=8>8</option>
+        <option value=9>9</option>
+        <option value=10>10</option>
+    </select>
+    <br />
+    <br />
+
+    @if (Session["AdminRole"].ToString() == "Senior Manager")
+    {
+        <span>Show deleted</span>
+        <input type="checkbox" name="ShowDel" id="ShowDel" value="ShowDel">
+        <br />
+        <br />
+    }
+
+    <input type="submit" value="FILTER" />
+</form>
+<br />
+<br />
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().FacilityType.FacilityTypeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().FacilityName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().FacilityLocation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().City.CityName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().FacilitySocials)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().FacilityPhone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().FacilityEmail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().ServiceNote)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().FacilityAvailability)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().FacilityImage)
+        </th>
+        @if (Session["AdminRole"].ToString() == "Senior Manager")
+        {
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Deleted)
+            </th>
+        }
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FacilityType.FacilityTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FacilityName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FacilityLocation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City.CityName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FacilitySocials)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FacilityPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FacilityEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ServiceNote)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FacilityAvailability)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FacilityImage)
+            </td>
+            @if (Session["AdminRole"].ToString() == "Senior Manager")
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.Deleted)
+                </td>
+            }
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.FacilityId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.FacilityId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.FacilityId })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<div class="pagination" style="margin-left: 400px">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, Page => Url.Action("Index", new { Page, SortOpt = ViewBag.CurrentSortOpt, SortOdr = ViewBag.CurrentSortOdr, CurrentShowDel = ViewBag.CurrentShowDel, PageSize = ViewBag.PageSize, CurrentSearchName = ViewBag.CurrentSearchName, CurrentSearchCity = ViewBag.CurrentSearchCity, CurrentSearchFacilityType = ViewBag.CurrentSearchFacilityType }))
+</div>

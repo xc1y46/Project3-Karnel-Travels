@@ -1,0 +1,136 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<KarlanTravels_Adm.Models.City>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var True = true;
+        var False = false;
+        $('#SortOpt').val('@ViewBag.CurrentSortOpt');
+        $('#SortOdr').val('@ViewBag.CurrentSortOdr');
+        $('#PageSize').val(@ViewBag.PageSize);
+        $('#ShowDel').prop('checked', @ViewBag.ShowDelCheck);
+    });
+</script>
+
+<h2>Index</h2>
+
+<br />
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<br />
+<br />
+<form action="Index" method="post">
+    <span>Search by name</span>
+    @Html.TextBox("SearchStringName", ViewBag.CurrentSearchName as string)
+    <br /><br />
+    <span>Search by country</span>
+    @Html.TextBox("SearchStringCountry", ViewBag.CurrentSearchCountry as string)
+    <span>(Leave empty to load all)</span>
+    <br /><br />
+
+    <span>Sort by</span>
+    <select name="SortOpt" id="SortOpt">
+        <option value="Country">Country</option>
+        <option value="Name">Name</option>
+        <option value="PostalCode">Postal code</option>
+    </select>
+
+    <select name="SortOdr" id="SortOdr">
+        <option value="Des">Descending</option>
+        <option value="Asc">Ascending</option>
+    </select>
+    <br />
+    <br />
+
+    <span>Rows per page</span>
+    <select name="PageSize" id="PageSize">
+        <option value=3>3</option>
+        <option value=4>4</option>
+        <option value=5>5</option>
+        <option value=6>6</option>
+        <option value=7>7</option>
+        <option value=8>8</option>
+        <option value=9>9</option>
+        <option value=10>10</option>
+    </select>
+    <br />
+    <br />
+
+    @if (Session["AdminRole"].ToString() == "Senior Manager")
+    {
+        <span>Show deleted</span>
+        <input type="checkbox" name="ShowDel" id="ShowDel" value="ShowDel">
+        <br />
+        <br />
+    }
+
+    <input type="submit" value="FILTER" />
+</form>
+<br />
+<br />
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().CityName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Country.CountryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().PostalCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().CityNote)
+        </th>
+        @if (Session["AdminRole"].ToString() == "Senior Manager")
+        {
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Deleted)
+            </th>
+        }
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CityName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Country.CountryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostalCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CityNote)
+            </td>
+            @if (Session["AdminRole"].ToString() == "Senior Manager")
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.Deleted)
+                </td>
+            }
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.CityId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.CityId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.CityId })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div class="pagination" style="margin-left: 400px">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, Page => Url.Action("Index", new { Page, SortOpt = ViewBag.CurrentSortOpt, SortOdr = ViewBag.CurrentSortOdr, CurrentShowDel = ViewBag.CurrentShowDel, PageSize = ViewBag.PageSize, CurrentSearchName = ViewBag.CurrentSearchName, CurrentSearchCountry = ViewBag.CurrentSearchCountry }))
+</div>

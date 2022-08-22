@@ -15,6 +15,7 @@ namespace KarlanTravels_Adm.Models
             TransactionRecords = new HashSet<TransactionRecord>();
         }
 
+        [Required]
         [StringLength(40)]
         public string TransactionTypeId { get; set; }
 
@@ -26,7 +27,9 @@ namespace KarlanTravels_Adm.Models
         public string TransactionTypeNote { get; set; }
 
         [Required]
-        public float TransactionPriceRate { get; set; }
+        public double TransactionPriceRate { get; set; }
+
+        public bool Deleted { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TransactionRecord> TransactionRecords { get; set; }

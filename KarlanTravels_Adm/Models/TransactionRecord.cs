@@ -28,16 +28,16 @@ namespace KarlanTravels_Adm.Models
         public bool Paid { get; set; }
 
         [Required]
-        public DateTime RecorededTime { get; set; }
-
-        public int? AdminID { get; set; }
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd HH:mm}", ApplyFormatInEditMode = true)]
+        public DateTime RecordedTime { get; set; }
 
         [StringLength(255)]
         public string TransactionNote { get; set; }
 
-        public bool Deleted { get; set; }
+        public int? AdminId { get; set; }
 
-        public virtual Admin Admin { get; set; }
+        public bool Deleted { get; set; }
 
         public virtual Customer Customer { get; set; }
 

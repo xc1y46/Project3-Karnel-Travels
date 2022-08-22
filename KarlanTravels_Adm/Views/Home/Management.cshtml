@@ -29,7 +29,7 @@
         }
 
         .welcome {
-            margin: 15px 0 0 200px;
+            margin: 15px 0 0 170px;
         }
 
         .logout {
@@ -65,12 +65,12 @@
             }
        
     </style>
-
+    
 </head>
 <body>
     <div class="container">
         <div class="navbar-header">
-            <div class="welcome"><h3>@TempData["WelcomeMessage"]</h3></div>
+            <div class="welcome"><h3>@Session["WelcomeMessage"]</h3></div>
             <div class="logout">
                 <form action="LogOut" method="post">
                     <input type="submit" value="LOG OUT"/>
@@ -79,21 +79,21 @@
         </div>
         <div class="body-content">
             <h2>USERS AND SALES</h2>
-            <div class="task" id="sale">
+            <div class="task">
 
-                @if (Session["AdminRole"].ToString() == "Senior Maneger" || Session["AdminRole"].ToString() == "Saler")
+                @if (Session["AdminRole"].ToString() == "Senior Manager" || Session["AdminRole"].ToString() == "Saler")
                 {
-                    @Html.ActionLink("Transactions", "Index", "TransactionRecords", new {@class = "taskText"})
+                    @Html.ActionLink("Transactions", "Index", "TransactionRecords", null, new {@class = "taskText"})
                     <br />
-                    @Html.ActionLink("Customers", "Index", "Customers", new { @class = "taskText" })
+                    @Html.ActionLink("Customers", "Index", "Customers", null, new { @class = "taskText" })
                     <br />
-                    @Html.ActionLink("Cites", "Index", "Cities", new { @class = "taskText" })
+                    @Html.ActionLink("Cites", "Index", "Cities", null, new { @class = "taskText" })
                     <br />
-                    @Html.ActionLink("Countries", "Index", "Countries", new { @class = "taskText" })
+                    @Html.ActionLink("Countries", "Index", "Countries", null, new { @class = "taskText" })
                     <br />
-                    @Html.ActionLink("Bank accounts", "Index", "Countries", new { @class = "taskText" })
+                    @Html.ActionLink("Bank accounts", "Index", "BankAccounts", null, new { @class = "taskText" })
                     <br />
-                    @Html.ActionLink("Banks", "Index", "Banks", new { @class = "taskText" })
+                    @Html.ActionLink("Banks", "Index", "Banks", null, new { @class = "taskText" })
                 }
                 else
                 {
@@ -101,27 +101,27 @@
                 }
             </div>
             <h2>TOURS AND FACILITIES</h2>
-            <div class="task" id="tour">
+            <div class="task">
 
-                @if (Session["AdminRole"].ToString() == "Senior Maneger" || Session["AdminRole"].ToString() == "Tour Manager")
+                @if (Session["AdminRole"].ToString() == "Senior Manager" || Session["AdminRole"].ToString() == "Tour Manager")
                 {
-                    @Html.ActionLink("Tour categories", "Index", "Categories", new { @class = "taskText" })
+                    @Html.ActionLink("Tour categories", "Index", "Categories", null, new { @class = "taskText" })
                     <br />
-                    @Html.ActionLink("Sub categories", "Index", "SubCategories", new { @class = "taskText" })
+                    @Html.ActionLink("Sub categories", "Index", "SubCategories", null, new { @class = "taskText" })
                     <br />
-                    @Html.ActionLink("Tourist Spots", "Index", "TouristSpots", new { @class = "taskText" })
+                    @Html.ActionLink("Tourist Spots", "Index", "TouristSpots", null, new { @class = "taskText" })
                     <br />
-                    @Html.ActionLink("Facilities", "Index", "Facilities", new { @class = "taskText" })
+                    @Html.ActionLink("Facilities", "Index", "Facilities", null, new { @class = "taskText" })
                     <br />
-                    @Html.ActionLink("Faciliies Types", "Index", "FacilityTypes", new { @class = "taskText" })
+                    @Html.ActionLink("Faciliies Types", "Index", "FacilityTypes", null, new { @class = "taskText" })
                     <br />
-                    @Html.ActionLink("Tours", "Index", "Tours", new { @class = "taskText" })
+                    @Html.ActionLink("Tours", "Index", "Tours", null, new { @class = "taskText" })
                     <br />
-                    @Html.ActionLink("Tours Details", "Index", "TourDetails", new { @class = "taskText" })
+                    @Html.ActionLink("Tours Details", "Index", "TourDetails", null, new { @class = "taskText" })
                     <br />
-                    @Html.ActionLink("Cites", "Index", "Cities", new { @class = "taskText" })
+                    @Html.ActionLink("Cites", "Index", "Cities", null, new { @class = "taskText" })
                     <br />
-                    @Html.ActionLink("Countries", "Index", "Countries", new { @class = "taskText" })
+                    @Html.ActionLink("Countries", "Index", "Countries", null, new { @class = "taskText" })
                 }
                 else
                 {
@@ -129,13 +129,13 @@
                 }
             </div>
             <h2>HR</h2>
-            <div class="task" id="senior">
+            <div class="task">
 
-                @if (Session["AdminRole"].ToString() == "Senior Maneger")
+                @if (Session["AdminRole"].ToString() == "Senior Manager")
                 {
-                    @Html.ActionLink("Admins", "Index", "Admins", new { @class = "taskText" })
+                    @Html.ActionLink("Admins", "Index", "Admins", null, new { @class = "taskText" })
                     <br />
-                    @Html.ActionLink("Roles", "Index", "AdminRoles", new { @class = "taskText" })
+                    @Html.ActionLink("Roles", "Index", "AdminRoles", null, new { @class = "taskText" })
                 }
                 else
                 {

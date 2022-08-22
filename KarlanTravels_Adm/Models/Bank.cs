@@ -14,7 +14,7 @@ namespace KarlanTravels_Adm.Models
         {
             BankAccounts = new HashSet<BankAccount>();
         }
-
+        [Required]
         [StringLength(40)]
         public string BankId { get; set; }
 

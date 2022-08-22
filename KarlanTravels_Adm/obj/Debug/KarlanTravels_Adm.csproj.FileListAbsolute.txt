@@ -102,3 +102,17 @@ C:\Users\Owner\source\repos\KarlanTravels_Adm\obj\Debug\KarlanTravels_Adm.csproj
 C:\Users\Owner\source\repos\KarlanTravels_Adm\obj\Debug\KarlanTravels_Adm.dll
 C:\Users\Owner\source\repos\KarlanTravels_Adm\obj\Debug\KarlanTravels_Adm.pdb
 C:\Users\Owner\source\repos\KarlanTravels_Adm\bin\Newtonsoft.Json.xml
+C:\Users\Owner\source\repos\Project3-Karnel-Travels\KarlanTravels_Adm\bin\KarlanTravels_Adm.dll.config
+C:\Users\Owner\source\repos\Project3-Karnel-Travels\KarlanTravels_Adm\bin\KarlanTravels_Adm.dll
+C:\Users\Owner\source\repos\Project3-Karnel-Travels\KarlanTravels_Adm\bin\KarlanTravels_Adm.pdb
+C:\Users\Owner\source\repos\Project3-Karnel-Travels\KarlanTravels_Adm\bin\Newtonsoft.Json.dll
+C:\Users\Owner\source\repos\Project3-Karnel-Travels\KarlanTravels_Adm\bin\PagedList.dll
+C:\Users\Owner\source\repos\Project3-Karnel-Travels\KarlanTravels_Adm\bin\PagedList.Mvc.dll
+C:\Users\Owner\source\repos\Project3-Karnel-Travels\KarlanTravels_Adm\bin\Newtonsoft.Json.xml
+C:\Users\Owner\source\repos\Project3-Karnel-Travels\KarlanTravels_Adm\bin\PagedList.xml
+C:\Users\Owner\source\repos\Project3-Karnel-Travels\KarlanTravels_Adm\bin\PagedList.Mvc.xml
+C:\Users\Owner\source\repos\Project3-Karnel-Travels\KarlanTravels_Adm\obj\Debug\KarlanTravels_Adm.csproj.CoreCompileInputs.cache
+C:\Users\Owner\source\repos\Project3-Karnel-Travels\KarlanTravels_Adm\obj\Debug\KarlanTravels_Adm.csproj.CopyComplete
+C:\Users\Owner\source\repos\Project3-Karnel-Travels\KarlanTravels_Adm\obj\Debug\KarlanTravels_Adm.dll
+C:\Users\Owner\source\repos\Project3-Karnel-Travels\KarlanTravels_Adm\obj\Debug\KarlanTravels_Adm.pdb
+C:\Users\Owner\source\repos\Project3-Karnel-Travels\KarlanTravels_Adm\obj\Debug\KarlanTravels_Adm.csproj.AssemblyReference.cache

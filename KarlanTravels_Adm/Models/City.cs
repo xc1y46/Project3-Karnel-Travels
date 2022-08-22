@@ -17,6 +17,7 @@ namespace KarlanTravels_Adm.Models
             TouristSpots = new HashSet<TouristSpot>();
         }
 
+        [Required]
         [StringLength(40)]
         public string CityId { get; set; }
 

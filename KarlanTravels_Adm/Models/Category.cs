@@ -17,6 +17,7 @@ namespace KarlanTravels_Adm.Models
             Tours1 = new HashSet<Tour>();
         }
 
+        [Required]
         [StringLength(40)]
         public string CategoryId { get; set; }
 

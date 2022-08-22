@@ -15,6 +15,7 @@ namespace KarlanTravels_Adm.Models
             TouristSpots = new HashSet<TouristSpot>();
         }
 
+        [Required]
         [StringLength(40)]
         public string SubCategoryId { get; set; }
 

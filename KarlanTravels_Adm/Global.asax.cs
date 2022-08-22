@@ -20,17 +20,5 @@ namespace KarlanTravels_Adm
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
-        //protected void Application_End(object sender, EventArgs e)
-        //{
-        //    SessionCheck SesCheck = new SessionCheck();
-        //    if (SesCheck.SessionChecking())
-        //    {
-        //        ContextModel db = new ContextModel();
-        //        Admin adm = db.Admin.Find(Session["CurrentAdminId"]);
-        //        adm.IsActive = false;
-        //        db.Entry(adm).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //    }
-        //}
     }
 }

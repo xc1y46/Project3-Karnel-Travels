@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 
 namespace KarlanTravels_Adm.Models
@@ -8,7 +9,7 @@ namespace KarlanTravels_Adm.Models
     public partial class ContextModel : DbContext
     {
         public ContextModel()
-            : base("name=Model1")
+            : base("name=ContextModel")
         {
         }
 

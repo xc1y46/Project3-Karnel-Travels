@@ -18,6 +18,7 @@ namespace KarlanTravels_Adm.Models
         public int BankAccountId { get; set; }
 
         [Required]
+        [Display(Name = "BankAccountName")]
         [StringLength(255)]
         public string AccountName { get; set; }
 

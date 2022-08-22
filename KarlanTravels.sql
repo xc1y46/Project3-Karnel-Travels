@@ -73,7 +73,8 @@ CREATE TABLE TransactionType(
 	TransactionTypeId NVARCHAR(40) PRIMARY KEY,
 	TransactionTypeName NVARCHAR(40) NOT NULL,
 	TransactionTypeNote NVARCHAR(255) NULL,
-	TransactionPriceRate FLOAT NOT NULL
+	TransactionPriceRate FLOAT NOT NULL,
+	Deleted BIT NOT NULL DEFAULT 0
 )
 
 GO
@@ -83,7 +84,8 @@ IF OBJECT_ID('dbo.AdminRole', 'U') IS NOT NULL
 CREATE TABLE AdminRole(
 	RoleId NVARCHAR(40) PRIMARY KEY,
 	RoleName NVARCHAR(50) NOT NULL,
-	RoleNote NVARCHAR(255) NULL
+	RoleNote NVARCHAR(255) NULL,
+	Deleted BIT NOT NULL DEFAULT 0
 )
 
 GO
@@ -121,7 +123,7 @@ CREATE TABLE Customer(
 	Phone NVARCHAR(20) UNIQUE NOT NULL,
 	BankAccountId INT FOREIGN KEY REFERENCES BankAccount(BankAccountId) NULL,
 	CityId NVARCHAR(40) FOREIGN KEY REFERENCES City(CityId) NOT NULL,
-	UserPassword NVARCHAR(20) NOT NULL,
+	UserPassword NVARCHAR(255) NOT NULL,
 	AmountToPay MONEY NOT NULL DEFAULT 0,
 	CustomerNote NVARCHAR(255) NULL,
 	Deleted BIT NOT NULL DEFAULT 0
@@ -172,8 +174,8 @@ CREATE TABLE TouristSpot(
 	SubCategoryId NVARCHAR(40) FOREIGN KEY REFERENCES SubCategory(SubCategoryId) NOT NULL,
 	TouristSpotLocation NVARCHAR(255) NOT NULL,
 	TouristSpotRating FLOAT NOT NULL DEFAULT 1,
-	OpenHour FLOAT NOT NULL,
-	ClosingHour FLOAT NULL,
+	OpenHour BIGINT NOT NULL,
+	ClosingHour BIGINT NOT NULL,
 	TouristSpotAvailability BIT NOT NULL DEFAULT 0,
 	TouristSpotImage NVARCHAR(255) NULL,
 	TouristSpotNote NVARCHAR(255) NULL,
@@ -229,7 +231,7 @@ CREATE TABLE TransactionRecord(
 	CustomerID INT FOREIGN KEY REFERENCES Customer(CustomerID) NOT NULL,
 	TransactionFee MONEY NOT NULL,
 	Paid BIT NOT NULL DEFAULT 0,
-	RecorededTime DATETIME NOT NULL,
+	RecordedTime DATETIME NOT NULL,
 	AdminID INT FOREIGN KEY REFERENCES [Admin](AdminID) NULL,
 	TransactionNote NVARCHAR(255) NULL,
 	Deleted BIT NOT NULL DEFAULT 0
@@ -241,13 +243,11 @@ GO
 
 
 INSERT INTO Country(CountryId, CountryName, Continent, RegionCode) VALUES
-(N'none', N'none', N'none', N'none'),
 (N'VN', N'VietNam', N'Asia', N'+84'),
 (N'CN', N'China', N'Asia', N'+86')
 
 
 INSERT INTO City(CityId, CityName, CountryId, PostalCode) VALUES
-(N'none', N'none', N'none', 'none'),
 (N'VN_HN', N'Hà Nội', N'VN', N'100000'),
 (N'VN_CB', N'Cao Bằng', N'VN', N'270000'),
 (N'VN_MC', N'Mai Châu', N'VN', N'350000'),
@@ -264,10 +264,10 @@ INSERT INTO Bank(BankId, BankName, SwiftCode, CountryId) VALUES
 
 
 INSERT INTO AdminRole(RoleId, RoleName, RoleNote) VALUES
+(N'TEMP', N'temporary account', N'Have no access'),
 (N'SALE_MG',N'Saler', N'Manage sales, trasactions and user accounts, cannot access tour database'),
-(N'TOUR_MG', N'Tour Manager', N'Manage the tour database, cannot access sales and transactions records'),
-(N'SN_MG', N'Senior Maneger', N'Have access to all divisions, including admin accounts')
-
+(N'TOUR_MG', N'Tour Manager', N'Manage the tour database, cannot access sales and users'),
+(N'SN_MG', N'Senior Manager', N'Have access to all divisions, and can access deleted items')
 
 INSERT INTO [Admin](AdminName, AdminPassword ,RoleId) VALUES
 (N'NTA', N'40bd001563085fc35165329ea1ff5c5ecbdbbeef', N'SN_MG'),
@@ -314,29 +314,29 @@ INSERT INTO SubCategory(SubCategoryId, SubCategoryName, SubCategoryNote, Categor
 
 
 INSERT INTO Tour(TourId, TourName, TourAvailability, TourStart, TourEnd, TourPrice, TourNote, TourImage, TourRating, MaxBooking, BookTimeLimit, CategoryId1, CategoryId2) VALUES
-(N'T_HNtoCB01', N'Hà Nội - Cao Bằng', 1, CAST(N'2022-08-03T06:00:00.000' AS DateTime), CAST(N'2022-08-04T21:00:00.000' AS DateTime), 2350000.0000, NULL, '~/Images/T_HNCB.jpg', 4.2, 60, 60, N'NATR', N'HIST'),
-(N'T_HNtoMC01', N'Hà Nội - Mai Châu', 1, CAST(N'2022-09-12T07:00:00.000' AS DateTime), CAST(N'2022-09-13T18:00:00.000' AS DateTime), 1580000.0000, NULL, '~/Images/T_HNMC.jpg', 3.6, 40, 30, N'NATR', N'CULTR'),
-(N'T_HNtoTD01', N'Hà Nội - Tam Đảo', 1, CAST(N'2022-12-04T07:00:00.000' AS DateTime), CAST(N'2022-12-05T18:30:00.000' AS DateTime), 1350000.0000, NULL, '~/Images/T_HNCB.jpg', 4.9, 30, 30, N'NATR', N'CULTR')
+(N'T_HNtoCB01', N'Hà Nội - Cao Bằng', 1, CAST(N'2022-08-03T06:00:00.000' AS DateTime), CAST(N'2022-08-04T21:00:00.000' AS DateTime), 2350000.0000, NULL, '~/Images/T_HNCB.jpg', 4.2, 40, 60, N'NATR', N'HIST'),
+(N'T_HNtoMC01', N'Hà Nội - Mai Châu', 1, CAST(N'2022-09-12T07:00:00.000' AS DateTime), CAST(N'2022-09-13T18:00:00.000' AS DateTime), 1580000.0000, NULL, '~/Images/T_HNMC.jpg', 3.6, 30, 30, N'CULTR', N'NATR'),
+(N'T_HNtoTD01', N'Hà Nội - Tam Đảo', 1, CAST(N'2022-12-04T07:00:00.000' AS DateTime), CAST(N'2022-12-05T18:30:00.000' AS DateTime), 1350000.0000, NULL, '~/Images/T_HNCB.jpg', 4.9, 20, 30, N'NATR', N'CULTR')
 
 
 INSERT INTO TouristSpot(TouristSpotId, TouristSpotName, CityId, SubCategoryId, TouristSpotRating, TouristSpotAvailability, TouristSpotLocation, TouristSpotImage, OpenHour, ClosingHour) VALUES 
-(N'none', N'none', N'none', N'UNSCG', 0, 1, N'none', NULL, 0, NULL),
-(N'TS_CB_BB01', N'Ba Bể Lake', N'VN_CB', N'WTER', 4, 1, N'At the center of The National Garden of Ba Bể, Nam Mẫu Commune, Ba Bể District', N'~/Images/TS_CB_BB01.png', 7, 19),
-(N'TS_HN_TMC01', N'Trái tim Mộc Châu Tea Hill', N'VN_HN', N'HGHLN', 4.5, 1, N'VMRP+7HQ, Unnamed Road, TT. NT Mộc Châu, Mộc Châu', N'~/Images/TS_HN_TMC01.png', 0, NULL),
-(N'TS_HN_B01', N'Bạc Waterfall,  Sao stream', N'VN_HN', N'WTER', 4.9, 1, N'XCQR+QXM, Provincial Road 446, Yên Bình, Thạch Thất', N'~/Images/TS_HN_B01.png', 7, 18),
-(N'TS_HN_CC01', N'Cát Cát Village', N'VN_HN', N'VILLG', 3.6, 1, N'San Sả Hồ, Sa Pa', N'~/Images/TS_HN_CC01.png', 6, 18),
-(N'TS_CB_PTL01', N'Phật tích Trúc Lâm Pagoda of Bản Giốc', N'VN_CB', N'TEMPL', 2.5, 1, N'Old National Highway 3, Sông Hiến Ward', N'~/Images/TS_CB_PTL01.png', 0, NULL),
-(N'TS_CB_NN01', N'Ngườm Ngao Cave', N'VN_CB', N'CAVE', 4.2, 1, N'Ngườm Ngao cave entrance, Đàm Thuỷ, Trùng Khánh', N'~/Images/TS_CB_NN01.png', 7, 18),
-(N'TS_CB_BG02', N'Bản Giốc Waterfall', N'VN_CB', N'WTER', 3.8, 1, N'TL 211, Đàm Thuỷ, Trùng Khánh', N'~/Images/TS_CB_BG02.png', 0, NULL),
-(N'TS_CB_D01', N'Đuổm Buddhist Temple', N'VN_CB', N'TEMPL', 3.3, 1, N'QP34+4MH, Chảo village, Phú Lương, Thái Nguyên, Bắc Kạn', N'~/Images/TS_CB_D01.png', 0, NULL),
-(N'TS_CB_AM01', N'An Mã Buddhist Temple', N'VN_CB', N'TEMPL', 4.4, 1, N'CJ68+R59, Nam Mẫu, Ba Bể, Bắc Kạn', N'~/Images/TS_CB_AM01.png', 0, NULL),
-(N'TS_HN_P01', N'Puông Cave', N'VN_HN', N'CAVE', 4.7, 1, N'FM63+V9F, Khang Ninh, Ba Bể, Bắc Kạn', N'~/Images/TS_HN_P01.png',  9, 17),
-(N'TS_MC_TK01', N'Thung Khe Pass', N'VN_MC', N'HGHLN', 2.5, 1, N'M47P+XRX, Phú Cường, Tân Lạc, Hòa Bình', N'~/Images/TS_MC_TK01.png', 12, 23.59),
-(N'TS_HN_DY01', N'Dải Yếm Waterfall', N'VN_HN', N'WTER', 4.1, 1, N'RH8R+3WM, QL43, Mường Sang, Mộc Châu, Sơn La', N'~/Images/TS_HN_DY01.png',  0, NULL)
+(N'none', N'none', N'VN_HN', N'UNSCG', 0, 1, N'none', NULL, 0, 0),
+(N'TS_CB_BB01', N'Ba Bể Lake', N'VN_CB', N'WTER', 4, 1, N'At the center of The National Garden of Ba Bể, Nam Mẫu Commune, Ba Bể District', N'~/Images/TS_CB_BB01.png', 252000000000, 684000000000),
+(N'TS_HN_TMC01', N'Trái tim Mộc Châu Tea Hill', N'VN_HN', N'HGHLN', 4.5, 1, N'VMRP+7HQ, Unnamed Road, TT. NT Mộc Châu, Mộc Châu', N'~/Images/TS_HN_TMC01.png', 0, 0),
+(N'TS_HN_B01', N'Bạc Waterfall,  Sao stream', N'VN_HN', N'WTER', 4.9, 1, N'XCQR+QXM, Provincial Road 446, Yên Bình, Thạch Thất', N'~/Images/TS_HN_B01.png', 252000000000, 648000000000),
+(N'TS_HN_CC01', N'Cát Cát Village', N'VN_HN', N'VILLG', 3.6, 1, N'San Sả Hồ, Sa Pa', N'~/Images/TS_HN_CC01.png', 216000000000, 648000000000),
+(N'TS_CB_PTL01', N'Phật tích Trúc Lâm Pagoda of Bản Giốc', N'VN_CB', N'TEMPL', 2.5, 1, N'Old National Highway 3, Sông Hiến Ward', N'~/Images/TS_CB_PTL01.png', 0, 0),
+(N'TS_CB_NN01', N'Ngườm Ngao Cave', N'VN_CB', N'CAVE', 4.2, 1, N'Ngườm Ngao cave entrance, Đàm Thuỷ, Trùng Khánh', N'~/Images/TS_CB_NN01.png', 252000000000, 648000000000),
+(N'TS_CB_BG02', N'Bản Giốc Waterfall', N'VN_CB', N'WTER', 3.8, 1, N'TL 211, Đàm Thuỷ, Trùng Khánh', N'~/Images/TS_CB_BG02.png', 0, 0),
+(N'TS_CB_D01', N'Đuổm Buddhist Temple', N'VN_CB', N'TEMPL', 3.3, 1, N'QP34+4MH, Chảo village, Phú Lương, Thái Nguyên, Bắc Kạn', N'~/Images/TS_CB_D01.png', 0, 0),
+(N'TS_CB_AM01', N'An Mã Buddhist Temple', N'VN_CB', N'TEMPL', 4.4, 1, N'CJ68+R59, Nam Mẫu, Ba Bể, Bắc Kạn', N'~/Images/TS_CB_AM01.png', 0, 0),
+(N'TS_HN_P01', N'Puông Cave', N'VN_HN', N'CAVE', 4.7, 1, N'FM63+V9F, Khang Ninh, Ba Bể, Bắc Kạn', N'~/Images/TS_HN_P01.png',  324000000000, 612000000000),
+(N'TS_MC_TK01', N'Thung Khe Pass', N'VN_MC', N'HGHLN', 2.5, 1, N'M47P+XRX, Phú Cường, Tân Lạc, Hòa Bình', N'~/Images/TS_MC_TK01.png', 432000000000, 863400000000),
+(N'TS_HN_DY01', N'Dải Yếm Waterfall', N'VN_HN', N'WTER', 4.1, 1, N'RH8R+3WM, QL43, Mường Sang, Mộc Châu, Sơn La', N'~/Images/TS_HN_DY01.png',  0, 0)
 
 
 INSERT INTO Facility(FacilityId, FacilityName, FacilityTypeId, FacilityLocation, CityId, Quantity, ServiceNote, FacilityAvailability, FacilityImage) VALUES
-(N'none', N'none', N'UNTP', N'', N'none', 0, NULL, 1, NULL),
+(N'none', N'none', N'UNTP', N'', N'VN_HN', 0, NULL, 1, NULL),
 (N'FC_HN_HV01', N'Hải Vân Bus Station', N'STA_VHC', N'23, Nguyễn Khuyến road', N'VN_HN', 20, N'29 seats per 20 bus', 1, N'~/Images/FC_HN_HV01.png'),
 (N'FC_HN_NN01', N'Nguyễn Nhật Bus Station', N'STA_VHC', N'25 Văn Quán street', N'VN_HN', 7, N'16 seats per 7 bus', 1, NULL),
 (N'FC_MC_HT01', N'Hợp Thủy Restaurant', N'RSTR', N'Subdivision 2, Mai Châu district', N'VN_MC', 20, N'4 seats per 20 tables', 1, N'~/Images/FC_MC_HT01.png'),

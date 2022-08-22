@@ -23,6 +23,7 @@ namespace KarlanTravels_Adm.Models
 
         [Required]
         [StringLength(255)]
+        [DataType(DataType.Password)]
         public string AdminPassword { get; set; }
 
         [Required]

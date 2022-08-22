@@ -20,9 +20,13 @@ namespace KarlanTravels_Adm.Models
         public string Activity { get; set; }
 
         [Required]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime ActivityTimeStart { get; set; }
 
         [Required]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime ActivityTimeEnd { get; set; }
 
         [Required]

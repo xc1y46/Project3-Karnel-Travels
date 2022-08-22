@@ -16,6 +16,7 @@ namespace KarlanTravels_Adm.Models
             Cities = new HashSet<City>();
         }
 
+        [Required]
         [StringLength(40)]
         public string CountryId { get; set; }
 

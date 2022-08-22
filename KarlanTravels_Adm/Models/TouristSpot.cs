@@ -15,6 +15,7 @@ namespace KarlanTravels_Adm.Models
             TourDetails = new HashSet<TourDetail>();
         }
 
+        [Required]
         [StringLength(40)]
         public string TouristSpotId { get; set; }
 
@@ -35,13 +36,30 @@ namespace KarlanTravels_Adm.Models
         public string TouristSpotLocation { get; set; }
 
         [Required]
-        public float TouristSpotRating { get; set; }
+        [Range(1,5)]
+        public double TouristSpotRating { get; set; }
 
-        [Required]
-        public float OpenHour { get; set; }
+        public Int64 OpenHour { get; set; }
 
-        [Required]
-        public float? ClosingHour { get; set; }
+        [NotMapped]
+        [Display(Name = "OpenHour")]
+        [DisplayFormat(DataFormatString = "{0:hh\\:mm}", ApplyFormatInEditMode = true)]
+        public TimeSpan OpenHourVald
+        {
+            get { return TimeSpan.FromTicks(OpenHour); }
+            set { OpenHour = value.Ticks; }
+        }
+
+        public Int64 ClosingHour { get; set; }
+
+        [NotMapped]
+        [Display(Name = "ClosingHour")]
+        [DisplayFormat(DataFormatString = "{0:hh\\:mm}", ApplyFormatInEditMode = true)]
+        public TimeSpan ClosingHourVald
+        {
+            get { return TimeSpan.FromTicks(ClosingHour); }
+            set { ClosingHour = value.Ticks; }
+        }
 
         public bool TouristSpotAvailability { get; set; }
 

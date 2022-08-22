@@ -15,6 +15,7 @@ namespace KarlanTravels_Adm.Models
             Facilities = new HashSet<Facility>();
         }
 
+        [Required]
         [StringLength(40)]
         public string FacilityTypeId { get; set; }
 

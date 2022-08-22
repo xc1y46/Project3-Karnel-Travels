@@ -15,6 +15,7 @@ namespace KarlanTravels_Adm.Models
             TourDetails = new HashSet<TourDetail>();
         }
 
+        [Required]
         [StringLength(40)]
         public string FacilityId { get; set; }
 
@@ -46,7 +47,9 @@ namespace KarlanTravels_Adm.Models
         [StringLength(40)]
         public string CityId { get; set; }
 
+        [Required]
         [Display(Name = "Service's quantity")]
+        [Range(0,200)]
         public int Quantity { get; set; }
 
         [StringLength(255)]

@@ -1,0 +1,116 @@
+﻿@model KarlanTravels_Adm.Models.TouristSpot
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TouristSpot</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TouristSpotId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TouristSpotId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TouristSpotName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TouristSpotName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubCategory.SubCategoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubCategory.SubCategoryName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TouristSpotLocation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TouristSpotLocation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.City.CityName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City.CityName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TouristSpotRating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TouristSpotRating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OpenHourVald)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OpenHourVald)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ClosingHourVald)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ClosingHourVald)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TouristSpotAvailability)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TouristSpotAvailability)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TouristSpotImage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TouristSpotImage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TouristSpotNote)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TouristSpotNote)
+        </dd>
+
+        @if (Session["AdminRole"].ToString() == "Senior Manager")
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Deleted)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Deleted)
+            </dd>
+        }
+        </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TouristSpotId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
