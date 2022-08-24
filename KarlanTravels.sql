@@ -314,9 +314,9 @@ INSERT INTO SubCategory(SubCategoryId, SubCategoryName, SubCategoryNote, Categor
 
 
 INSERT INTO Tour(TourId, TourName, TourAvailability, TourStart, TourEnd, TourPrice, TourNote, TourImage, TourRating, MaxBooking, BookTimeLimit, CategoryId1, CategoryId2) VALUES
-(N'T_HNtoCB01', N'Hà Nội - Cao Bằng', 1, CAST(N'2022-08-03T06:00:00.000' AS DateTime), CAST(N'2022-08-04T21:00:00.000' AS DateTime), 2350000.0000, NULL, '~/images/T_HNCB.png', 4.2, 40, 60, N'NATR', N'HIST'),
-(N'T_HNtoMC01', N'Hà Nội - Mai Châu', 1, CAST(N'2022-09-12T07:00:00.000' AS DateTime), CAST(N'2022-09-13T18:00:00.000' AS DateTime), 1580000.0000, NULL, '~/images/T_HNMC.png', 3.6, 30, 30, N'CULTR', N'NATR'),
-(N'T_HNtoTD01', N'Hà Nội - Tam Đảo', 1, CAST(N'2022-12-04T07:00:00.000' AS DateTime), CAST(N'2022-12-05T18:30:00.000' AS DateTime), 1350000.0000, NULL, '~/images/T_HNCB.png', 4.9, 20, 30, N'NATR', N'CULTR')
+(N'T_HNtoCB01', N'Hà Nội - Cao Bằng', 1, CAST(N'2022-08-03T06:00:00.000' AS DateTime), CAST(N'2022-08-04T21:00:00.000' AS DateTime), 2350000.0000, NULL, '~/images/T_HNtoCB.png', 4.2, 40, 60, N'NATR', N'HIST'),
+(N'T_HNtoMC01', N'Hà Nội - Mai Châu', 1, CAST(N'2022-09-12T07:00:00.000' AS DateTime), CAST(N'2022-09-13T18:00:00.000' AS DateTime), 1580000.0000, NULL, '~/images/T_HNtoMC.png', 3.6, 30, 30, N'CULTR', N'NATR'),
+(N'T_HNtoTD01', N'Hà Nội - Tam Đảo', 1, CAST(N'2022-12-04T07:00:00.000' AS DateTime), CAST(N'2022-12-05T18:30:00.000' AS DateTime), 1350000.0000, NULL, '~/images/T_HNtoCB.png', 4.9, 20, 30, N'NATR', N'CULTR')
 
 
 INSERT INTO TouristSpot(TouristSpotId, TouristSpotName, CityId, SubCategoryId, TouristSpotRating, TouristSpotAvailability, TouristSpotLocation, TouristSpotImage, OpenHour, ClosingHour) VALUES 
