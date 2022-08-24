@@ -314,41 +314,41 @@ INSERT INTO SubCategory(SubCategoryId, SubCategoryName, SubCategoryNote, Categor
 
 
 INSERT INTO Tour(TourId, TourName, TourAvailability, TourStart, TourEnd, TourPrice, TourNote, TourImage, TourRating, MaxBooking, BookTimeLimit, CategoryId1, CategoryId2) VALUES
-(N'T_HNtoCB01', N'Hà Nội - Cao Bằng', 1, CAST(N'2022-08-03T06:00:00.000' AS DateTime), CAST(N'2022-08-04T21:00:00.000' AS DateTime), 2350000.0000, NULL, '~/Images/T_HNCB.png', 4.2, 40, 60, N'NATR', N'HIST'),
-(N'T_HNtoMC01', N'Hà Nội - Mai Châu', 1, CAST(N'2022-09-12T07:00:00.000' AS DateTime), CAST(N'2022-09-13T18:00:00.000' AS DateTime), 1580000.0000, NULL, '~/Images/T_HNMC.png', 3.6, 30, 30, N'CULTR', N'NATR'),
-(N'T_HNtoTD01', N'Hà Nội - Tam Đảo', 1, CAST(N'2022-12-04T07:00:00.000' AS DateTime), CAST(N'2022-12-05T18:30:00.000' AS DateTime), 1350000.0000, NULL, '~/Images/T_HNCB.png', 4.9, 20, 30, N'NATR', N'CULTR')
+(N'T_HNtoCB01', N'Hà Nội - Cao Bằng', 1, CAST(N'2022-08-03T06:00:00.000' AS DateTime), CAST(N'2022-08-04T21:00:00.000' AS DateTime), 2350000.0000, NULL, '~/images/T_HNCB.png', 4.2, 40, 60, N'NATR', N'HIST'),
+(N'T_HNtoMC01', N'Hà Nội - Mai Châu', 1, CAST(N'2022-09-12T07:00:00.000' AS DateTime), CAST(N'2022-09-13T18:00:00.000' AS DateTime), 1580000.0000, NULL, '~/images/T_HNMC.png', 3.6, 30, 30, N'CULTR', N'NATR'),
+(N'T_HNtoTD01', N'Hà Nội - Tam Đảo', 1, CAST(N'2022-12-04T07:00:00.000' AS DateTime), CAST(N'2022-12-05T18:30:00.000' AS DateTime), 1350000.0000, NULL, '~/images/T_HNCB.png', 4.9, 20, 30, N'NATR', N'CULTR')
 
 
 INSERT INTO TouristSpot(TouristSpotId, TouristSpotName, CityId, SubCategoryId, TouristSpotRating, TouristSpotAvailability, TouristSpotLocation, TouristSpotImage, OpenHour, ClosingHour) VALUES 
 (N'none', N'none', N'VN_HN', N'UNSCG', 0, 1, N'none', NULL, 0, 0),
-(N'TS_CB_BB01', N'Ba Bể Lake', N'VN_CB', N'WTER', 4, 1, N'At the center of The National Garden of Ba Bể, Nam Mẫu Commune, Ba Bể District', N'~/Images/TS_CB_BB01.png', 252000000000, 684000000000),
-(N'TS_HN_TMC01', N'Trái tim Mộc Châu Tea Hill', N'VN_HN', N'HGHLN', 4.5, 1, N'VMRP+7HQ, Unnamed Road, TT. NT Mộc Châu, Mộc Châu', N'~/Images/TS_HN_TMC01.png', 0, 0),
-(N'TS_HN_B01', N'Bạc Waterfall,  Sao stream', N'VN_HN', N'WTER', 4.9, 1, N'XCQR+QXM, Provincial Road 446, Yên Bình, Thạch Thất', N'~/Images/TS_HN_B01.png', 252000000000, 648000000000),
+(N'TS_CB_BB01', N'Ba Bể Lake', N'VN_CB', N'WTER', 4, 1, N'At the center of The National Garden of Ba Bể, Nam Mẫu Commune, Ba Bể District', N'~/images/TS_CB_BB01.png', 252000000000, 684000000000),
+(N'TS_HN_TMC01', N'Trái tim Mộc Châu Tea Hill', N'VN_HN', N'HGHLN', 4.5, 1, N'VMRP+7HQ, Unnamed Road, TT. NT Mộc Châu, Mộc Châu', N'~/images/TS_HN_TMC01.png', 0, 0),
+(N'TS_HN_B01', N'Bạc Waterfall,  Sao stream', N'VN_HN', N'WTER', 4.9, 1, N'XCQR+QXM, Provincial Road 446, Yên Bình, Thạch Thất', N'~/images/TS_HN_B01.png', 252000000000, 648000000000),
 (N'TS_HN_CC01', N'Cát Cát Village', N'VN_HN', N'VILLG', 3.6, 1, N'San Sả Hồ, Sa Pa', N'~/Images/TS_HN_CC01.png', 216000000000, 648000000000),
-(N'TS_CB_PTL01', N'Phật tích Trúc Lâm Pagoda of Bản Giốc', N'VN_CB', N'TEMPL', 2.5, 1, N'Old National Highway 3, Sông Hiến Ward', N'~/Images/TS_CB_PTL01.png', 0, 0),
-(N'TS_CB_NN01', N'Ngườm Ngao Cave', N'VN_CB', N'CAVE', 4.2, 1, N'Ngườm Ngao cave entrance, Đàm Thuỷ, Trùng Khánh', N'~/Images/TS_CB_NN01.png', 252000000000, 648000000000),
-(N'TS_CB_BG02', N'Bản Giốc Waterfall', N'VN_CB', N'WTER', 3.8, 1, N'TL 211, Đàm Thuỷ, Trùng Khánh', N'~/Images/TS_CB_BG02.png', 0, 0),
-(N'TS_CB_D01', N'Đuổm Buddhist Temple', N'VN_CB', N'TEMPL', 3.3, 1, N'QP34+4MH, Chảo village, Phú Lương, Thái Nguyên, Bắc Kạn', N'~/Images/TS_CB_D01.png', 0, 0),
-(N'TS_CB_AM01', N'An Mã Buddhist Temple', N'VN_CB', N'TEMPL', 4.4, 1, N'CJ68+R59, Nam Mẫu, Ba Bể, Bắc Kạn', N'~/Images/TS_CB_AM01.png', 0, 0),
-(N'TS_HN_P01', N'Puông Cave', N'VN_HN', N'CAVE', 4.7, 1, N'FM63+V9F, Khang Ninh, Ba Bể, Bắc Kạn', N'~/Images/TS_HN_P01.png',  324000000000, 612000000000),
-(N'TS_MC_TK01', N'Thung Khe Pass', N'VN_MC', N'HGHLN', 2.5, 1, N'M47P+XRX, Phú Cường, Tân Lạc, Hòa Bình', N'~/Images/TS_MC_TK01.png', 432000000000, 863400000000),
-(N'TS_HN_DY01', N'Dải Yếm Waterfall', N'VN_HN', N'WTER', 4.1, 1, N'RH8R+3WM, QL43, Mường Sang, Mộc Châu, Sơn La', N'~/Images/TS_HN_DY01.png',  0, 0)
+(N'TS_CB_PTL01', N'Phật tích Trúc Lâm Pagoda of Bản Giốc', N'VN_CB', N'TEMPL', 2.5, 1, N'Old National Highway 3, Sông Hiến Ward', N'~/images/TS_CB_PTL01.png', 0, 0),
+(N'TS_CB_NN01', N'Ngườm Ngao Cave', N'VN_CB', N'CAVE', 4.2, 1, N'Ngườm Ngao cave entrance, Đàm Thuỷ, Trùng Khánh', N'~/images/TS_CB_NN01.png', 252000000000, 648000000000),
+(N'TS_CB_BG02', N'Bản Giốc Waterfall', N'VN_CB', N'WTER', 3.8, 1, N'TL 211, Đàm Thuỷ, Trùng Khánh', N'~/images/TS_CB_BG02.png', 0, 0),
+(N'TS_CB_D01', N'Đuổm Buddhist Temple', N'VN_CB', N'TEMPL', 3.3, 1, N'QP34+4MH, Chảo village, Phú Lương, Thái Nguyên, Bắc Kạn', N'~/images/TS_CB_D01.png', 0, 0),
+(N'TS_CB_AM01', N'An Mã Buddhist Temple', N'VN_CB', N'TEMPL', 4.4, 1, N'CJ68+R59, Nam Mẫu, Ba Bể, Bắc Kạn', N'~/images/TS_CB_AM01.png', 0, 0),
+(N'TS_HN_P01', N'Puông Cave', N'VN_HN', N'CAVE', 4.7, 1, N'FM63+V9F, Khang Ninh, Ba Bể, Bắc Kạn', N'~/images/TS_HN_P01.png',  324000000000, 612000000000),
+(N'TS_MC_TK01', N'Thung Khe Pass', N'VN_MC', N'HGHLN', 2.5, 1, N'M47P+XRX, Phú Cường, Tân Lạc, Hòa Bình', N'~/images/TS_MC_TK01.png', 432000000000, 863400000000),
+(N'TS_HN_DY01', N'Dải Yếm Waterfall', N'VN_HN', N'WTER', 4.1, 1, N'RH8R+3WM, QL43, Mường Sang, Mộc Châu, Sơn La', N'~/images/TS_HN_DY01.png',  0, 0)
 
 
 INSERT INTO Facility(FacilityId, FacilityName, FacilityTypeId, FacilityLocation, CityId, Quantity, ServiceNote, FacilityAvailability, FacilityImage) VALUES
 (N'none', N'none', N'UNTP', N'', N'VN_HN', 0, NULL, 1, NULL),
-(N'FC_HN_HV01', N'Hải Vân Bus Station', N'STA_VHC', N'23, Nguyễn Khuyến road', N'VN_HN', 20, N'29 seats per 20 bus', 1, N'~/Images/FC_HN_HV01.png'),
+(N'FC_HN_HV01', N'Hải Vân Bus Station', N'STA_VHC', N'23, Nguyễn Khuyến road', N'VN_HN', 20, N'29 seats per 20 bus', 1, N'~/images/FC_HN_HV01.png'),
 (N'FC_HN_NN01', N'Nguyễn Nhật Bus Station', N'STA_VHC', N'25 Văn Quán street', N'VN_HN', 7, N'16 seats per 7 bus', 1, NULL),
-(N'FC_MC_HT01', N'Hợp Thủy Restaurant', N'RSTR', N'Subdivision 2, Mai Châu district', N'VN_MC', 20, N'4 seats per 20 tables', 1, N'~/Images/FC_MC_HT01.png'),
-(N'FC_VY_NA01', N'Nguyệt Anh Hotel', N'HTEL', N'Block 1, Tam Đảo district', N'VN_VY', 12, N'15 double rooms, 15 tables with 4 seats', 1, N'~/Images/FC_VY_NA01.png'),
-(N'FC_VY_GTD01', N'Gió Tam Đảo Cafe', N'RSTR', N'Tam Đảo district, Vĩnh Phúc province', N'VN_VY', 16, N'4 seats per 16 tables', 1, N'~/Images/FC_VY_GTD01.png'),
-(N'FC_VY_PN01', N'Phố Núi Restaurant', N'RSTR', N'Near Hợp Châu town''s people''s Committee , Tam Đảo district', N'VN_VY', 6, N'3 seats per 6 tables', 1, N'~/Images/FC_VY_PN01.png'),
-(N'FC_HN_BND01', N'Bảo Ngọc Diamond Hotel', N'HTEL', N'1st floor, 124 Bế Văn Đàn street, Hợp Giang sub-district', N'VN_CB', 10, N'10 double rooms, 12 four seats tables', 1, N'~/Images/FC_HN_BND01.png'),
-(N'FC_CB_TL01', N'Thành Loan Hotel', N'HTEL', N'131 Vườn Cam street', N'VN_CB', 9, N'9 triple rooms, 4 ten seats tables', 1, N'~/Images/FC_CB_TL01.png'),
-(N'FC_HN_TN01', N'Thành Nam Bus Station', N'STA_VHC', N'29 Mộ Lao street', N'VN_HN', 16, N'42 seats per 16 buses', 1, N'~/Images/FC_HN_TN01.png'),
-(N'FC_CB_BG01', N'Bản Giốc Restaurant', N'RSTR', N'Bản Giốc hamlet, Đàm Thủy commune, Trùng Khánh district', N'VN_CB', 18, N'7 seats per 18 tables', 1, N'~/Images/FC_CB_BG01.png'),
-(N'FC_MC_EE01', N'88 Hotel', N'HTEL', N'102 Hoàng Quốc Việt street', N'VN_MC', 5, N'5 double rooms, 2 seats per 5 tables', 1, N'~/Images/FC_MC_EE01.png'),
-(N'FC_MC_BCE01', N'Ba Chị Em Restaurant', N'RSTR', N'Chiềng Sại hamlet', N'VN_MC', 15, N'2 seats per 15 tables', 1, N'~/Images/FC_MC_BCE01.png')
+(N'FC_MC_HT01', N'Hợp Thủy Restaurant', N'RSTR', N'Subdivision 2, Mai Châu district', N'VN_MC', 20, N'4 seats per 20 tables', 1, N'~/images/FC_MC_HT01.png'),
+(N'FC_VY_NA01', N'Nguyệt Anh Hotel', N'HTEL', N'Block 1, Tam Đảo district', N'VN_VY', 12, N'15 double rooms, 15 tables with 4 seats', 1, N'~/images/FC_VY_NA01.png'),
+(N'FC_VY_GTD01', N'Gió Tam Đảo Cafe', N'RSTR', N'Tam Đảo district, Vĩnh Phúc province', N'VN_VY', 16, N'4 seats per 16 tables', 1, N'~/images/FC_VY_GTD01.png'),
+(N'FC_VY_PN01', N'Phố Núi Restaurant', N'RSTR', N'Near Hợp Châu town''s people''s Committee , Tam Đảo district', N'VN_VY', 6, N'3 seats per 6 tables', 1, N'~/images/FC_VY_PN01.png'),
+(N'FC_HN_BND01', N'Bảo Ngọc Diamond Hotel', N'HTEL', N'1st floor, 124 Bế Văn Đàn street, Hợp Giang sub-district', N'VN_CB', 10, N'10 double rooms, 12 four seats tables', 1, N'~/images/FC_HN_BND01.png'),
+(N'FC_CB_TL01', N'Thành Loan Hotel', N'HTEL', N'131 Vườn Cam street', N'VN_CB', 9, N'9 triple rooms, 4 ten seats tables', 1, N'~/images/FC_CB_TL01.png'),
+(N'FC_HN_TN01', N'Thành Nam Bus Station', N'STA_VHC', N'29 Mộ Lao street', N'VN_HN', 16, N'42 seats per 16 buses', 1, N'~/images/FC_HN_TN01.png'),
+(N'FC_CB_BG01', N'Bản Giốc Restaurant', N'RSTR', N'Bản Giốc hamlet, Đàm Thủy commune, Trùng Khánh district', N'VN_CB', 18, N'7 seats per 18 tables', 1, N'~/images/FC_CB_BG01.png'),
+(N'FC_MC_EE01', N'88 Hotel', N'HTEL', N'102 Hoàng Quốc Việt street', N'VN_MC', 5, N'5 double rooms, 2 seats per 5 tables', 1, N'~/images/FC_MC_EE01.png'),
+(N'FC_MC_BCE01', N'Ba Chị Em Restaurant', N'RSTR', N'Chiềng Sại hamlet', N'VN_MC', 15, N'2 seats per 15 tables', 1, N'~/images/FC_MC_BCE01.png')
 
 
 INSERT INTO TourDetail(TourId, TourDetailName, TouristSpotId, FacilityId, Activity, ActivityTimeStart, ActivityTimeEnd, ActivityNote) VALUES
