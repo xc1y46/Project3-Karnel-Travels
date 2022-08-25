@@ -336,7 +336,7 @@ INSERT INTO TouristSpot(TouristSpotId, TouristSpotName, CityId, SubCategoryId, T
 
 
 INSERT INTO Facility(FacilityId, FacilityName, FacilityTypeId, FacilityLocation, CityId, Quantity, ServiceNote, FacilityAvailability, FacilityImage) VALUES
-(N'none', N'none', N'UNTP', N'', N'VN_HN', 0, NULL, 1, NULL),
+(N'none', N'none', N'UNTP', N'', N'VN_HN', 0, 'none', 1, NULL),
 (N'FC_HN_HV01', N'Hải Vân Bus Station', N'STA_VHC', N'23, Nguyễn Khuyến road', N'VN_HN', 20, N'29 seats per 20 bus', 1, N'/assets/images/FC_HN_HV01.png'),
 (N'FC_HN_NN01', N'Nguyễn Nhật Bus Station', N'STA_VHC', N'25 Văn Quán street', N'VN_HN', 7, N'16 seats per 7 bus', 1, NULL),
 (N'FC_MC_HT01', N'Hợp Thủy Restaurant', N'RSTR', N'Subdivision 2, Mai Châu district', N'VN_MC', 20, N'4 seats per 20 tables', 1, N'/assets/images/FC_MC_HT01.png'),
