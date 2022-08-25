@@ -244,7 +244,7 @@ namespace KarlanTravels_Adm.Controllers
                         return RedirectToAction("Create");
                     }
 
-                    var flag = tourDetailTime.Where(t => t.ActivityTimeStart == tourDetail.ActivityTimeStart || t.ActivityTimeEnd == tourDetail.ActivityTimeEnd);
+                    var flag = tourDetailTime.Where(t => t.ActivityTimeStart == tourDetail.ActivityTimeStart || t.ActivityTimeEnd == tourDetail.ActivityTimeEnd || t.ActivityTimeStart == tourDetail.ActivityTimeEnd || t.ActivityTimeEnd == tourDetail.ActivityTimeStart);
                     if (flag != null)
                     {
                         TempData["ActivityEndWarning"] = "The tour already has an activity within that time span";
@@ -334,7 +334,7 @@ namespace KarlanTravels_Adm.Controllers
                         return RedirectToAction("Edit");
                     }
 
-                    var flag = tourDetailTime.Where(t => t.ActivityTimeStart == tourDetail.ActivityTimeStart || t.ActivityTimeEnd == tourDetail.ActivityTimeEnd);
+                    var flag = tourDetailTime.Where(t => t.ActivityTimeStart == tourDetail.ActivityTimeStart || t.ActivityTimeEnd == tourDetail.ActivityTimeEnd || t.ActivityTimeStart == tourDetail.ActivityTimeEnd || t.ActivityTimeEnd == tourDetail.ActivityTimeStart);
                     if (flag != null)
                     {
                         TempData["ActivityEndWarning"] = "The tour already has an activity within that time span";
