@@ -175,6 +175,32 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\images\FC_CB_BG01.png" />
+    <Content Include="assets\images\FC_CB_TL01.png" />
+    <Content Include="assets\images\FC_HN_BND01.png" />
+    <Content Include="assets\images\FC_HN_HV01.png" />
+    <Content Include="assets\images\FC_HN_TN01.png" />
+    <Content Include="assets\images\FC_MC_BCE01.png" />
+    <Content Include="assets\images\FC_MC_EE01.png" />
+    <Content Include="assets\images\FC_MC_HT01.png" />
+    <Content Include="assets\images\FC_VY_GTD01.png" />
+    <Content Include="assets\images\FC_VY_NA01.png" />
+    <Content Include="assets\images\FC_VY_PN01.png" />
+    <Content Include="assets\images\TS_CB_AM01.png" />
+    <Content Include="assets\images\TS_CB_BB01.png" />
+    <Content Include="assets\images\TS_CB_BG02.png" />
+    <Content Include="assets\images\TS_CB_D01.png" />
+    <Content Include="assets\images\TS_CB_NN01.png" />
+    <Content Include="assets\images\TS_CB_PTL01.png" />
+    <Content Include="assets\images\TS_HN_B01.png" />
+    <Content Include="assets\images\TS_HN_CC01.png" />
+    <Content Include="assets\images\TS_HN_DY01.png" />
+    <Content Include="assets\images\TS_HN_P01.png" />
+    <Content Include="assets\images\TS_HN_TMC01.png" />
+    <Content Include="assets\images\TS_MC_TK01.png" />
+    <Content Include="assets\images\T_HNtoCB01.png" />
+    <Content Include="assets\images\T_HNtoMC01.png" />
+    <Content Include="assets\images\T_HNtoTD01.png" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />

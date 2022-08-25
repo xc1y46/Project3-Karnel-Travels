@@ -184,6 +184,10 @@ namespace KarlanTravels_Adm.Controllers
         {
             if (SesCheck.SessionChecking())
             {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
                 BankAccount bankAccount = db.BankAccounts.Find(id);
                 if (bankAccount == null)
                 {
@@ -197,11 +201,6 @@ namespace KarlanTravels_Adm.Controllers
                 TempData["LoginResult"] = "Invalid access";
                 return RedirectToAction("Login", "Home");
             }
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            
         }
 
         // POST: BankAccounts/Edit/5

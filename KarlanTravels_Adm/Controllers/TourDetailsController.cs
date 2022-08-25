@@ -224,6 +224,7 @@ namespace KarlanTravels_Adm.Controllers
                 {
                     Tour tour = db.Tours.Find(tourDetail.TourId);
                     TouristSpot touristSpot = db.TouristSpots.Find(tourDetail.TouristSpotId);
+                    var tourDetailTime = db.TourDetails.Where(t => t.TourId == tourDetail.TourId);
 
                     if ((tourDetail.ActivityTimeStart.TimeOfDay < touristSpot.OpenHourVald || tourDetail.ActivityTimeStart.TimeOfDay > touristSpot.ClosingHourVald || tourDetail.ActivityTimeEnd.TimeOfDay > touristSpot.ClosingHourVald) && (touristSpot.OpenHour != 0 && touristSpot.ClosingHour != 0))
                     {
@@ -240,6 +241,13 @@ namespace KarlanTravels_Adm.Controllers
                     if (tourDetail.ActivityTimeEnd <= tourDetail.ActivityTimeStart)
                     {
                         TempData["ActivityEndWarning"] = "Activity end time must be after start time";
+                        return RedirectToAction("Create");
+                    }
+
+                    var flag = tourDetailTime.Where(t => t.ActivityTimeStart == tourDetail.ActivityTimeStart || t.ActivityTimeEnd == tourDetail.ActivityTimeEnd);
+                    if (flag != null)
+                    {
+                        TempData["ActivityEndWarning"] = "The tour already has an activity within that time span";
                         return RedirectToAction("Create");
                     }
 
@@ -306,6 +314,7 @@ namespace KarlanTravels_Adm.Controllers
                 {
                     Tour tour = db.Tours.Find(tourDetail.TourId);
                     TouristSpot touristSpot = db.TouristSpots.Find(tourDetail.TouristSpotId);
+                    var tourDetailTime = db.TourDetails.Where(t => t.TourId == tourDetail.TourId);
 
                     if ((tourDetail.ActivityTimeStart.TimeOfDay < touristSpot.OpenHourVald || tourDetail.ActivityTimeStart.TimeOfDay > touristSpot.ClosingHourVald || tourDetail.ActivityTimeEnd.TimeOfDay > touristSpot.ClosingHourVald) && (touristSpot.OpenHour != 0 && touristSpot.ClosingHour != 0))
                     {
@@ -322,6 +331,13 @@ namespace KarlanTravels_Adm.Controllers
                     if (tourDetail.ActivityTimeEnd <= tourDetail.ActivityTimeStart)
                     {
                         TempData["ActivityEndWarning"] = "Activity end time must be after start time";
+                        return RedirectToAction("Edit");
+                    }
+
+                    var flag = tourDetailTime.Where(t => t.ActivityTimeStart == tourDetail.ActivityTimeStart || t.ActivityTimeEnd == tourDetail.ActivityTimeEnd);
+                    if (flag != null)
+                    {
+                        TempData["ActivityEndWarning"] = "The tour already has an activity within that time span";
                         return RedirectToAction("Edit");
                     }
 

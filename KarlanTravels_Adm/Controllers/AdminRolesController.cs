@@ -49,7 +49,7 @@ namespace KarlanTravels_Adm.Controllers
 
                 if (String.IsNullOrEmpty(ShowDel))
                 {
-                    tourDetails = tourDetails.Where(t => t.Deleted == false);
+                    adminRoles = adminRoles.Where(t => t.Deleted == false);
                 }
                 if (!String.IsNullOrEmpty(SearchString))
                 {
