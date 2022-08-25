@@ -321,7 +321,7 @@ INSERT INTO Tour(TourId, TourName, TourAvailability, TourStart, TourEnd, TourPri
 
 INSERT INTO TouristSpot(TouristSpotId, TouristSpotName, CityId, SubCategoryId, TouristSpotRating, TouristSpotAvailability, TouristSpotLocation, TouristSpotImage, OpenHour, ClosingHour) VALUES 
 (N'none', N'none', N'VN_HN', N'UNSCG', 0, 1, N'none', NULL, 0, 0),
-(N'TS_CB_BB01', N'Ba Bể Lake', N'VN_CB', N'WTER', 4, 1, N'At the center of The National Garden of Ba Bể, Nam Mẫu Commune, Ba Bể District', N'~/assets/images/TS_CB_BB01.png', 252000000000, 684000000000),
+(N'TS_CB_BB01', N'Ba Bể Lake', N'VN_CB', N'WTER', 4, 1, N'At the center of The National Garden of Ba Bể, Nam Mẫu Commune, Ba Bể District', N'/assets/images/TS_CB_BB01.png', 252000000000, 684000000000),
 (N'TS_HN_TMC01', N'Trái tim Mộc Châu Tea Hill', N'VN_HN', N'HGHLN', 4.5, 1, N'VMRP+7HQ, Unnamed Road, TT. NT Mộc Châu, Mộc Châu', N'/assets/images/TS_HN_TMC01.png', 0, 0),
 (N'TS_HN_B01', N'Bạc Waterfall,  Sao stream', N'VN_HN', N'WTER', 4.9, 1, N'XCQR+QXM, Provincial Road 446, Yên Bình, Thạch Thất', N'/assets/images/TS_HN_B01.png', 252000000000, 648000000000),
 (N'TS_HN_CC01', N'Cát Cát Village', N'VN_HN', N'VILLG', 3.6, 1, N'San Sả Hồ, Sa Pa', N'/assets/images/TS_HN_CC01.png', 216000000000, 648000000000),
