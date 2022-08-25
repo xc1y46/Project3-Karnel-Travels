@@ -225,9 +225,21 @@ namespace KarlanTravels_Adm.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    db.TouristSpots.Add(touristSpot);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                    bool flag = true;
+                    if (db.TouristSpots.Where(f => f.TouristSpotId == touristSpot.TouristSpotId) != null)
+                    {
+                        TempData["IdWarning"] = $"The id \"{touristSpot.TouristSpotId}\" already exists";
+                        flag = false;
+                    }
+                    if (flag)
+                    {
+                        db.TouristSpots.Add(touristSpot);
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                    ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", touristSpot.CityId);
+                    ViewBag.SubCategoryId = new SelectList(db.SubCategories, "SubCategoryId", "SubCategoryName", touristSpot.SubCategoryId);
+                    return View(touristSpot);
                 }
 
                 ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", touristSpot.CityId);

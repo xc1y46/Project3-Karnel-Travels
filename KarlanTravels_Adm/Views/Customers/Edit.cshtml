@@ -68,6 +68,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.AmountToPay, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
+                <span>@TempData["AmountToPay"]</span>
                 @Html.EditorFor(model => model.AmountToPay, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.AmountToPay, "", new { @class = "text-danger" })
             </div>

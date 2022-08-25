@@ -170,6 +170,11 @@ namespace KarlanTravels_Adm.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    if (db.Cities.Where(f => f.CityId == city.CityId) != null)
+                    {
+                        TempData["IdWarning"] = $"The id \"{city.CityId}\" already exists";
+                        return View(city);
+                    }
                     db.Cities.Add(city);
                     db.SaveChanges();
                     return RedirectToAction("Index");

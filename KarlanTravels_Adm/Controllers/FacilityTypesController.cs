@@ -136,6 +136,11 @@ namespace KarlanTravels_Adm.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    if(db.FacilityTypes.Where(f => f.FacilityTypeId == facilityType.FacilityTypeId)!= null)
+                    {
+                        TempData["IdWarning"] = $"The id \"{facilityType.FacilityTypeId}\" already exists";
+                        return View(facilityType);
+                    }
                     db.FacilityTypes.Add(facilityType);
                     db.SaveChanges();
                     return RedirectToAction("Index");

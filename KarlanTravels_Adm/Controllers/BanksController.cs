@@ -169,6 +169,11 @@ namespace KarlanTravels_Adm.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    if (db.Banks.Where(f => f.BankId == bank.BankId) != null)
+                    {
+                        TempData["IdWarning"] = $"The id \"{bank.BankId}\" already exists";
+                        return View(bank);
+                    }
                     db.Banks.Add(bank);
                     db.SaveChanges();
                     return RedirectToAction("Index");

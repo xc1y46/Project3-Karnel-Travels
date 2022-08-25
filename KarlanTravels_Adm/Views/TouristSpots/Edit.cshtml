@@ -61,7 +61,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.OpenHourVald, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <span>Format: HH:MM</span>
+                <span>Format: Hour:minute</span>
+                <br />
                 @Html.EditorFor(model => model.OpenHourVald, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.OpenHourVald, "", new { @class = "text-danger" })
             </div>

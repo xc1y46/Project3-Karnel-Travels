@@ -116,9 +116,6 @@
             @Html.DisplayNameFor(model => model.FirstOrDefault().TourRating)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().TourImage)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().TourNote)
         </th>
         @if (Session["AdminRole"].ToString() == "Senior Manager")
@@ -162,9 +159,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TourRating)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TourImage)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TourNote)

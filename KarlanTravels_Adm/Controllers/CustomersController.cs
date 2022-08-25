@@ -222,6 +222,13 @@ namespace KarlanTravels_Adm.Controllers
                 }
                 ViewBag.BankAccountId = new SelectList(db.BankAccounts, "BankAccountId", "AccountName", customer.BankAccountId);
                 ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", customer.CityId);
+                List<TransactionRecord> temp = db.TransactionRecords.Where(t => t.CustomerID == customer.CustomerId).ToList();
+                decimal total = 0;
+                for (int i = 0; i < temp.Count; i++)
+                {
+                    total += temp[i].TransactionFee;
+                }
+                TempData["AmountToPay"] = $"The correct amount according to transaction records is {total}";
                 return View(customer);
             }
             else

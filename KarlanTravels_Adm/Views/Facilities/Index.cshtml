@@ -116,9 +116,6 @@
         <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().FacilityAvailability)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().FacilityImage)
-        </th>
         @if (Session["AdminRole"].ToString() == "Senior Manager")
         {
             <th>
@@ -160,9 +157,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FacilityAvailability)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FacilityImage)
             </td>
             @if (Session["AdminRole"].ToString() == "Senior Manager")
             {

@@ -114,9 +114,6 @@
             @Html.DisplayNameFor(model => model.FirstOrDefault().TouristSpotAvailability)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().TouristSpotImage)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().TouristSpotNote)
         </th>
         @if (Session["AdminRole"].ToString() == "Senior Manager")
@@ -157,9 +154,6 @@
             </th>
             <th>
                 @Html.DisplayFor(modelItem => item.TouristSpotAvailability)
-            </th>
-            <th>
-                @Html.DisplayFor(modelItem => item.TouristSpotImage)
             </th>
             <th>
                 @Html.DisplayFor(modelItem => item.TouristSpotNote)

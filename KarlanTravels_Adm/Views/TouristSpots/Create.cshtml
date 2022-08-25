@@ -20,6 +20,7 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.TouristSpotId, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.TouristSpotId, "", new { @class = "text-danger" })
+                <span class="text-danger">@TempData["IdWarning"]</span>
             </div>
         </div>
 
@@ -67,7 +68,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.OpenHourVald, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <span>Format: HH:MM</span>
+                <span>Format: Hour:minute</span>
+                <br />
                 @Html.EditorFor(model => model.OpenHourVald, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.OpenHourVald, "", new { @class = "text-danger" })
             </div>
@@ -76,7 +78,6 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ClosingHourVald, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <span>Format: HH:MM</span>
                 @Html.EditorFor(model => model.ClosingHourVald, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ClosingHourVald, "", new { @class = "text-danger" })
             </div>

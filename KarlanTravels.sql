@@ -158,7 +158,7 @@ CREATE TABLE Facility(
 	CityId NVARCHAR(40) FOREIGN KEY REFERENCES City(CityId) NOT NULL,
 	Quantity INT NOT NULL DEFAULT 0,
 	FacilityImage NVARCHAR(255) NULL,
-	ServiceNote NVARCHAR(255) NULL,
+	ServiceNote NVARCHAR(255) NOT NULL,
 	FacilityAvailability BIT NOT NULL DEFAULT 0,
 	Deleted BIT NOT NULL DEFAULT 0
 )
@@ -264,7 +264,7 @@ INSERT INTO Bank(BankId, BankName, SwiftCode, CountryId) VALUES
 
 
 INSERT INTO AdminRole(RoleId, RoleName, RoleNote) VALUES
-(N'TEMP', N'temporary account', N'Have no access'),
+(N'TEMP', N'Temporary account', N'Have no access'),
 (N'SALE_MG',N'Saler', N'Manage sales, trasactions and user accounts, cannot access tour database'),
 (N'TOUR_MG', N'Tour Manager', N'Manage the tour database, cannot access sales and users'),
 (N'SN_MG', N'Senior Manager', N'Have access to all divisions, and can access deleted items')

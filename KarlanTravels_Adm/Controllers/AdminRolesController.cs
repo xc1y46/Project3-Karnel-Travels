@@ -145,6 +145,11 @@ namespace KarlanTravels_Adm.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    if (db.AdminRoles.Where(f => f.RoleId == adminRole.RoleId) != null)
+                    {
+                        TempData["IdWarning"] = $"The id \"{adminRole.RoleId}\" already exists";
+                        return View(adminRole);
+                    }
                     db.AdminRoles.Add(adminRole);
                     db.SaveChanges();
                     return RedirectToAction("Index");

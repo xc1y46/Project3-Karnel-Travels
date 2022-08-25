@@ -218,6 +218,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    bool flag = true;
                     Tour tours = (from t in db.Tours where t.TourId == transactionRecord.TourId select t).First();
                     List<TransactionRecord> temp = (from t in db.TransactionRecords where (t.TourId == tours.TourId && t.TransactionTypeId == "DEPOSIT") select t).ToList();
                     DateTime limitDate = tours.TourStart.Subtract(new TimeSpan(tours.BookTimeLimit, 0, 0, 0));
@@ -225,22 +226,29 @@ namespace KarlanTravels_Adm.Controllers
                     if (DateTime.Now.Date > limitDate.Date)
                     {
                         TempData["TourWarning"] = $"The \"{tours.TourName}\" tour booking period has been closed (before {limitDate.Date})";
-                        return RedirectToAction("Create");
+                        flag = false;
                     }
 
                     if (temp.Count >= tours.MaxBooking)
                     {
                         TempData["TourWarning"] = $"The \"{tours.TourName}\" tour has already reach the booking limit ({tours.MaxBooking})";
-                        return RedirectToAction("Create");
+                        flag = false;
                     }
-                    
-                    TransactionType transactionTypes = (from t in db.TransactionTypes where t.TransactionTypeId == transactionRecord.TransactionTypeId select t).First();
-                    transactionRecord.TransactionFee = tours.TourPrice * (decimal)transactionTypes.TransactionPriceRate;
-                    transactionRecord.RecordedTime = DateTime.Now;
-                    transactionRecord.AdminId = (int)Session["AdminId"];
-                    db.TransactionRecords.Add(transactionRecord);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+
+                    if (flag)
+                    {
+                        TransactionType transactionTypes = (from t in db.TransactionTypes where t.TransactionTypeId == transactionRecord.TransactionTypeId select t).First();
+                        transactionRecord.TransactionFee = tours.TourPrice * (decimal)transactionTypes.TransactionPriceRate;
+                        transactionRecord.RecordedTime = DateTime.Now;
+                        transactionRecord.AdminId = (int)Session["AdminId"];
+                        db.TransactionRecords.Add(transactionRecord);
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                    ViewBag.CustomerID = new SelectList(db.Customers, "CustomerId", "Username", transactionRecord.CustomerID);
+                    ViewBag.TourId = new SelectList(db.Tours, "TourId", "TourName", transactionRecord.TourId);
+                    ViewBag.TransactionTypeId = new SelectList(db.TransactionTypes, "TransactionTypeId", "TransactionTypeName", transactionRecord.TransactionTypeId);
+                    return View(transactionRecord);
                 }
 
                 ViewBag.CustomerID = new SelectList(db.Customers, "CustomerId", "Username", transactionRecord.CustomerID);
@@ -295,6 +303,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    bool flag = true;
                     Tour tours = (from t in db.Tours where t.TourId == transactionRecord.TourId select t).First();
                     List<TransactionRecord> temp = (from t in db.TransactionRecords where (t.TourId == tours.TourId && t.TransactionTypeId == "DEPOSIT") select t).ToList();
                     DateTime limitDate = tours.TourStart.Subtract(new TimeSpan(tours.BookTimeLimit, 0, 0, 0));
@@ -302,21 +311,28 @@ namespace KarlanTravels_Adm.Controllers
                     if (DateTime.Now.Date > limitDate.Date)
                     {
                         TempData["TourWarning"] = $"The \"{tours.TourName}\" tour booking period has been closed (before {limitDate.Date})";
-                        return RedirectToAction("Create");
+                        flag = false;
                     }
 
                     if (temp.Count >= tours.MaxBooking)
                     {
                         TempData["TourWarning"] = $"The \"{tours.TourName}\" tour has already reach the booking limit ({tours.MaxBooking})";
-                        return RedirectToAction("Create");
+                        flag = false;
                     }
 
-                    TransactionType transactionTypes = (from t in db.TransactionTypes where t.TransactionTypeId == transactionRecord.TransactionTypeId select t).First();
-                    transactionRecord.TransactionFee = tours.TourPrice * (decimal)transactionTypes.TransactionPriceRate;
-                    transactionRecord.AdminId = (int)Session["AdminId"];
-                    db.Entry(transactionRecord).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                    if (flag)
+                    {
+                        TransactionType transactionTypes = (from t in db.TransactionTypes where t.TransactionTypeId == transactionRecord.TransactionTypeId select t).First();
+                        transactionRecord.TransactionFee = tours.TourPrice * (decimal)transactionTypes.TransactionPriceRate;
+                        transactionRecord.AdminId = (int)Session["AdminId"];
+                        db.Entry(transactionRecord).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                    ViewBag.CustomerID = new SelectList(db.Customers, "CustomerId", "Username", transactionRecord.CustomerID);
+                    ViewBag.TourId = new SelectList(db.Tours, "TourId", "TourName", transactionRecord.TourId);
+                    ViewBag.TransactionTypeId = new SelectList(db.TransactionTypes, "TransactionTypeId", "TransactionTypeName", transactionRecord.TransactionTypeId);
+                    return View(transactionRecord);
                 }
                 ViewBag.CustomerID = new SelectList(db.Customers, "CustomerId", "Username", transactionRecord.CustomerID);
                 ViewBag.TourId = new SelectList(db.Tours, "TourId", "TourName", transactionRecord.TourId);

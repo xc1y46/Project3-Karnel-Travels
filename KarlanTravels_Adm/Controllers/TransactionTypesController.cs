@@ -146,10 +146,16 @@ namespace KarlanTravels_Adm.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    if (db.TransactionTypes.Where(f => f.TransactionTypeId == transactionType.TransactionTypeId) != null)
+                    {
+                        TempData["IdWarning"] = $"The id \"{transactionType.TransactionTypeId}\" already exists";
+                        return View(transactionType);
+                    }
                     db.TransactionTypes.Add(transactionType);
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
+                return View(transactionType);
             }
             else
             {
@@ -157,9 +163,7 @@ namespace KarlanTravels_Adm.Controllers
                 return RedirectToAction("Login", "Home");
             }
             
-
-            return View(transactionType);
-        }
+}
 
         // GET: TransactionTypes/Edit/5
         public ActionResult Edit(string id)
