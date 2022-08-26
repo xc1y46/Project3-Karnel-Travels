@@ -161,10 +161,11 @@ namespace KarlanTravels_Adm.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (db.SubCategories.Where(f => f.SubCategoryId == subCategory.SubCategoryId) != null)
+                    SubCategory temp = db.SubCategories.Find(subCategory.SubCategoryId);
+                    if (temp != null)
                     {
                         TempData["IdWarning"] = $"The id \"{subCategory.SubCategoryId}\" already exists";
-                        return View(subCategory);
+                        return RedirectToAction("Create");
                     }
                     db.SubCategories.Add(subCategory);
                     db.SaveChanges();

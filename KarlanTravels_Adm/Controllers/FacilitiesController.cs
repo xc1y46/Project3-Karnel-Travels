@@ -226,21 +226,15 @@ namespace KarlanTravels_Adm.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    bool flag = true;
-                    if (db.Facilities.Where(f => f.FacilityId == facility.FacilityId) != null)
+                    Facility temp = db.Facilities.Find(facility.FacilityId);
+                    if (temp != null)
                     {
                         TempData["IdWarning"] = $"The id \"{facility.FacilityId}\" already exists";
-                        flag = false;
+                        return RedirectToAction("Create");
                     }
-                    if (flag)
-                    {
-                        db.Facilities.Add(facility);
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
-                    }
-                    ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", facility.CityId);
-                    ViewBag.FacilityTypeId = new SelectList(db.FacilityTypes, "FacilityTypeId", "FacilityTypeName", facility.FacilityTypeId);
-                    return View(facility);
+                    db.Facilities.Add(facility);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
 
                 ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", facility.CityId);

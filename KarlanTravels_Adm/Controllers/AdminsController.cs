@@ -147,6 +147,12 @@ namespace KarlanTravels_Adm.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    Admin temp = db.Admins.Where(a => a.AdminName == admin.AdminName && a.Deleted == false).FirstOrDefault();
+                    if (temp != null)
+                    {
+                        TempData["NameWarning"] = $"The name \"{admin.AdminName}\" already exists";
+                        return RedirectToAction("Create");
+                    }
                     admin.AdminPassword = SesCheck.HashPW(admin.AdminPassword);
                     db.Admins.Add(admin);
                     db.SaveChanges();
@@ -199,6 +205,12 @@ namespace KarlanTravels_Adm.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    Admin temp = db.Admins.Where(a => a.AdminName == admin.AdminName && a.Deleted == false && a.AdminId != admin.AdminId).FirstOrDefault();
+                    if (temp != null)
+                    {
+                        TempData["NameWarning"] = $"The name \"{admin.AdminName}\" already exists";
+                        return RedirectToAction("Edit");
+                    }
                     admin.AdminPassword = SesCheck.HashPW(admin.AdminPassword);
                     db.Entry(admin).State = EntityState.Modified;
                     db.SaveChanges();

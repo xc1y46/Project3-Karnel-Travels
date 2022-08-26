@@ -169,17 +169,24 @@ namespace KarlanTravels_Adm.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (db.Banks.Where(f => f.BankId == bank.BankId) != null)
+                    Bank temp = db.Banks.Find(bank.BankId);
+                    if (temp != null)
                     {
                         TempData["IdWarning"] = $"The id \"{bank.BankId}\" already exists";
-                        return View(bank);
+                        return RedirectToAction("Create");
+                    }
+                    temp = db.Banks.Where(b => b.SwiftCode == bank.SwiftCode && b.Deleted == false).FirstOrDefault();
+                    if (temp != null)
+                    {
+                        TempData["SwiftCodeWarning"] = $"The SWIFT code \"{bank.SwiftCode}\" already exists";
+                        return RedirectToAction("Create");
                     }
                     db.Banks.Add(bank);
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
 
-                ViewBag.CountryId = new SelectList(db.Countries, "CountryId", "CountryName", bank.CountryId);
+                ViewBag.CountryId = new SelectList(db.Countries.Where(c => c.Deleted == false), "CountryId", "CountryName", bank.CountryId);
                 return View(bank);
             }
             else
@@ -224,6 +231,12 @@ namespace KarlanTravels_Adm.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    Bank temp = db.Banks.Where(b => b.SwiftCode == bank.SwiftCode && b.Deleted == false && b.BankId != bank.BankId).FirstOrDefault();
+                    if (temp != null)
+                    {
+                        TempData["SwiftCodeWarning"] = $"The SWIFT code \"{bank.SwiftCode}\" already exists";
+                        return RedirectToAction("Edit");
+                    }
                     db.Entry(bank).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index");

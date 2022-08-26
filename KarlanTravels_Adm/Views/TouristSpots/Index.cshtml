@@ -146,12 +146,20 @@
             <th>
                 @Html.DisplayFor(modelItem => item.TouristSpotRating)
             </th>
-            <th>
-                @Html.DisplayFor(modelItem => item.OpenHourVald)
-            </th>
-            <th>
-                @Html.DisplayFor(modelItem => item.ClosingHourVald)
-            </th>
+            @if(item.OpenHour == 0 && item.ClosingHour == 0)
+            {
+                <th>Always</th>
+                <th></th>
+            }
+            else
+            {
+                <th>
+                    @Html.DisplayFor(modelItem => item.OpenHourVald)
+                </th>
+                <th>
+                    @Html.DisplayFor(modelItem => item.ClosingHourVald)
+                </th>
+            }
             <th>
                 @Html.DisplayFor(modelItem => item.TouristSpotAvailability)
             </th>

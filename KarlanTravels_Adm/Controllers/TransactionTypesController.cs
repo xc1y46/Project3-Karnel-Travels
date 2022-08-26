@@ -146,10 +146,11 @@ namespace KarlanTravels_Adm.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (db.TransactionTypes.Where(f => f.TransactionTypeId == transactionType.TransactionTypeId) != null)
+                    TransactionType temp = db.TransactionTypes.Find(transactionType.TransactionTypeId);
+                    if (temp != null)
                     {
                         TempData["IdWarning"] = $"The id \"{transactionType.TransactionTypeId}\" already exists";
-                        return View(transactionType);
+                        return RedirectToAction("Create");
                     }
                     db.TransactionTypes.Add(transactionType);
                     db.SaveChanges();

@@ -219,27 +219,21 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TouristSpotId,TouristSpotName,CityId,SubCategoryId,TouristSpotLocation,TouristSpotRating,OpenHourVald,ClosingHourVald,TouristSpotAvailability,TouristSpotImage,TouristSpotNote")] TouristSpot touristSpot)
+        public ActionResult Create([Bind(Include = "TouristSpotId,TouristSpotName,CityId,SubCategoryId,TouristSpotLocation,TouristSpotRating,OpenHourVald,ClosingHourVald,TouristSpotAvailability,TouristSpotImage,TouristSpotNote,Cord_Lat,Cord_Long")] TouristSpot touristSpot)
         {
             if (SesCheck.SessionChecking())
             {
                 if (ModelState.IsValid)
                 {
-                    bool flag = true;
-                    if (db.TouristSpots.Where(f => f.TouristSpotId == touristSpot.TouristSpotId) != null)
+                    TouristSpot temp = db.TouristSpots.Find(touristSpot.TouristSpotId);
+                    if (temp != null)
                     {
                         TempData["IdWarning"] = $"The id \"{touristSpot.TouristSpotId}\" already exists";
-                        flag = false;
+                        return RedirectToAction("Create");
                     }
-                    if (flag)
-                    {
-                        db.TouristSpots.Add(touristSpot);
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
-                    }
-                    ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", touristSpot.CityId);
-                    ViewBag.SubCategoryId = new SelectList(db.SubCategories, "SubCategoryId", "SubCategoryName", touristSpot.SubCategoryId);
-                    return View(touristSpot);
+                    db.TouristSpots.Add(touristSpot);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
 
                 ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", touristSpot.CityId);
@@ -285,7 +279,7 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TouristSpotId,TouristSpotName,CityId,SubCategoryId,TouristSpotLocation,TouristSpotRating,OpenHourVald,ClosingHourVald,TouristSpotAvailability,TouristSpotImage,TouristSpotNote,Deleted")] TouristSpot touristSpot)
+        public ActionResult Edit([Bind(Include = "TouristSpotId,TouristSpotName,CityId,SubCategoryId,TouristSpotLocation,TouristSpotRating,OpenHourVald,ClosingHourVald,TouristSpotAvailability,TouristSpotImage,TouristSpotNote,Cord_Lat,Cord_Long,Deleted")] TouristSpot touristSpot)
         {
             if (SesCheck.SessionChecking())
             {

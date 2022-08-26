@@ -21,12 +21,10 @@ namespace KarlanTravels_Adm.Models
         [StringLength(255)]
         public string Username { get; set; }
 
-        [Required]
         [StringLength(255)]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        [Required]
         [StringLength(20)]
         [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }

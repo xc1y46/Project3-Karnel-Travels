@@ -163,6 +163,12 @@ namespace KarlanTravels_Adm.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    BankAccount temp = db.BankAccounts.Where(b => b.AccountNumber == bankAccount.AccountNumber && b.Deleted == false).FirstOrDefault();
+                    if (temp != null)
+                    {
+                        TempData["AccNumWarning"] = $"The account \"{bankAccount.AccountNumber}\" already exists";
+                        return RedirectToAction("Create");
+                    }
                     db.BankAccounts.Add(bankAccount);
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -214,6 +220,12 @@ namespace KarlanTravels_Adm.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    BankAccount temp = db.BankAccounts.Where(b => b.AccountNumber == bankAccount.AccountNumber && b.Deleted == false && b.BankAccountId != bankAccount.BankAccountId).FirstOrDefault();
+                    if (temp != null)
+                    {
+                        TempData["AccNumWarning"] = $"The account \"{bankAccount.AccountNumber}\" already exists";
+                        return RedirectToAction("Edit");
+                    }
                     db.Entry(bankAccount).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index");

@@ -187,6 +187,30 @@ namespace KarlanTravels_Adm.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    Customer temp = db.Customers.Where(a => a.Username == customer.Username && a.Deleted == false).FirstOrDefault();
+                    if (temp != null)
+                    {
+                        TempData["NameWarning"] = $"The name \"{customer.Username}\" already exists";
+                        return RedirectToAction("Create");
+                    }
+                    temp = db.Customers.Where(a => a.Email == customer.Email && a.Deleted == false).FirstOrDefault();
+                    if (temp != null)
+                    {
+                        TempData["EmailWarning"] = $"The email \"{customer.Email}\" is already in use";
+                        return RedirectToAction("Create");
+                    }
+                    temp = db.Customers.Where(a => a.Phone == customer.Phone && a.Deleted == false).FirstOrDefault();
+                    if (temp != null)
+                    {
+                        TempData["PhoneWarning"] = $"The phone number \"{customer.Phone}\" is already in use";
+                        return RedirectToAction("Create");
+                    }
+                    temp = db.Customers.Where(a => a.BankAccountId == customer.BankAccountId && a.Deleted == false).FirstOrDefault();
+                    if (temp != null)
+                    {
+                        TempData["BankAccWarning"] = $"The bank account is already in use";
+                        return RedirectToAction("Create");
+                    }
                     customer.UserPassword = SesCheck.HashPW(customer.UserPassword);
                     db.Customers.Add(customer);
                     db.SaveChanges();
@@ -222,13 +246,14 @@ namespace KarlanTravels_Adm.Controllers
                 }
                 ViewBag.BankAccountId = new SelectList(db.BankAccounts, "BankAccountId", "AccountName", customer.BankAccountId);
                 ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", customer.CityId);
-                List<TransactionRecord> temp = db.TransactionRecords.Where(t => t.CustomerID == customer.CustomerId).ToList();
+
+                List<TransactionRecord> temp = db.TransactionRecords.Where(t => t.CustomerID == customer.CustomerId && t.Paid == false).ToList();
                 decimal total = 0;
                 for (int i = 0; i < temp.Count; i++)
                 {
                     total += temp[i].TransactionFee;
                 }
-                TempData["AmountToPay"] = $"The correct amount according to transaction records is {total}";
+                TempData["AmountToPay"] = $"The correct amount according to transaction records is: {total}";
                 return View(customer);
             }
             else
@@ -251,6 +276,30 @@ namespace KarlanTravels_Adm.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    Customer temp = db.Customers.Where(a => a.Username == customer.Username && a.Deleted == false && a.CustomerId != customer.CustomerId).FirstOrDefault();
+                    if (temp != null)
+                    {
+                        TempData["NameWarning"] = $"The name \"{customer.Username}\" already exists";
+                        return RedirectToAction("Edit");
+                    }
+                    temp = db.Customers.Where(a => a.Email == customer.Email && a.Deleted == false && a.CustomerId != customer.CustomerId).FirstOrDefault();
+                    if (temp != null)
+                    {
+                        TempData["EmailWarning"] = $"The email \"{customer.Email}\" is already in use";
+                        return RedirectToAction("Edit");
+                    }
+                    temp = db.Customers.Where(a => a.Phone == customer.Phone && a.Deleted == false && a.CustomerId != customer.CustomerId).FirstOrDefault();
+                    if (temp != null)
+                    {
+                        TempData["PhoneWarning"] = $"The phone number \"{customer.Phone}\" is already in use";
+                        return RedirectToAction("Edit");
+                    }
+                    temp = db.Customers.Where(a => a.BankAccountId == customer.BankAccountId && a.Deleted == false && a.CustomerId != customer.CustomerId).FirstOrDefault();
+                    if (temp != null)
+                    {
+                        TempData["BankAccWarning"] = $"The bank account is already in use";
+                        return RedirectToAction("Edit");
+                    }
                     customer.UserPassword = SesCheck.HashPW(customer.UserPassword);
                     db.Entry(customer).State = EntityState.Modified;
                     db.SaveChanges();

@@ -129,10 +129,11 @@ namespace KarlanTravels_Adm.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (db.Categories.Where(f => f.CategoryId == category.CategoryId) != null)
+                    Category temp = db.Categories.Find(category.CategoryId);
+                    if (temp != null)
                     {
                         TempData["IdWarning"] = $"The id \"{category.CategoryId}\" already exists";
-                        return View(category);
+                        return RedirectToAction("Create");
                     }
                     db.Categories.Add(category);
                     db.SaveChanges();

@@ -83,6 +83,22 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.Cord_Lat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cord_Lat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cord_Long)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cord_Long)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.TouristSpotImage)
         </dt>
 
@@ -108,7 +124,7 @@
                 @Html.DisplayFor(model => model.Deleted)
             </dd>
         }
-        </dl>
+    </dl>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.TouristSpotId }) |

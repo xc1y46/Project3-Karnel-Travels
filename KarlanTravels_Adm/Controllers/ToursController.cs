@@ -228,31 +228,26 @@ namespace KarlanTravels_Adm.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    bool flag = true;
-                    if (db.Tours.Where(f => f.TourId == tour.TourId) != null)
+                    Tour temp = db.Tours.Find(tour.TourId);
+                    if (temp != null)
                     {
                         TempData["IdWarning"] = $"The id \"{tour.TourId}\" already exists";
-                        flag = false;
+                        return RedirectToAction("Create");
                     }
                     if (tour.TourEnd <= tour.TourStart)
                     {
                         TempData["TourEndWarning"] = "Tour end time must be after start time";
-                        flag = false;
+                        return RedirectToAction("Create");
                     }
                     if (tour.CategoryId1 == tour.CategoryId2)
                     {
                         TempData["CategoryWarning"] = "The 2 categories must be different";
-                        flag = false;
+                        return RedirectToAction("Create");
                     }
-                    if (flag)
-                    {
-                        db.Tours.Add(tour);
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
-                    }
-                    ViewBag.CategoryId1 = new SelectList(db.Categories, "CategoryId", "CategoryName", tour.CategoryId1);
-                    ViewBag.CategoryId2 = new SelectList(db.Categories, "CategoryId", "CategoryName", tour.CategoryId2);
-                    return View(tour);
+                    
+                    db.Tours.Add(tour);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
 
                 ViewBag.CategoryId1 = new SelectList(db.Categories, "CategoryId", "CategoryName", tour.CategoryId1);
@@ -304,26 +299,19 @@ namespace KarlanTravels_Adm.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    bool flag = true;
                     if (tour.TourEnd <= tour.TourStart)
                     {
                         TempData["TourEndWarning"] = "Tour end time must be after start time";
-                        flag = false;
+                        return RedirectToAction("Edit");
                     }
                     if (tour.CategoryId1 == tour.CategoryId2)
                     {
                         TempData["CategoryWarning"] = "The 2 categories must be different";
-                        flag = false;
+                        return RedirectToAction("Edit");
                     }
-                    if (flag)
-                    {
-                        db.Entry(tour).State = EntityState.Modified;
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
-                    }
-                    ViewBag.CategoryId1 = new SelectList(db.Categories, "CategoryId", "CategoryName", tour.CategoryId1);
-                    ViewBag.CategoryId2 = new SelectList(db.Categories, "CategoryId", "CategoryName", tour.CategoryId2);
-                    return View(tour);
+                    db.Entry(tour).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
                 ViewBag.CategoryId1 = new SelectList(db.Categories, "CategoryId", "CategoryName", tour.CategoryId1);
                 ViewBag.CategoryId2 = new SelectList(db.Categories, "CategoryId", "CategoryName", tour.CategoryId2);

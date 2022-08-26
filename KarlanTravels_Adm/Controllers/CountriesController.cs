@@ -155,10 +155,11 @@ namespace KarlanTravels_Adm.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (db.Countries.Where(f => f.CountryId == country.CountryId) != null)
+                    Country temp = db.Countries.Find(country.CountryId);
+                    if (temp != null)
                     {
                         TempData["IdWarning"] = $"The id \"{country.CountryId}\" already exists";
-                        return View(country);
+                        return RedirectToAction("Create");
                     }
                     db.Countries.Add(country);
                     db.SaveChanges();

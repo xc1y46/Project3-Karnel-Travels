@@ -36,7 +36,7 @@ namespace KarlanTravels_Adm.Models
         public string TouristSpotLocation { get; set; }
 
         [Required]
-        [Range(1,5)]
+        [Range(1, 5)]
         public double TouristSpotRating { get; set; }
 
         public Int64 OpenHour { get; set; }
@@ -65,6 +65,14 @@ namespace KarlanTravels_Adm.Models
 
         [StringLength(255)]
         public string TouristSpotImage { get; set; }
+
+        [Display(Name = "Latitude")]
+        [StringLength(20)]
+        public string Cord_Lat { get; set; }
+
+        [StringLength(20)]
+        [Display(Name = "Longitude")]
+        public string Cord_Long { get; set; }
 
         [StringLength(255)]
         public string TouristSpotNote { get; set; }

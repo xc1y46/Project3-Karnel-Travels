@@ -222,7 +222,6 @@ namespace KarlanTravels_Adm.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    bool flag = true;
                     Tour tour = db.Tours.Find(tourDetail.TourId);
                     TouristSpot touristSpot = db.TouristSpots.Find(tourDetail.TouristSpotId);
                     List<TourDetail> tourDetailTime = db.TourDetails.Where(t => t.TourId == tourDetail.TourId).OrderBy(t => t.ActivityTimeStart).ToList();
@@ -230,42 +229,36 @@ namespace KarlanTravels_Adm.Controllers
                     if ((tourDetail.ActivityTimeStart.TimeOfDay < touristSpot.OpenHourVald || tourDetail.ActivityTimeStart.TimeOfDay > touristSpot.ClosingHourVald || tourDetail.ActivityTimeEnd.TimeOfDay > touristSpot.ClosingHourVald) && (touristSpot.OpenHour != 0 && touristSpot.ClosingHour != 0))
                     {
                         TempData["ActivityEndWarning"] = $"Activity time not suitable for tourist spot's open time ({touristSpot.OpenHourVald} to {touristSpot.ClosingHourVald})";
-                        flag = false;
+                        return RedirectToAction("Create");
                     }
 
                     if (tourDetailTime != null && tourDetail.ActivityTimeStart < tourDetailTime[tourDetailTime.Count - 1].ActivityTimeEnd)
                     {
                         TempData["ActivityEndWarning"] = "The tour already has an activity within that time span";
-                        flag = false;
+                        return RedirectToAction("Create");
                     }
 
                     if (tourDetail.ActivityTimeStart < tour.TourStart || tourDetail.ActivityTimeStart > tour.TourEnd || tourDetail.ActivityTimeEnd > tour.TourEnd)
                     {
                         TempData["ActivityEndWarning"] = $"Activity time is outside of the tour schedule ({tour.TourStart} to {tour.TourEnd})";
-                        flag = false;
+                        return RedirectToAction("Create");
                     }
 
                     if (tourDetail.ActivityTimeEnd <= tourDetail.ActivityTimeStart)
                     {
                         TempData["ActivityEndWarning"] = "Activity end time must be after start time";
-                        flag = false;
+                        return RedirectToAction("Create");
                     }
 
                     if ((tourDetail.FacilityId == "none" && tourDetail.TouristSpotId == "none") || (tourDetail.FacilityId != "none" && tourDetail.TouristSpotId != "none"))
                     {
                         TempData["ActivityWarning"] = "Only a facility or tourist spot per activity, the other must be \'none\'";
-                        flag = false;
+                        return RedirectToAction("Create");
                     }
-                    if (flag)
-                    {
-                        db.TourDetails.Add(tourDetail);
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
-                    }
-                    ViewBag.FacilityId = new SelectList(db.Facilities, "FacilityId", "FacilityName", tourDetail.FacilityId);
-                    ViewBag.TourId = new SelectList(db.Tours, "TourId", "TourName", tourDetail.TourId);
-                    ViewBag.TouristSpotId = new SelectList(db.TouristSpots, "TouristSpotId", "TouristSpotName", tourDetail.TouristSpotId);
-                    return View(tourDetail);
+
+                    db.TourDetails.Add(tourDetail);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
 
                 ViewBag.FacilityId = new SelectList(db.Facilities, "FacilityId", "FacilityName", tourDetail.FacilityId);
@@ -319,7 +312,6 @@ namespace KarlanTravels_Adm.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    bool flag = true;
                     Tour tour = db.Tours.Find(tourDetail.TourId);
                     TouristSpot touristSpot = db.TouristSpots.Find(tourDetail.TouristSpotId);
                     List<TourDetail> tourDetailTime = db.TourDetails.Where(t => t.TourId == tourDetail.TourId).OrderBy(t => t.ActivityTimeStart).ToList();
@@ -327,42 +319,36 @@ namespace KarlanTravels_Adm.Controllers
                     if ((tourDetail.ActivityTimeStart.TimeOfDay < touristSpot.OpenHourVald || tourDetail.ActivityTimeStart.TimeOfDay > touristSpot.ClosingHourVald || tourDetail.ActivityTimeEnd.TimeOfDay > touristSpot.ClosingHourVald) && (touristSpot.OpenHour != 0 && touristSpot.ClosingHour != 0))
                     {
                         TempData["ActivityEndWarning"] = $"Activity time not suitable for tourist spot's open time ({touristSpot.OpenHourVald} to {touristSpot.ClosingHourVald})";
-                        flag = false;
-                    }
-
-                    if (tourDetail.ActivityTimeStart < tour.TourStart || tourDetail.ActivityTimeStart > tour.TourEnd || tourDetail.ActivityTimeEnd < tour.TourStart || tourDetail.ActivityTimeEnd > tour.TourEnd)
-                    {
-                        TempData["ActivityEndWarning"] = $"Activity time is outside of the tour schedule ({tour.TourStart} to {tour.TourEnd})";
-                        flag = false;
-                    }
-
-                    if (tourDetail.ActivityTimeEnd <= tourDetail.ActivityTimeStart)
-                    {
-                        TempData["ActivityEndWarning"] = "Activity end time must be after start time";
-                        flag = false;
+                        return RedirectToAction("Edit");
                     }
 
                     if (tourDetailTime != null && tourDetail.ActivityTimeStart < tourDetailTime[tourDetailTime.Count - 1].ActivityTimeEnd)
                     {
                         TempData["ActivityEndWarning"] = "The tour already has an activity within that time span";
-                        flag = false;
+                        return RedirectToAction("Edit");
+                    }
+
+                    if (tourDetail.ActivityTimeStart < tour.TourStart || tourDetail.ActivityTimeStart > tour.TourEnd || tourDetail.ActivityTimeEnd > tour.TourEnd)
+                    {
+                        TempData["ActivityEndWarning"] = $"Activity time is outside of the tour schedule ({tour.TourStart} to {tour.TourEnd})";
+                        return RedirectToAction("Edit");
+                    }
+
+                    if (tourDetail.ActivityTimeEnd <= tourDetail.ActivityTimeStart)
+                    {
+                        TempData["ActivityEndWarning"] = "Activity end time must be after start time";
+                        return RedirectToAction("Edit");
                     }
 
                     if ((tourDetail.FacilityId == "none" && tourDetail.TouristSpotId == "none") || (tourDetail.FacilityId != "none" && tourDetail.TouristSpotId != "none"))
                     {
                         TempData["ActivityWarning"] = "Only a facility or tourist spot per activity, the other must be \'none\'";
-                        flag = false;
+                        return RedirectToAction("Edit");
                     }
-                    if (flag)
-                    {
-                        db.Entry(tourDetail).State = EntityState.Modified;
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
-                    }
-                    ViewBag.FacilityId = new SelectList(db.Facilities, "FacilityId", "FacilityName", tourDetail.FacilityId);
-                    ViewBag.TourId = new SelectList(db.Tours, "TourId", "TourName", tourDetail.TourId);
-                    ViewBag.TouristSpotId = new SelectList(db.TouristSpots, "TouristSpotId", "TouristSpotName", tourDetail.TouristSpotId);
-                    return View(tourDetail);
+
+                    db.Entry(tourDetail).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
                 ViewBag.FacilityId = new SelectList(db.Facilities, "FacilityId", "FacilityName", tourDetail.FacilityId);
                 ViewBag.TourId = new SelectList(db.Tours, "TourId", "TourName", tourDetail.TourId);
