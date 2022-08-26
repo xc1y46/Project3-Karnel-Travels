@@ -50,9 +50,11 @@ namespace KarlanTravels_Adm.Models
         public string CategoryId2 { get; set; }
 
         [Required]
+        [Range(1,200)]
         public int MaxBooking { get; set; }
 
         [Display(Name = "Booking time(days)")]
+        [Range(7,365)]
         public int BookTimeLimit { get; set; }
 
         [Required]

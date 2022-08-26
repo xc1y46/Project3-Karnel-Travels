@@ -232,7 +232,7 @@ namespace KarlanTravels_Adm.Controllers
                         return RedirectToAction("Create");
                     }
 
-                    if (tourDetailTime != null && tourDetail.ActivityTimeStart < tourDetailTime[tourDetailTime.Count - 1].ActivityTimeEnd)
+                    if (tourDetailTime.Count != 0 && tourDetail.ActivityTimeStart < tourDetailTime[tourDetailTime.Count - 1].ActivityTimeEnd)
                     {
                         TempData["ActivityEndWarning"] = "The tour already has an activity within that time span";
                         return RedirectToAction("Create");
@@ -314,7 +314,7 @@ namespace KarlanTravels_Adm.Controllers
                 {
                     Tour tour = db.Tours.Find(tourDetail.TourId);
                     TouristSpot touristSpot = db.TouristSpots.Find(tourDetail.TouristSpotId);
-                    List<TourDetail> tourDetailTime = db.TourDetails.Where(t => t.TourId == tourDetail.TourId).OrderBy(t => t.ActivityTimeStart).ToList();
+                    List<TourDetail> tourDetailTime = db.TourDetails.Where(t => t.TourId == tourDetail.TourId && t.TourDetailId != tourDetail.TourDetailId).OrderBy(t => t.ActivityTimeStart).ToList();
 
                     if ((tourDetail.ActivityTimeStart.TimeOfDay < touristSpot.OpenHourVald || tourDetail.ActivityTimeStart.TimeOfDay > touristSpot.ClosingHourVald || tourDetail.ActivityTimeEnd.TimeOfDay > touristSpot.ClosingHourVald) && (touristSpot.OpenHour != 0 && touristSpot.ClosingHour != 0))
                     {
@@ -322,7 +322,7 @@ namespace KarlanTravels_Adm.Controllers
                         return RedirectToAction("Edit");
                     }
 
-                    if (tourDetailTime != null && tourDetail.ActivityTimeStart < tourDetailTime[tourDetailTime.Count - 1].ActivityTimeEnd)
+                    if (tourDetailTime.Count != 0 && tourDetail.ActivityTimeStart < tourDetailTime[tourDetailTime.Count - 1].ActivityTimeEnd)
                     {
                         TempData["ActivityEndWarning"] = "The tour already has an activity within that time span";
                         return RedirectToAction("Edit");

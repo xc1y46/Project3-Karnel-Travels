@@ -304,7 +304,7 @@ namespace KarlanTravels_Adm.Controllers
                         TempData["TourEndWarning"] = "Tour end time must be after start time";
                         return RedirectToAction("Edit");
                     }
-                    if (tour.CategoryId1 == tour.CategoryId2)
+                    if (tour.CategoryId1 == tour.CategoryId2 && tour.CategoryId1 != "UNCG")
                     {
                         TempData["CategoryWarning"] = "The 2 categories must be different";
                         return RedirectToAction("Edit");
