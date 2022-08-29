@@ -73,6 +73,22 @@ else
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.AmountToRefund)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AmountToRefund)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Violations)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Violations)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.CustomerNote)
         </dt>
 
@@ -80,6 +96,13 @@ else
             @Html.DisplayFor(model => model.CustomerNote)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.BlackListed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BlackListed)
+        </dd>
     </dl>
 </div>
 }
@@ -95,6 +118,7 @@ else
             <input type="submit" value="Delete" class="btn btn-default" />
         }
         @Html.ActionLink("Back to List", "Index")
+        <br /><span class="text-danger">@TempData["DelWaring"]</span>
     </div>
     }
 </div>

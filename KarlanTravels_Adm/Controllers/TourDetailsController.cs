@@ -224,7 +224,7 @@ namespace KarlanTravels_Adm.Controllers
                 {
                     Tour tour = db.Tours.Find(tourDetail.TourId);
                     TouristSpot touristSpot = db.TouristSpots.Find(tourDetail.TouristSpotId);
-                    List<TourDetail> tourDetailTime = db.TourDetails.Where(t => t.TourId == tourDetail.TourId).OrderBy(t => t.ActivityTimeStart).ToList();
+                    List<TourDetail> tourDetailTime = db.TourDetails.Where(t => t.TourId == tourDetail.TourId && t.Deleted == false).OrderBy(t => t.ActivityTimeStart).ToList();
 
                     if ((tourDetail.ActivityTimeStart.TimeOfDay < touristSpot.OpenHourVald || tourDetail.ActivityTimeStart.TimeOfDay > touristSpot.ClosingHourVald || tourDetail.ActivityTimeEnd.TimeOfDay > touristSpot.ClosingHourVald) && (touristSpot.OpenHour != 0 && touristSpot.ClosingHour != 0))
                     {
@@ -314,7 +314,7 @@ namespace KarlanTravels_Adm.Controllers
                 {
                     Tour tour = db.Tours.Find(tourDetail.TourId);
                     TouristSpot touristSpot = db.TouristSpots.Find(tourDetail.TouristSpotId);
-                    List<TourDetail> tourDetailTime = db.TourDetails.Where(t => t.TourId == tourDetail.TourId && t.TourDetailId != tourDetail.TourDetailId).OrderBy(t => t.ActivityTimeStart).ToList();
+                    List<TourDetail> tourDetailTime = db.TourDetails.Where(t => t.TourId == tourDetail.TourId && t.TourDetailId != tourDetail.TourDetailId && t.Deleted == false).OrderBy(t => t.ActivityTimeStart).ToList();
 
                     if ((tourDetail.ActivityTimeStart.TimeOfDay < touristSpot.OpenHourVald || tourDetail.ActivityTimeStart.TimeOfDay > touristSpot.ClosingHourVald || tourDetail.ActivityTimeEnd.TimeOfDay > touristSpot.ClosingHourVald) && (touristSpot.OpenHour != 0 && touristSpot.ClosingHour != 0))
                     {

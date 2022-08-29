@@ -56,6 +56,32 @@ namespace KarlanTravels_Adm.Controllers
                 db.SaveChanges();
                 HttpContext.Current.Session.Clear();
             }
+
+        }
+
+        public Customer CustomerRefundCheck(Customer c)
+        {
+            Customer temp = c;
+            if (temp.AmountToPay < 0)
+            {
+                temp.AmountToRefund += (-1 * temp.AmountToPay);
+                temp.AmountToPay = 0;
+            }
+            return temp;
+        }
+
+        public Customer CustomerViolation(Customer c)
+        {
+            Customer temp = c;
+            if (temp.Violations < temp.maxViolations)
+            {
+                temp.Violations++;
+            }
+            if(temp.Violations == temp.maxViolations)
+            {
+                temp.BlackListed = true;
+            }
+            return temp;
         }
     }
 }

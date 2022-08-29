@@ -75,6 +75,14 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.CancelDueDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CancelDueDate)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Category.CategoryName)
         </dt>
 
@@ -124,7 +132,7 @@
                 @Html.DisplayFor(model => model.Deleted)
             </dd>
         }
-        </dl>
+    </dl>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.TourId }) |

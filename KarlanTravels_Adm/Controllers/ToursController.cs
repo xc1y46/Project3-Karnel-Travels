@@ -222,7 +222,7 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TourId,TourName,TourAvailability,TourStart,TourEnd,TourPrice,CategoryId1,CategoryId2,MaxBooking,BookTimeLimit,TourRating,TourImage,TourNote")] Tour tour)
+        public ActionResult Create([Bind(Include = "TourId,TourName,TourAvailability,TourStart,TourEnd,TourPrice,CategoryId1,CategoryId2,MaxBooking,BookTimeLimit,CancelDueDate,TourRating,TourImage,TourNote")] Tour tour)
         {
             if (SesCheck.SessionChecking())
             {
@@ -239,7 +239,7 @@ namespace KarlanTravels_Adm.Controllers
                         TempData["TourEndWarning"] = "Tour end time must be after start time";
                         return RedirectToAction("Create");
                     }
-                    if (tour.CategoryId1 == tour.CategoryId2)
+                    if (tour.CategoryId1 == tour.CategoryId2 && tour.CategoryId1 != "UNCG")
                     {
                         TempData["CategoryWarning"] = "The 2 categories must be different";
                         return RedirectToAction("Create");
@@ -293,7 +293,7 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TourId,TourName,TourAvailability,TourStart,TourEnd,TourPrice,CategoryId1,CategoryId2,MaxBooking,BookTimeLimit,TourRating,TourImage,TourNote,Deleted")] Tour tour)
+        public ActionResult Edit([Bind(Include = "TourId,TourName,TourAvailability,TourStart,TourEnd,TourPrice,CategoryId1,CategoryId2,MaxBooking,BookTimeLimit,CancelDueDate,TourRating,TourImage,TourNote,Deleted")] Tour tour)
         {
             if (SesCheck.SessionChecking())
             {

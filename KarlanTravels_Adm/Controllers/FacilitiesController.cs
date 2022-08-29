@@ -184,7 +184,7 @@ namespace KarlanTravels_Adm.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 Facility facility = db.Facilities.Find(id);
-                if (facility == null)
+                if (facility == null || facility.FacilityId == "none")
                 {
                     return HttpNotFound();
                 }
@@ -259,7 +259,7 @@ namespace KarlanTravels_Adm.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 Facility facility = db.Facilities.Find(id);
-                if (facility == null)
+                if (facility == null || facility.FacilityId == "none")
                 {
                     return HttpNotFound();
                 }
@@ -311,7 +311,7 @@ namespace KarlanTravels_Adm.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 Facility facility = db.Facilities.Find(id);
-                if (facility == null)
+                if (facility == null || facility.FacilityId == "none")
                 {
                     return HttpNotFound();
                 }

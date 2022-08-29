@@ -25,12 +25,32 @@ namespace KarlanTravels_Adm.Models
         [Column(TypeName = "money")]
         public decimal TransactionFee { get; set; }
 
+        public bool Canceled { get; set; }
+
         public bool Paid { get; set; }
 
         [Required]
         [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd HH:mm}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:HH:mm MM/dd/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime RecordedTime { get; set; }
+
+        public DateTime DueDate { get; set; }
+
+        [NotMapped]
+        [DataType(DataType.DateTime)]
+        [Display(Name ="DueDate")]
+        [DisplayFormat(DataFormatString = "{0:HH:mm MM/dd/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime _dueDate
+        {
+            get
+            {
+                return DueDate;
+            }
+            set
+            {
+                DueDate = value.AddDays(7);
+            }
+        }
 
         [StringLength(255)]
         public string TransactionNote { get; set; }

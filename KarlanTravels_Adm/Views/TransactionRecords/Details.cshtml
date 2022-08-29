@@ -50,6 +50,16 @@
             @Html.DisplayFor(model => model.TransactionFee)
         </dd>
 
+        @if (Model.TransactionType.TransactionTypeId != "CANCL_EARL" && Model.TransactionType.TransactionTypeId != "CANCL_LATE")
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Canceled)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Canceled)
+            </dd>
+        }
         <dt>
             @Html.DisplayNameFor(model => model.Paid)
         </dt>
@@ -64,6 +74,14 @@
 
         <dd>
             @Html.DisplayFor(model => model.RecordedTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model._dueDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model._dueDate)
         </dd>
 
         <dt>

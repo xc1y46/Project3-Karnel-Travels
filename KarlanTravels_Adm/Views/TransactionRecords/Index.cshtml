@@ -47,6 +47,7 @@
         <option value="Tour">Tour</option>
         <option value="RecordedTime">Recorded Time</option>
         <option value="Paid">Paid</option>
+        <option value="Cancel">Canceled</option>
     </select>
 
     <select name="SortOdr" id="SortOdr">
@@ -98,10 +99,18 @@
             @Html.DisplayNameFor(model => model.FirstOrDefault().TransactionFee)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Canceled)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().Paid)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().RecordedTime)
+            (month/day/year)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault()._dueDate)
+            (month/day/year)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().TransactionNote)
@@ -131,10 +140,19 @@
                 @Html.DisplayFor(modelItem => item.TransactionFee)
             </td>
             <td>
+                @if (item.TransactionType.TransactionTypeId != "CANCL_EARL" && item.TransactionType.TransactionTypeId != "CANCL_LATE")
+                {
+                    @Html.DisplayFor(modelItem => item.Canceled)
+                }
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Paid)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RecordedTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item._dueDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TransactionNote)

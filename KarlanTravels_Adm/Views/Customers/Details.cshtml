@@ -67,11 +67,35 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.AmountToRefund)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AmountToRefund)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Violations)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Violations)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.CustomerNote)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.CustomerNote)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BlackListed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BlackListed)
         </dd>
 
         @if (Session["AdminRole"].ToString() == "Senior Manager")

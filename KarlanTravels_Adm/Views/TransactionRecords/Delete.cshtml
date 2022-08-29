@@ -56,6 +56,17 @@ else
                 @Html.DisplayFor(model => model.TransactionFee)
             </dd>
 
+            @if (Model.TransactionType.TransactionTypeId != "CANCL_EARL" && Model.TransactionType.TransactionTypeId != "CANCL_LATE")
+            {
+                <dt>
+                    @Html.DisplayNameFor(model => model.Canceled)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Canceled)
+                </dd>
+            }
+
             <dt>
                 @Html.DisplayNameFor(model => model.Paid)
             </dt>
@@ -70,6 +81,14 @@ else
 
             <dd>
                 @Html.DisplayFor(model => model.RecordedTime)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model._dueDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model._dueDate)
             </dd>
 
             <dt>
@@ -93,8 +112,10 @@ else
         @if (!Model.Deleted)
         {
             <input type="submit" value="Delete" class="btn btn-default" />
+
         }
         @Html.ActionLink("Back to List", "Index")
+        <br /><span class="text-danger">@TempData["DelWaring"]</span>
     </div>
     }
 </div>

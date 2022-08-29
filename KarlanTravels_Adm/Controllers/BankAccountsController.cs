@@ -21,7 +21,7 @@ namespace KarlanTravels_Adm.Controllers
         {
             if (SesCheck.SessionChecking())
             {
-                var bankAccounts = db.BankAccounts.Include(b => b.Bank);
+                var bankAccounts = db.BankAccounts.Include(b => b.Bank).Where(b => b.AccountName != "none" && b.AccountNumber != "0");
 
 
                 if (String.IsNullOrEmpty(ShowDel))
@@ -122,7 +122,7 @@ namespace KarlanTravels_Adm.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 BankAccount bankAccount = db.BankAccounts.Find(id);
-                if (bankAccount == null)
+                if (bankAccount == null || bankAccount.AccountName != "none" || bankAccount.AccountNumber != "0")
                 {
                     return HttpNotFound();
                 }
@@ -195,7 +195,7 @@ namespace KarlanTravels_Adm.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 BankAccount bankAccount = db.BankAccounts.Find(id);
-                if (bankAccount == null)
+                if (bankAccount == null || bankAccount.AccountName != "none" || bankAccount.AccountNumber != "0")
                 {
                     return HttpNotFound();
                 }
@@ -251,7 +251,7 @@ namespace KarlanTravels_Adm.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 BankAccount bankAccount = db.BankAccounts.Find(id);
-                if (bankAccount == null)
+                if (bankAccount == null || bankAccount.AccountName != "none" || bankAccount.AccountNumber != "0")
                 {
                     return HttpNotFound();
                 }

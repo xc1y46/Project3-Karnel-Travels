@@ -181,7 +181,7 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CustomerId,Username,Email,Phone,BankAccountId,CityId,UserPassword,AmountToPay,CustomerNote")] Customer customer)
+        public ActionResult Create([Bind(Include = "CustomerId,Username,Email,Phone,BankAccountId,CityId,UserPassword,AmountToPay,AmountToRefund,Violations,CustomerNote")] Customer customer)
         {
             if (SesCheck.SessionChecking())
             {
@@ -205,7 +205,7 @@ namespace KarlanTravels_Adm.Controllers
                         TempData["PhoneWarning"] = $"The phone number \"{customer.Phone}\" is already in use";
                         return RedirectToAction("Create");
                     }
-                    temp = db.Customers.Where(a => a.BankAccountId == customer.BankAccountId && a.Deleted == false).FirstOrDefault();
+                    temp = db.Customers.Where(a => a.BankAccountId == customer.BankAccountId && a.Deleted == false && a.BankAccount.AccountName != "none" && a.BankAccount.AccountNumber != "0").FirstOrDefault();
                     if (temp != null)
                     {
                         TempData["BankAccWarning"] = $"The bank account is already in use";
@@ -246,14 +246,6 @@ namespace KarlanTravels_Adm.Controllers
                 }
                 ViewBag.BankAccountId = new SelectList(db.BankAccounts, "BankAccountId", "AccountName", customer.BankAccountId);
                 ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", customer.CityId);
-
-                List<TransactionRecord> temp = db.TransactionRecords.Where(t => t.CustomerID == customer.CustomerId && t.Paid == false).ToList();
-                decimal total = 0;
-                for (int i = 0; i < temp.Count; i++)
-                {
-                    total += temp[i].TransactionFee;
-                }
-                TempData["AmountToPay"] = $"The correct amount according to transaction records is: {total}";
                 return View(customer);
             }
             else
@@ -270,7 +262,7 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CustomerId,Username,Email,Phone,BankAccountId,CityId,UserPassword,AmountToPay,CustomerNote,Deleted")] Customer customer)
+        public ActionResult Edit([Bind(Include = "CustomerId,Username,Email,Phone,BankAccountId,CityId,UserPassword,AmountToPay,AmountToRefund,Violations,CustomerNote,Deleted")] Customer customer)
         {
             if (SesCheck.SessionChecking())
             {
@@ -294,7 +286,7 @@ namespace KarlanTravels_Adm.Controllers
                         TempData["PhoneWarning"] = $"The phone number \"{customer.Phone}\" is already in use";
                         return RedirectToAction("Edit");
                     }
-                    temp = db.Customers.Where(a => a.BankAccountId == customer.BankAccountId && a.Deleted == false && a.CustomerId != customer.CustomerId).FirstOrDefault();
+                    temp = db.Customers.Where(a => a.BankAccountId == customer.BankAccountId && a.Deleted == false && a.CustomerId != customer.CustomerId && a.BankAccount.AccountName != "none" && a.BankAccount.AccountNumber != "0").FirstOrDefault();
                     if (temp != null)
                     {
                         TempData["BankAccWarning"] = $"The bank account is already in use";
@@ -349,6 +341,11 @@ namespace KarlanTravels_Adm.Controllers
             if (SesCheck.SessionChecking())
             {
                 Customer customer = db.Customers.Find(id);
+                if(customer.AmountToPay != 0 || customer.AmountToRefund != 0)
+                {
+                    TempData["DelWaring"] = "The customer account still have unfinished payment and currently cannot be deleted";
+                    return RedirectToAction("Delete");
+                }
                 customer.Deleted = true;
                 db.Entry(customer).State = EntityState.Modified;
                 //db.Customers.Remove(customer);

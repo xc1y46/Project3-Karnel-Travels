@@ -183,7 +183,7 @@ namespace KarlanTravels_Adm.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 TouristSpot touristSpot = db.TouristSpots.Find(id);
-                if (touristSpot == null)
+                if (touristSpot == null || touristSpot.TouristSpotId == "none")
                 {
                     return HttpNotFound();
                 }
@@ -258,7 +258,7 @@ namespace KarlanTravels_Adm.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 TouristSpot touristSpot = db.TouristSpots.Find(id);
-                if (touristSpot == null)
+                if (touristSpot == null || touristSpot.TouristSpotId == "none")
                 {
                     return HttpNotFound();
                 }
@@ -311,7 +311,7 @@ namespace KarlanTravels_Adm.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 TouristSpot touristSpot = db.TouristSpots.Find(id);
-                if (touristSpot == null)
+                if (touristSpot == null || touristSpot.TouristSpotId == "none")
                 {
                     return HttpNotFound();
                 }

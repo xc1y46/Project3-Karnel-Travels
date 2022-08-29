@@ -29,12 +29,12 @@ namespace KarlanTravels_Adm.Models
         //, ApplyFormatInEditMode = true
         [Required]
         [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:HH:mm dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:HH:mm MM/dd/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime TourStart { get; set; }
 
         [Required]
         [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:HH:mm dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:HH:mm MM/dd/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime TourEnd { get; set; }
 
         [Column(TypeName = "money")]
@@ -56,6 +56,10 @@ namespace KarlanTravels_Adm.Models
         [Display(Name = "Booking time(days)")]
         [Range(7,365)]
         public int BookTimeLimit { get; set; }
+
+        [Required]
+        [Range(7, 365)]
+        public int CancelDueDate { get; set; }
 
         [Required]
         [Range(1,5)]

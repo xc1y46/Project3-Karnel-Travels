@@ -93,9 +93,11 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().TourStart)
+            (month/day/year)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().TourEnd)
+            (month/day/year)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().Category.CategoryName)
@@ -111,6 +113,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().BookTimeLimit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().CancelDueDate)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().TourRating)
@@ -156,6 +161,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BookTimeLimit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CancelDueDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TourRating)

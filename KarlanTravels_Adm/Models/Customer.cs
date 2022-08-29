@@ -21,10 +21,12 @@ namespace KarlanTravels_Adm.Models
         [StringLength(255)]
         public string Username { get; set; }
 
+        [Required]
         [StringLength(255)]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
+        [Required]
         [StringLength(20)]
         [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
@@ -44,8 +46,20 @@ namespace KarlanTravels_Adm.Models
         [Column(TypeName = "money")]
         public decimal AmountToPay { get; set; }
 
+        [Required]
+        [Column(TypeName = "money")]
+        public decimal AmountToRefund { get; set; }
+
+        [NotMapped]
+        public int maxViolations = 5;
+
+        [Range(0,3)]
+        public int Violations { get; set; }
+
         [StringLength(255)]
         public string CustomerNote { get; set; }
+
+        public bool BlackListed { get; set; }
 
         public bool Deleted { get; set; }
 

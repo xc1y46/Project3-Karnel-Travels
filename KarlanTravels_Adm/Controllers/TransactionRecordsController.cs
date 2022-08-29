@@ -120,6 +120,11 @@ namespace KarlanTravels_Adm.Controllers
                             transactionRecords = transactionRecords.OrderByDescending(t => t.Paid);
                             break;
                         }
+                    case "CancelDes":
+                        {
+                            transactionRecords = transactionRecords.OrderByDescending(t => t.Canceled);
+                            break;
+                        }
                     case "CustomerAsc":
                         {
                             transactionRecords = transactionRecords.OrderBy(t => t.Customer.Username);
@@ -148,6 +153,11 @@ namespace KarlanTravels_Adm.Controllers
                     case "PaidAsc":
                         {
                             transactionRecords = transactionRecords.OrderBy(t => t.Paid);
+                            break;
+                        }
+                    case "CancelAsc":
+                        {
+                            transactionRecords = transactionRecords.OrderBy(t => t.Canceled);
                             break;
                         }
                     default:
@@ -197,7 +207,7 @@ namespace KarlanTravels_Adm.Controllers
             {
                 ViewBag.CustomerID = new SelectList(db.Customers.Where(c => c.Deleted == false), "CustomerId", "Username");
                 ViewBag.TourId = new SelectList(db.Tours.Where(t => t.TourAvailability == true && t.Deleted == false), "TourId", "TourName");
-                ViewBag.TransactionTypeId = new SelectList(db.TransactionTypes.Where(t => t.Deleted == false), "TransactionTypeId", "TransactionTypeName");
+                ViewBag.TransactionTypeId = new SelectList(db.TransactionTypes.Where(t => t.Deleted == false && t.TransactionTypeId != "PURCHSE"), "TransactionTypeId", "TransactionTypeName");
                 return View();
             }
             else
@@ -219,25 +229,151 @@ namespace KarlanTravels_Adm.Controllers
                 if (ModelState.IsValid)
                 {
                     Tour tours = db.Tours.Where(t => t.TourId == transactionRecord.TourId).First();
-                    List<TransactionRecord> temp = db.TransactionRecords.AsNoTracking().Where(t => t.TourId == tours.TourId && t.TransactionTypeId == "DEPOSIT").ToList();
+                    List<TransactionRecord> temp = db.TransactionRecords.AsNoTracking().Where(t => t.TourId == tours.TourId && t.TransactionTypeId == "DEPOSIT" && t.Deleted == false && t.Canceled == false).ToList();
                     DateTime limitDate = tours.TourStart.Subtract(new TimeSpan(tours.BookTimeLimit, 0, 0, 0));
+                    Customer customer = db.Customers.Where(c => c.CustomerId == transactionRecord.CustomerID).First();
+                    DateTime tourDueTime = tours.TourStart.Subtract(new TimeSpan(tours.CancelDueDate, 0, 0, 0));
 
-                    if (DateTime.Now.Date > limitDate.Date && transactionRecord.TransactionTypeId != "CANCL_EARL" && transactionRecord.TransactionTypeId != "CANCL_LATE")
+                    if (customer.BlackListed && transactionRecord.TransactionTypeId == "DEPOSIT")
                     {
-                        TempData["TourWarning"] = $"The \"{tours.TourName}\" tour booking period has been closed (before {limitDate.Date})";
+                        TempData["TourWarning"] = $"The user {customer.Username} account has been blacklisted ({customer.maxViolations}) and cannot purchase any service";
                         return RedirectToAction("Create");
                     }
 
-                    if (temp.Count >= tours.MaxBooking && transactionRecord.TransactionTypeId != "CANCL_EARL" && transactionRecord.TransactionTypeId != "CANCL_LATE")
+                    if (DateTime.Now.Date > limitDate.Date && transactionRecord.TransactionTypeId == "DEPOSIT")
+                    {
+                        TempData["TourWarning"] = $"The \"{tours.TourName}\" tour booking period has been closed after {limitDate.Date.ToString("MM/dd/yyyy")})";
+                        return RedirectToAction("Create");
+                    }
+
+                    if (temp.Count >= tours.MaxBooking && transactionRecord.TransactionTypeId == "DEPOSIT")
                     {
                         TempData["TourWarning"] = $"The \"{tours.TourName}\" tour has already reach the booking limit ({tours.MaxBooking})";
                         return RedirectToAction("Create");
                     }
+
+                    temp = db.TransactionRecords.AsNoTracking().Where(t => t.TourId == tours.TourId && t.TransactionTypeId == "DEPOSIT" && t.CustomerID == transactionRecord.CustomerID && t.Deleted == false && t.Canceled == false).ToList();
+
+                    if (temp.Count != 0 && transactionRecord.TransactionTypeId == "DEPOSIT")
+                    {
+                        TempData["TourWarning"] = $"The user has already purchased the \"{tours.TourName}\" tour";
+                        return RedirectToAction("Create");
+                    }
+
+                    temp = db.TransactionRecords.AsNoTracking().Where(t => t.TourId == tours.TourId && t.CustomerID == transactionRecord.CustomerID && t.TransactionTypeId == "DEPOSIT" && t.Canceled == false && t.Deleted == false).ToList();
+
+                    if (temp.Count == 0 && (transactionRecord.TransactionTypeId == "CANCL_EARL" || transactionRecord.TransactionTypeId == "CANCL_LATE"))
+                    {
+                        TempData["TourWarning"] = $"The customer doesn't have any active record of purchasing the {tours.TourName} tour therefore it can't be canceled";
+                        return RedirectToAction("Create");
+                    }
+
+                    if (transactionRecord.TransactionTypeId == "CANCL_EARL" && DateTime.Now.Date > tourDueTime.Date)
+                    {
+                        TempData["TourWarning"] = $"Tour's cancelation is currently late (after { tourDueTime.Date.ToString("MM/dd/yyyy")})";
+                        return RedirectToAction("Create");
+                    }
+
+                    if(transactionRecord.TransactionTypeId == "CANCL_LATE" && DateTime.Now.Date <= tourDueTime.Date)
+                    {
+                        TempData["TourWarning"] = $"Tour's cancelation is currently early (before { tourDueTime.Date.ToString("MM/dd/yyyy")})";
+                        return RedirectToAction("Create");
+                    }
+
                     TransactionType transactionTypes = db.TransactionTypes.Where(t => t.TransactionTypeId == transactionRecord.TransactionTypeId).First();
                     transactionRecord.TransactionFee = tours.TourPrice * (decimal)transactionTypes.TransactionPriceRate;
                     transactionRecord.RecordedTime = DateTime.Now;
+                    transactionRecord._dueDate = DateTime.Now;
                     transactionRecord.AdminId = (int)Session["AdminId"];
-                    db.TransactionRecords.Add(transactionRecord);
+                    customer.AmountToPay += transactionRecord.TransactionFee;
+
+                    switch (transactionRecord.TransactionTypeId)
+                    {
+                        
+                        case "DEPOSIT":
+                        {
+                            db.TransactionRecords.Add(transactionRecord);
+
+                            transactionTypes = db.TransactionTypes.Where(t => t.TransactionTypeId == "PURCHSE").First();
+                            TransactionRecord PendingPurchase = new TransactionRecord
+                            {
+                                TransactionTypeId = "PURCHSE",
+                                TourId = transactionRecord.TourId,
+                                CustomerID = transactionRecord.CustomerID,
+                                TransactionFee = tours.TourPrice * (decimal)transactionTypes.TransactionPriceRate,
+                                RecordedTime = DateTime.Now,
+                                _dueDate = DateTime.Now,
+                                AdminId = (int)Session["AdminId"]
+                            };
+                            db.TransactionRecords.Add(PendingPurchase);
+                            customer.AmountToPay += PendingPurchase.TransactionFee;
+                            break;
+                        }
+                        case "CANCL_EARL":
+                        {
+                            transactionRecord.Paid = true;
+                            db.TransactionRecords.Add(transactionRecord);
+
+                            TransactionRecord currentBook = db.TransactionRecords.Where(t => t.TourId == tours.TourId && t.CustomerID == transactionRecord.CustomerID && t.TransactionTypeId == "DEPOSIT" && t.Canceled == false && t.Deleted == false).First();
+                            TransactionRecord currentPurchase = db.TransactionRecords.Where(t => t.TourId == tours.TourId && t.CustomerID == transactionRecord.CustomerID && t.TransactionTypeId == "PURCHSE" && t.Canceled == false && t.Deleted == false).First();
+                            currentBook.Canceled = true;
+                            currentPurchase.Canceled = true;
+
+                            if (currentBook.Paid)
+                            {
+                                customer.AmountToRefund += currentBook.TransactionFee;
+                            }
+                            else
+                            {
+                                customer.AmountToPay -= currentBook.TransactionFee;
+                                customer = SesCheck.CustomerRefundCheck(customer);
+                            }
+                            
+                            if (currentPurchase.Paid)
+                            {
+                                customer.AmountToRefund += currentPurchase.TransactionFee;
+                            }
+                            else
+                            {
+                                customer.AmountToPay -= currentPurchase.TransactionFee;
+                                customer = SesCheck.CustomerRefundCheck(customer);
+                            }
+                            db.Entry(currentBook).State = EntityState.Modified;
+                            db.Entry(currentPurchase).State = EntityState.Modified;
+                            break;
+                        }
+                        case "CANCL_LATE":
+                        {
+                            db.TransactionRecords.Add(transactionRecord);
+
+                            TransactionRecord currentBook = db.TransactionRecords.Where(t => t.TourId == tours.TourId && t.CustomerID == transactionRecord.CustomerID && t.TransactionTypeId == "DEPOSIT" && t.Canceled == false && t.Deleted == false).First();
+                            TransactionRecord currentPurchase = db.TransactionRecords.Where(t => t.TourId == tours.TourId && t.CustomerID == transactionRecord.CustomerID && t.TransactionTypeId == "PURCHSE" && t.Canceled == false && t.Deleted == false).First();
+                            currentBook.Canceled = true;
+                            currentPurchase.Canceled = true;
+
+                            customer = SesCheck.CustomerViolation(customer);
+
+                            if (currentPurchase.Paid)
+                            {
+                                customer.AmountToRefund += currentPurchase.TransactionFee;
+                            }
+                            else
+                            {
+                                customer.AmountToPay -= currentPurchase.TransactionFee;
+                                customer = SesCheck.CustomerRefundCheck(customer);
+                            }
+                            db.Entry(currentBook).State = EntityState.Modified;
+                            db.Entry(currentPurchase).State = EntityState.Modified;
+                            break;
+                        }
+                        default:
+                        {
+                            TempData["TourWarning"] = "Something went wrong";
+                            return RedirectToAction("Create");
+                        }
+                    }
+
+                    db.Entry(customer).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
@@ -288,29 +424,32 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TransactionRecordId,TransactionTypeId,TourId,CustomerID,TransactionFee,Paid,RecordedTime,TransactionNote,Deleted")] TransactionRecord transactionRecord)
+        public ActionResult Edit([Bind(Include = "TransactionRecordId,TransactionTypeId,TourId,CustomerID,TransactionFee,Paid,RecordedTime,_dueDate,TransactionNote,Canceled,Deleted")] TransactionRecord transactionRecord)
         {
             if (SesCheck.SessionChecking())
             {
                 if (ModelState.IsValid)
                 {
-                    Tour tours = db.Tours.Where(t => t.TourId == transactionRecord.TourId).First();
-                    List<TransactionRecord> temp = db.TransactionRecords.AsNoTracking().Where(t => t.TourId == tours.TourId && t.TransactionTypeId == "DEPOSIT").ToList();
-                    DateTime limitDate = tours.TourStart.Subtract(new TimeSpan(tours.BookTimeLimit, 0, 0, 0));
-
-                    if (DateTime.Now.Date > limitDate.Date && transactionRecord.TransactionTypeId != "CANCL_EARL" && transactionRecord.TransactionTypeId != "CANCL_LATE")
+                    TransactionRecord temp = db.TransactionRecords.AsNoTracking().Where(t => t.TransactionRecordId == transactionRecord.TransactionRecordId).First();
+                    if (temp.Paid != transactionRecord.Paid && transactionRecord.TransactionTypeId != "CANCL_EARL")
                     {
-                        TempData["TourWarning"] = $"The \"{tours.TourName}\" tour booking period has been closed (before {limitDate.Date})";
-                        return RedirectToAction("Edit");
+                        Customer customer = db.Customers.Where(c => c.CustomerId == transactionRecord.CustomerID).First();
+                        if (!temp.Paid)
+                        {
+                            customer.AmountToPay -= transactionRecord.TransactionFee;
+                            customer = SesCheck.CustomerRefundCheck(customer);
+                            if(DateTime.Now > transactionRecord._dueDate)
+                            {
+                                customer = SesCheck.CustomerViolation(customer);
+                            }
+                        }
+                        else
+                        {
+                            customer.AmountToPay += transactionRecord.TransactionFee;
+                        }
+                        db.Entry(customer).State = EntityState.Modified;
                     }
-
-                    if (temp.Count >= tours.MaxBooking && transactionRecord.TransactionTypeId != "CANCL_EARL" && transactionRecord.TransactionTypeId != "CANCL_LATE")
-                    {
-                        TempData["TourWarning"] = $"The \"{tours.TourName}\" tour has already reach the booking limit ({tours.MaxBooking})";
-                        return RedirectToAction("Edit");
-                    }
-                    TransactionType transactionTypes =  db.TransactionTypes.AsNoTracking().Where(t => t.TransactionTypeId == transactionRecord.TransactionTypeId).First();
-                    transactionRecord.TransactionFee = tours.TourPrice * (decimal)transactionTypes.TransactionPriceRate;
+                    temp = null;
                     transactionRecord.AdminId = (int)Session["AdminId"];
                     db.Entry(transactionRecord).State = EntityState.Modified;
                     db.SaveChanges();
@@ -361,6 +500,11 @@ namespace KarlanTravels_Adm.Controllers
             if (SesCheck.SessionChecking())
             {
                 TransactionRecord transactionRecord = db.TransactionRecords.Find(id);
+                if (!transactionRecord.Paid)
+                {
+                    TempData["DelWaring"] = "Transaction has not been paid and currently cannot be deleted";
+                    return RedirectToAction("Delete");
+                }
                 transactionRecord.Deleted = true;
                 db.Entry(transactionRecord).State = EntityState.Modified;
                 //db.TransactionRecords.Remove(transactionRecord);
