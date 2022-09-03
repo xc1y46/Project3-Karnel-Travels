@@ -236,8 +236,8 @@ namespace KarlanTravels_Adm.Controllers
                     return RedirectToAction("Index");
                 }
 
-                ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", touristSpot.CityId);
-                ViewBag.SubCategoryId = new SelectList(db.SubCategories, "SubCategoryId", "SubCategoryName", touristSpot.SubCategoryId);
+                ViewBag.CityId = new SelectList(db.Cities.Where(a => !a.Deleted), "CityId", "CityName", touristSpot.CityId);
+                ViewBag.SubCategoryId = new SelectList(db.SubCategories.Where(a => !a.Deleted), "SubCategoryId", "SubCategoryName", touristSpot.SubCategoryId);
                 return View(touristSpot);
             }
             else
@@ -262,8 +262,8 @@ namespace KarlanTravels_Adm.Controllers
                 {
                     return HttpNotFound();
                 }
-                ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", touristSpot.CityId);
-                ViewBag.SubCategoryId = new SelectList(db.SubCategories, "SubCategoryId", "SubCategoryName", touristSpot.SubCategoryId);
+                ViewBag.CityId = new SelectList(db.Cities.Where(a => !a.Deleted), "CityId", "CityName", touristSpot.CityId);
+                ViewBag.SubCategoryId = new SelectList(db.SubCategories.Where(a => !a.Deleted), "SubCategoryId", "SubCategoryName", touristSpot.SubCategoryId);
                 return View(touristSpot);
             }
             else
@@ -289,8 +289,8 @@ namespace KarlanTravels_Adm.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", touristSpot.CityId);
-                ViewBag.SubCategoryId = new SelectList(db.SubCategories, "SubCategoryId", "SubCategoryName", touristSpot.SubCategoryId);
+                ViewBag.CityId = new SelectList(db.Cities.Where(a => !a.Deleted), "CityId", "CityName", touristSpot.CityId);
+                ViewBag.SubCategoryId = new SelectList(db.SubCategories.Where(a => !a.Deleted), "SubCategoryId", "SubCategoryName", touristSpot.SubCategoryId);
                 return View(touristSpot);
             }
             else

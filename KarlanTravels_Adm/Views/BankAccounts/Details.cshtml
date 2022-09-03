@@ -19,14 +19,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Bank.BankName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Bank.BankName)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.AccountName)
         </dt>
 
@@ -42,6 +34,21 @@
             @Html.DisplayFor(model => model.AccountNumber)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Balance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Balance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Bank.BankName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bank.BankName)
+        </dd>
         @if (Session["AdminRole"].ToString() == "Senior Manager")
         {
             <dt>
@@ -52,7 +59,7 @@
                 @Html.DisplayFor(model => model.Deleted)
             </dd>
         }
-        </dl>
+    </dl>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.BankAccountId }) |

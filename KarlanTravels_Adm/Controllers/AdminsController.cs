@@ -125,7 +125,7 @@ namespace KarlanTravels_Adm.Controllers
         {
             if (SesCheck.SessionChecking())
             {
-                ViewBag.RoleId = new SelectList(db.AdminRoles.Where(a => a.Deleted == false), "RoleId", "RoleName");
+                ViewBag.RoleId = new SelectList(db.AdminRoles.Where(a => !a.Deleted), "RoleId", "RoleName");
                 return View();
             }
             else
@@ -159,7 +159,7 @@ namespace KarlanTravels_Adm.Controllers
                     return RedirectToAction("Index");
                 }
 
-                ViewBag.RoleId = new SelectList(db.AdminRoles, "RoleId", "RoleName", admin.RoleId);
+                ViewBag.RoleId = new SelectList(db.AdminRoles.Where(a => !a.Deleted), "RoleId", "RoleName", admin.RoleId);
                 return View(admin);
             }
             else
@@ -184,7 +184,7 @@ namespace KarlanTravels_Adm.Controllers
                 {
                     return HttpNotFound();
                 }
-                ViewBag.RoleId = new SelectList(db.AdminRoles, "RoleId", "RoleName", admin.RoleId);
+                ViewBag.RoleId = new SelectList(db.AdminRoles.Where(a => !a.Deleted), "RoleId", "RoleName", admin.RoleId);
                 return View(admin);
             }
             else
@@ -199,7 +199,7 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AdminId,AdminName,AdminPassword,RoleId,AdminNote,IsActive,Deleted")] Admin admin)
+        public ActionResult Edit([Bind(Include = "AdminId,AdminName,AdminPassword,RoleId,AdminNote,Deleted")] Admin admin)
         {
             if (SesCheck.SessionChecking())
             {
@@ -216,7 +216,7 @@ namespace KarlanTravels_Adm.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                ViewBag.RoleId = new SelectList(db.AdminRoles, "RoleId", "RoleName", admin.RoleId);
+                ViewBag.RoleId = new SelectList(db.AdminRoles.Where(a => !a.Deleted), "RoleId", "RoleName", admin.RoleId);
                 return View(admin);
             }
             else

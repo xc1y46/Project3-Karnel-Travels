@@ -34,9 +34,7 @@ namespace KarlanTravels.Controllers
             else
             {
                 string tempPw = SesCheck.HashPW(AdminPassword);
-                CurrentAdmin = CurrentAdmin.Where(a => a.AdminName == AdminName)
-                                           .Where(a => a.AdminPassword == tempPw)
-                                           .Where(a => a.Deleted == false);
+                CurrentAdmin = CurrentAdmin.Where(a => a.AdminName == AdminName && a.AdminPassword == tempPw && a.Deleted == false);
 
                 if (CurrentAdmin.FirstOrDefault() != null)
                 {
@@ -62,11 +60,6 @@ namespace KarlanTravels.Controllers
             if (SesCheck.SessionChecking())
             {
                 Session["WelcomeMessage"] = $"Welcome {Session["AdminRole"]} {Session["AdminName"]}";
-
-                Admin adm = db.Admins.Find(Session["AdminId"]);
-                adm.IsActive = true;
-                db.Entry(adm).State = EntityState.Modified;
-                db.SaveChanges();
                 return View();
             }
             else

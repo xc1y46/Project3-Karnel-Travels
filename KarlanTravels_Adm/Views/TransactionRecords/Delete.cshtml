@@ -33,19 +33,19 @@ else
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.TransactionType.TransactionTypeName)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.TransactionType.TransactionTypeName)
-            </dd>
-
-            <dt>
                 @Html.DisplayNameFor(model => model.Tour.TourName)
             </dt>
 
             <dd>
                 @Html.DisplayFor(model => model.Tour.TourName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Quantity)
             </dd>
 
             <dt>
@@ -56,16 +56,13 @@ else
                 @Html.DisplayFor(model => model.TransactionFee)
             </dd>
 
-            @if (Model.TransactionType.TransactionTypeId != "CANCL_EARL" && Model.TransactionType.TransactionTypeId != "CANCL_LATE")
-            {
-                <dt>
-                    @Html.DisplayNameFor(model => model.Canceled)
-                </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Canceled)
+            </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Canceled)
-                </dd>
-            }
+            <dd>
+                @Html.DisplayFor(model => model.Canceled)
+            </dd>
 
             <dt>
                 @Html.DisplayNameFor(model => model.Paid)
@@ -84,11 +81,11 @@ else
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model._dueDate)
+                @Html.DisplayNameFor(model => model.DueDate)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model._dueDate)
+                @Html.DisplayFor(model => model.DueDate)
             </dd>
 
             <dt>

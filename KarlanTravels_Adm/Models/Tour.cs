@@ -37,6 +37,7 @@ namespace KarlanTravels_Adm.Models
         [DisplayFormat(DataFormatString = "{0:HH:mm MM/dd/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime TourEnd { get; set; }
 
+        [Required]
         [Column(TypeName = "money")]
         public decimal TourPrice { get; set; }
 
@@ -50,16 +51,12 @@ namespace KarlanTravels_Adm.Models
         public string CategoryId2 { get; set; }
 
         [Required]
-        [Range(1,200)]
+        [Range(1,1000)]
         public int MaxBooking { get; set; }
 
         [Display(Name = "Booking time(days)")]
         [Range(7,365)]
         public int BookTimeLimit { get; set; }
-
-        [Required]
-        [Range(7, 365)]
-        public int CancelDueDate { get; set; }
 
         [Required]
         [Range(1,5)]

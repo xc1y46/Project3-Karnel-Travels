@@ -103,9 +103,6 @@
             @Html.DisplayNameFor(model => model.FirstOrDefault().Violations)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().BlackListed)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().CustomerNote)
         </th>
         @if (Session["AdminRole"].ToString() == "Senior Manager")
@@ -143,9 +140,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Violations)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BlackListed)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CustomerNote)

@@ -83,6 +83,9 @@
             @Html.DisplayNameFor(model => model.FirstOrDefault().AccountNumber)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Balance)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().Bank.BankName)
         </th>
         @if (Session["AdminRole"].ToString() == "Senior Manager")
@@ -102,6 +105,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AccountNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Balance)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Bank.BankName)

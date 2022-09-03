@@ -27,6 +27,10 @@ namespace KarlanTravels_Adm.Models
         public string AccountNumber { get; set; }
 
         [Required]
+        [Column(TypeName = "money")]
+        public decimal Balance { get; set; }
+
+        [Required]
         [StringLength(40)]
         public string BankId { get; set; }
 

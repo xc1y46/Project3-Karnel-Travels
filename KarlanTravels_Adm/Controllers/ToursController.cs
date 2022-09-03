@@ -222,7 +222,7 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TourId,TourName,TourAvailability,TourStart,TourEnd,TourPrice,CategoryId1,CategoryId2,MaxBooking,BookTimeLimit,CancelDueDate,TourRating,TourImage,TourNote")] Tour tour)
+        public ActionResult Create([Bind(Include = "TourId,TourName,TourAvailability,TourStart,TourEnd,TourPrice,CategoryId1,CategoryId2,MaxBooking,BookTimeLimit,TourRating,TourImage,TourNote")] Tour tour)
         {
             if (SesCheck.SessionChecking())
             {
@@ -250,8 +250,8 @@ namespace KarlanTravels_Adm.Controllers
                     return RedirectToAction("Index");
                 }
 
-                ViewBag.CategoryId1 = new SelectList(db.Categories, "CategoryId", "CategoryName", tour.CategoryId1);
-                ViewBag.CategoryId2 = new SelectList(db.Categories, "CategoryId", "CategoryName", tour.CategoryId2);
+                ViewBag.CategoryId1 = new SelectList(db.Categories.Where(a => !a.Deleted), "CategoryId", "CategoryName", tour.CategoryId1);
+                ViewBag.CategoryId2 = new SelectList(db.Categories.Where(a => !a.Deleted), "CategoryId", "CategoryName", tour.CategoryId2);
                 return View(tour);
             }
             else
@@ -276,8 +276,8 @@ namespace KarlanTravels_Adm.Controllers
                 {
                     return HttpNotFound();
                 }
-                ViewBag.CategoryId1 = new SelectList(db.Categories, "CategoryId", "CategoryName", tour.CategoryId1);
-                ViewBag.CategoryId2 = new SelectList(db.Categories, "CategoryId", "CategoryName", tour.CategoryId2);
+                ViewBag.CategoryId1 = new SelectList(db.Categories.Where(a => !a.Deleted), "CategoryId", "CategoryName", tour.CategoryId1);
+                ViewBag.CategoryId2 = new SelectList(db.Categories.Where(a => !a.Deleted), "CategoryId", "CategoryName", tour.CategoryId2);
                 return View(tour);
             }
             else
@@ -293,7 +293,7 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TourId,TourName,TourAvailability,TourStart,TourEnd,TourPrice,CategoryId1,CategoryId2,MaxBooking,BookTimeLimit,CancelDueDate,TourRating,TourImage,TourNote,Deleted")] Tour tour)
+        public ActionResult Edit([Bind(Include = "TourId,TourName,TourAvailability,TourStart,TourEnd,TourPrice,CategoryId1,CategoryId2,MaxBooking,BookTimeLimit,TourRating,TourImage,TourNote,Deleted")] Tour tour)
         {
             if (SesCheck.SessionChecking())
             {
@@ -313,8 +313,8 @@ namespace KarlanTravels_Adm.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                ViewBag.CategoryId1 = new SelectList(db.Categories, "CategoryId", "CategoryName", tour.CategoryId1);
-                ViewBag.CategoryId2 = new SelectList(db.Categories, "CategoryId", "CategoryName", tour.CategoryId2);
+                ViewBag.CategoryId1 = new SelectList(db.Categories.Where(a => !a.Deleted), "CategoryId", "CategoryName", tour.CategoryId1);
+                ViewBag.CategoryId2 = new SelectList(db.Categories.Where(a => !a.Deleted), "CategoryId", "CategoryName", tour.CategoryId2);
                 return View(tour);
             }
             else

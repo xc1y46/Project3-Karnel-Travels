@@ -84,9 +84,6 @@
         <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().AdminNote)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().IsActive)
-        </th>
         @if (Session["AdminRole"].ToString() == "Senior Manager")
         {
             <th>
@@ -107,9 +104,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AdminNote)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
             </td>
             @if (Session["AdminRole"].ToString() == "Senior Manager")
             {

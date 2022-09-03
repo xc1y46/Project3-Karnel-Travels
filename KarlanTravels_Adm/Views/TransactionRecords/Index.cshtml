@@ -33,16 +33,12 @@
     <span>Search by tours</span>
     @Html.TextBox("SearchStringTour", ViewBag.CurrentSearchTour as string)
     <br /><br />
-    <span>Search by transaction type</span>
-    @Html.TextBox("SearchStringTransactionType", ViewBag.CurrentSearchTransactionType as string)
-    <br /><br />
     <span>(Leave empty to load all)</span>
     <br /><br />
 
     <span>Sort by</span>
     <select name="SortOpt" id="SortOpt">
         <option value="Customer">Customer</option>
-        <option value="Type">Transaction type</option>
         <option value="Fee">Fee</option>
         <option value="Tour">Tour</option>
         <option value="RecordedTime">Recorded Time</option>
@@ -87,13 +83,13 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().TransactionType.TransactionTypeName)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().Customer.Username)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().Tour.TourName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Quantity)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().TransactionFee)
@@ -109,7 +105,7 @@
             (month/day/year)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault()._dueDate)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().DueDate)
             (month/day/year)
         </th>
         <th>
@@ -128,22 +124,19 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.TransactionType.TransactionTypeName)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Customer.Username)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Tour.TourName)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.TransactionFee)
             </td>
             <td>
-                @if (item.TransactionType.TransactionTypeId != "CANCL_EARL" && item.TransactionType.TransactionTypeId != "CANCL_LATE")
-                {
-                    @Html.DisplayFor(modelItem => item.Canceled)
-                }
+                @Html.DisplayFor(modelItem => item.Canceled)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Paid)
@@ -152,7 +145,7 @@
                 @Html.DisplayFor(modelItem => item.RecordedTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item._dueDate)
+                @Html.DisplayFor(modelItem => item.DueDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TransactionNote)
@@ -176,5 +169,5 @@
 
 <div class="pagination" style="margin-left: 400px">
     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-    @Html.PagedListPager(Model, Page => Url.Action("Index", new { Page, SortOpt = ViewBag.CurrentSortOpt, SortOdr = ViewBag.CurrentSortOdr, CurrentShowDel = ViewBag.CurrentShowDel, PageSize = ViewBag.PageSize, CurrentSearchCustomer = ViewBag.CurrentSearchCustomer, CurrentSearchTour = ViewBag.CurrentSearchTour, CurrentSearchTransactionType = ViewBag.CurrentSearchTransactionType }))
+    @Html.PagedListPager(Model, Page => Url.Action("Index", new { Page, SortOpt = ViewBag.CurrentSortOpt, SortOdr = ViewBag.CurrentSortOdr, CurrentShowDel = ViewBag.CurrentShowDel, PageSize = ViewBag.PageSize, CurrentSearchCustomer = ViewBag.CurrentSearchCustomer, CurrentSearchTour = ViewBag.CurrentSearchTour}))
 </div>

@@ -122,7 +122,7 @@ namespace KarlanTravels_Adm.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 BankAccount bankAccount = db.BankAccounts.Find(id);
-                if (bankAccount == null || bankAccount.AccountName != "none" || bankAccount.AccountNumber != "0")
+                if (bankAccount == null || bankAccount.AccountName == "none" || bankAccount.AccountNumber == "0")
                 {
                     return HttpNotFound();
                 }
@@ -157,7 +157,7 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BankAccountId,AccountName,AccountNumber,BankId")] BankAccount bankAccount)
+        public ActionResult Create([Bind(Include = "BankAccountId,AccountName,AccountNumber,Balance,BankId")] BankAccount bankAccount)
         {
             if (SesCheck.SessionChecking())
             {
@@ -174,7 +174,7 @@ namespace KarlanTravels_Adm.Controllers
                     return RedirectToAction("Index");
                 }
 
-                ViewBag.BankId = new SelectList(db.Banks, "BankId", "BankName", bankAccount.BankId);
+                ViewBag.BankId = new SelectList(db.Banks.Where(a => !a.Deleted), "BankId", "BankName", bankAccount.BankId);
                 return View(bankAccount);
             }
             else
@@ -195,11 +195,11 @@ namespace KarlanTravels_Adm.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 BankAccount bankAccount = db.BankAccounts.Find(id);
-                if (bankAccount == null || bankAccount.AccountName != "none" || bankAccount.AccountNumber != "0")
+                if (bankAccount == null || bankAccount.AccountName == "none" || bankAccount.AccountNumber == "0")
                 {
                     return HttpNotFound();
                 }
-                ViewBag.BankId = new SelectList(db.Banks, "BankId", "BankName", bankAccount.BankId);
+                ViewBag.BankId = new SelectList(db.Banks.Where(a => !a.Deleted), "BankId", "BankName", bankAccount.BankId);
                 return View(bankAccount);
             }
             else
@@ -214,7 +214,7 @@ namespace KarlanTravels_Adm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "BankAccountId,AccountName,AccountNumber,BankId,Deleted")] BankAccount bankAccount)
+        public ActionResult Edit([Bind(Include = "BankAccountId,AccountName,AccountNumber,Balance,BankId,Deleted")] BankAccount bankAccount)
         {
             if (SesCheck.SessionChecking())
             {
@@ -230,7 +230,7 @@ namespace KarlanTravels_Adm.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                ViewBag.BankId = new SelectList(db.Banks, "BankId", "BankName", bankAccount.BankId);
+                ViewBag.BankId = new SelectList(db.Banks.Where(a => !a.Deleted), "BankId", "BankName", bankAccount.BankId);
                 return View(bankAccount);
             }
             else
@@ -251,7 +251,7 @@ namespace KarlanTravels_Adm.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 BankAccount bankAccount = db.BankAccounts.Find(id);
-                if (bankAccount == null || bankAccount.AccountName != "none" || bankAccount.AccountNumber != "0")
+                if (bankAccount == null || bankAccount.AccountName == "none" || bankAccount.AccountNumber == "0")
                 {
                     return HttpNotFound();
                 }

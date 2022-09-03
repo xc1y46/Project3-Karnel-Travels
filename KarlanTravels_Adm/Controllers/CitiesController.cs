@@ -181,7 +181,7 @@ namespace KarlanTravels_Adm.Controllers
                     return RedirectToAction("Index");
                 }
 
-                ViewBag.CountryId = new SelectList(db.Countries, "CountryId", "CountryName", city.CountryId);
+                ViewBag.CountryId = new SelectList(db.Countries.Where(a => !a.Deleted), "CountryId", "CountryName", city.CountryId);
                 return View(city);
             }
             else
@@ -206,7 +206,7 @@ namespace KarlanTravels_Adm.Controllers
                 {
                     return HttpNotFound();
                 }
-                ViewBag.CountryId = new SelectList(db.Countries, "CountryId", "CountryName", city.CountryId);
+                ViewBag.CountryId = new SelectList(db.Countries.Where(a => !a.Deleted), "CountryId", "CountryName", city.CountryId);
                 return View(city);
             }
             else
@@ -232,7 +232,7 @@ namespace KarlanTravels_Adm.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                ViewBag.CountryId = new SelectList(db.Countries, "CountryId", "CountryName", city.CountryId);
+                ViewBag.CountryId = new SelectList(db.Countries.Where(a => !a.Deleted), "CountryId", "CountryName", city.CountryId);
                 return View(city);
             }
             else

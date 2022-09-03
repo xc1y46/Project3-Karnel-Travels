@@ -28,7 +28,6 @@ namespace KarlanTravels_Adm.Models
         public virtual DbSet<TourDetail> TourDetails { get; set; }
         public virtual DbSet<TouristSpot> TouristSpots { get; set; }
         public virtual DbSet<TransactionRecord> TransactionRecords { get; set; }
-        public virtual DbSet<TransactionType> TransactionTypes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -85,7 +84,7 @@ namespace KarlanTravels_Adm.Models
 
             modelBuilder.Entity<Customer>()
                 .Property(e => e.AmountToPay)
-                .HasPrecision(19, 4);
+                .HasPrecision(20, 6);
 
             modelBuilder.Entity<Customer>()
                 .HasMany(e => e.TransactionRecords)
@@ -109,7 +108,7 @@ namespace KarlanTravels_Adm.Models
 
             modelBuilder.Entity<Tour>()
                 .Property(e => e.TourPrice)
-                .HasPrecision(19, 4);
+                .HasPrecision(20, 6);
 
             modelBuilder.Entity<Tour>()
                 .HasMany(e => e.TourDetails)
@@ -128,12 +127,7 @@ namespace KarlanTravels_Adm.Models
 
             modelBuilder.Entity<TransactionRecord>()
                 .Property(e => e.TransactionFee)
-                .HasPrecision(19, 4);
-
-            modelBuilder.Entity<TransactionType>()
-                .HasMany(e => e.TransactionRecords)
-                .WithRequired(e => e.TransactionType)
-                .WillCascadeOnDelete(false);
+                .HasPrecision(20, 6);
         }
     }
 }

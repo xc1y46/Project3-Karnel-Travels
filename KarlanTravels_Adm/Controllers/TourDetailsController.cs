@@ -240,7 +240,7 @@ namespace KarlanTravels_Adm.Controllers
 
                     if (tourDetail.ActivityTimeStart < tour.TourStart || tourDetail.ActivityTimeStart > tour.TourEnd || tourDetail.ActivityTimeEnd > tour.TourEnd)
                     {
-                        TempData["ActivityEndWarning"] = $"Activity time is outside of the tour schedule ({tour.TourStart} to {tour.TourEnd})";
+                        TempData["ActivityEndWarning"] = $"Activity time is outside of the tour schedule ({tour.TourStart.ToString("HH:mm MM/dd/yyyy")} to {tour.TourEnd.ToString("HH:mm MM/dd/yyyy")})";
                         return RedirectToAction("Create");
                     }
 
@@ -261,9 +261,9 @@ namespace KarlanTravels_Adm.Controllers
                     return RedirectToAction("Index");
                 }
 
-                ViewBag.FacilityId = new SelectList(db.Facilities, "FacilityId", "FacilityName", tourDetail.FacilityId);
-                ViewBag.TourId = new SelectList(db.Tours, "TourId", "TourName", tourDetail.TourId);
-                ViewBag.TouristSpotId = new SelectList(db.TouristSpots, "TouristSpotId", "TouristSpotName", tourDetail.TouristSpotId);
+                ViewBag.FacilityId = new SelectList(db.Facilities.Where(a => !a.Deleted && a.FacilityAvailability), "FacilityId", "FacilityName", tourDetail.FacilityId);
+                ViewBag.TourId = new SelectList(db.Tours.Where(a => !a.Deleted && a.TourAvailability), "TourId", "TourName", tourDetail.TourId);
+                ViewBag.TouristSpotId = new SelectList(db.TouristSpots.Where(a => !a.Deleted && a.TouristSpotAvailability), "TouristSpotId", "TouristSpotName", tourDetail.TouristSpotId);
                 return View(tourDetail);
             }
             else
@@ -288,9 +288,9 @@ namespace KarlanTravels_Adm.Controllers
                 {
                     return HttpNotFound();
                 }
-                ViewBag.FacilityId = new SelectList(db.Facilities, "FacilityId", "FacilityName", tourDetail.FacilityId);
-                ViewBag.TourId = new SelectList(db.Tours, "TourId", "TourName", tourDetail.TourId);
-                ViewBag.TouristSpotId = new SelectList(db.TouristSpots, "TouristSpotId", "TouristSpotName", tourDetail.TouristSpotId);
+                ViewBag.FacilityId = new SelectList(db.Facilities.Where(a => !a.Deleted && a.FacilityAvailability), "FacilityId", "FacilityName", tourDetail.FacilityId);
+                ViewBag.TourId = new SelectList(db.Tours.Where(a => !a.Deleted && a.TourAvailability), "TourId", "TourName", tourDetail.TourId);
+                ViewBag.TouristSpotId = new SelectList(db.TouristSpots.Where(a => !a.Deleted && a.TouristSpotAvailability), "TouristSpotId", "TouristSpotName", tourDetail.TouristSpotId);
                 return View(tourDetail);
             }
             else
@@ -350,9 +350,9 @@ namespace KarlanTravels_Adm.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                ViewBag.FacilityId = new SelectList(db.Facilities, "FacilityId", "FacilityName", tourDetail.FacilityId);
-                ViewBag.TourId = new SelectList(db.Tours, "TourId", "TourName", tourDetail.TourId);
-                ViewBag.TouristSpotId = new SelectList(db.TouristSpots, "TouristSpotId", "TouristSpotName", tourDetail.TouristSpotId);
+                ViewBag.FacilityId = new SelectList(db.Facilities.Where(a => !a.Deleted && a.FacilityAvailability), "FacilityId", "FacilityName", tourDetail.FacilityId);
+                ViewBag.TourId = new SelectList(db.Tours.Where(a => !a.Deleted && a.TourAvailability), "TourId", "TourName", tourDetail.TourId);
+                ViewBag.TouristSpotId = new SelectList(db.TouristSpots.Where(a => !a.Deleted && a.TouristSpotAvailability), "TouristSpotId", "TouristSpotName", tourDetail.TouristSpotId);
                 return View(tourDetail);
             }
             else

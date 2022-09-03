@@ -172,7 +172,7 @@ namespace KarlanTravels_Adm.Controllers
                     return RedirectToAction("Index");
                 }
 
-                ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "CategoryName", subCategory.CategoryId);
+                ViewBag.CategoryId = new SelectList(db.Categories.Where(a => !a.Deleted), "CategoryId", "CategoryName", subCategory.CategoryId);
                 return View(subCategory);
             }
             else
@@ -197,7 +197,7 @@ namespace KarlanTravels_Adm.Controllers
                 {
                     return HttpNotFound();
                 }
-                ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "CategoryName", subCategory.CategoryId);
+                ViewBag.CategoryId = new SelectList(db.Categories.Where(a => !a.Deleted), "CategoryId", "CategoryName", subCategory.CategoryId);
                 return View(subCategory);
             }
             else
@@ -223,7 +223,7 @@ namespace KarlanTravels_Adm.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "CategoryName", subCategory.CategoryId);
+                ViewBag.CategoryId = new SelectList(db.Categories.Where(a => !a.Deleted), "CategoryId", "CategoryName", subCategory.CategoryId);
                 return View(subCategory);
             }
             else

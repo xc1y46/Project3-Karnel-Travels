@@ -36,6 +36,7 @@ namespace KarlanTravels_Adm.Controllers
 
         public bool SessionChecking()
         {
+            DbAutoAction();
             return (
                 HttpContext.Current != null &&
                 HttpContext.Current.Session != null &&
@@ -46,17 +47,10 @@ namespace KarlanTravels_Adm.Controllers
 
         public void AutoLogOut()
         {
-            
             if (this.SessionChecking())
             {
-                ContextModel db = new ContextModel();
-                Admin adm = db.Admins.Find((int)HttpContext.Current.Session["AdminId"]);
-                adm.IsActive = false;
-                db.Entry(adm).State = EntityState.Modified;
-                db.SaveChanges();
                 HttpContext.Current.Session.Clear();
             }
-
         }
 
         public Customer CustomerRefundCheck(Customer c)
@@ -77,11 +71,48 @@ namespace KarlanTravels_Adm.Controllers
             {
                 temp.Violations++;
             }
-            if(temp.Violations == temp.maxViolations)
+            else if(temp.Violations > temp.maxViolations)
             {
-                temp.BlackListed = true;
+                temp.Violations = temp.maxViolations;
             }
             return temp;
         }
+
+        public void DbAutoAction()
+        {
+            ContextModel db = new ContextModel();
+
+            List<Tour> tours = db.Tours.AsNoTracking().ToList();
+            for(int i = 0; i < tours.Count; i++)
+            {
+                if(DateTime.Now > tours[i].TourEnd && tours[i].TourAvailability)
+                {
+                    tours[i].TourAvailability = false;
+                    db.Entry(tours[i]).State = EntityState.Modified;
+                }
+            }
+            
+            tours = null;
+
+            List<TransactionRecord> transactions = db.TransactionRecords.AsNoTracking().Where(t => t.Deleted == false && t.Canceled == false).ToList();
+            for(int i = 0; i < transactions.Count; i++)
+            {
+                if (DateTime.Now > transactions[i].DueDate && transactions[i].Paid == false)
+                {
+                    int customerId = transactions[i].CustomerID;
+                    Customer customer = db.Customers.AsNoTracking().Where(c => c.CustomerId == customerId).First();
+                    customer = CustomerViolation(customer);
+                    transactions[i].Canceled = true;
+                    transactions[i].TransactionNote += " Failed to pay before the due date and was canceled";
+                    db.Entry(customer).State = EntityState.Modified;
+                    db.Entry(transactions[i]).State = EntityState.Modified;
+                }
+            }
+
+            transactions = null;
+
+            db.SaveChanges();
+        }
+
     }
 }

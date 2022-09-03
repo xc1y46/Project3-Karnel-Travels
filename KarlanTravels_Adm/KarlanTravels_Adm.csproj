@@ -151,7 +151,6 @@
     <Compile Include="Controllers\TouristSpotsController.cs" />
     <Compile Include="Controllers\ToursController.cs" />
     <Compile Include="Controllers\TransactionRecordsController.cs" />
-    <Compile Include="Controllers\TransactionTypesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -171,7 +170,6 @@
     <Compile Include="Models\TourDetail.cs" />
     <Compile Include="Models\TouristSpot.cs" />
     <Compile Include="Models\TransactionRecord.cs" />
-    <Compile Include="Models\TransactionType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -306,11 +304,6 @@
     <Content Include="Views\AdminRoles\Details.cshtml" />
     <Content Include="Views\AdminRoles\Edit.cshtml" />
     <Content Include="Views\AdminRoles\Index.cshtml" />
-    <Content Include="Views\TransactionTypes\Create.cshtml" />
-    <Content Include="Views\TransactionTypes\Delete.cshtml" />
-    <Content Include="Views\TransactionTypes\Details.cshtml" />
-    <Content Include="Views\TransactionTypes\Edit.cshtml" />
-    <Content Include="Views\TransactionTypes\Index.cshtml" />
     <Content Include="Views\TransactionRecords\Create.cshtml" />
     <Content Include="Views\TransactionRecords\Delete.cshtml" />
     <Content Include="Views\TransactionRecords\Details.cshtml" />

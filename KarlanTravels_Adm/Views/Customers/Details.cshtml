@@ -90,14 +90,6 @@
             @Html.DisplayFor(model => model.CustomerNote)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.BlackListed)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BlackListed)
-        </dd>
-
         @if (Session["AdminRole"].ToString() == "Senior Manager")
         {
             <dt>

@@ -53,13 +53,11 @@ namespace KarlanTravels_Adm.Models
         [NotMapped]
         public int maxViolations = 5;
 
-        [Range(0,3)]
+        [Range(0, 5)]
         public int Violations { get; set; }
 
         [StringLength(255)]
         public string CustomerNote { get; set; }
-
-        public bool BlackListed { get; set; }
 
         public bool Deleted { get; set; }
 

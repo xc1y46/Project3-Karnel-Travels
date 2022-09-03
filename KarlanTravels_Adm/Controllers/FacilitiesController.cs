@@ -21,7 +21,6 @@ namespace KarlanTravels_Adm.Controllers
             if (SesCheck.SessionChecking())
             {
                 var facilities = db.Facilities.Include(f => f.City).Include(f => f.FacilityType).Where(f => f.FacilityId != "none");
-                facilities = facilities.Where(f => f.FacilityId != "none");
                 if (String.IsNullOrEmpty(ShowDel))
                 {
                     ShowDel = CurrentShowDel;
@@ -237,8 +236,8 @@ namespace KarlanTravels_Adm.Controllers
                     return RedirectToAction("Index");
                 }
 
-                ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", facility.CityId);
-                ViewBag.FacilityTypeId = new SelectList(db.FacilityTypes, "FacilityTypeId", "FacilityTypeName", facility.FacilityTypeId);
+                ViewBag.CityId = new SelectList(db.Cities.Where(a => !a.Deleted), "CityId", "CityName", facility.CityId);
+                ViewBag.FacilityTypeId = new SelectList(db.FacilityTypes.Where(a => !a.Deleted), "FacilityTypeId", "FacilityTypeName", facility.FacilityTypeId);
                 return View(facility);
             }
             else
@@ -263,8 +262,8 @@ namespace KarlanTravels_Adm.Controllers
                 {
                     return HttpNotFound();
                 }
-                ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", facility.CityId);
-                ViewBag.FacilityTypeId = new SelectList(db.FacilityTypes, "FacilityTypeId", "FacilityTypeName", facility.FacilityTypeId);
+                ViewBag.CityId = new SelectList(db.Cities.Where(a => !a.Deleted), "CityId", "CityName", facility.CityId);
+                ViewBag.FacilityTypeId = new SelectList(db.FacilityTypes.Where(a => !a.Deleted), "FacilityTypeId", "FacilityTypeName", facility.FacilityTypeId);
                 return View(facility);
             }
             else
@@ -289,8 +288,8 @@ namespace KarlanTravels_Adm.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", facility.CityId);
-                ViewBag.FacilityTypeId = new SelectList(db.FacilityTypes, "FacilityTypeId", "FacilityTypeName", facility.FacilityTypeId);
+                ViewBag.CityId = new SelectList(db.Cities.Where(a => !a.Deleted), "CityId", "CityName", facility.CityId);
+                ViewBag.FacilityTypeId = new SelectList(db.FacilityTypes.Where(a => !a.Deleted), "FacilityTypeId", "FacilityTypeName", facility.FacilityTypeId);
                 return View(facility);
             }
             else

@@ -218,8 +218,8 @@ namespace KarlanTravels_Adm.Controllers
                     return RedirectToAction("Index");
                 }
 
-                ViewBag.BankAccountId = new SelectList(db.BankAccounts, "BankAccountId", "AccountName", customer.BankAccountId);
-                ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", customer.CityId);
+                ViewBag.BankAccountId = new SelectList(db.BankAccounts.Where(a => !a.Deleted), "BankAccountId", "AccountName", customer.BankAccountId);
+                ViewBag.CityId = new SelectList(db.Cities.Where(a => !a.Deleted), "CityId", "CityName", customer.CityId);
                 return View(customer);
             }
             else
@@ -244,8 +244,8 @@ namespace KarlanTravels_Adm.Controllers
                 {
                     return HttpNotFound();
                 }
-                ViewBag.BankAccountId = new SelectList(db.BankAccounts, "BankAccountId", "AccountName", customer.BankAccountId);
-                ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", customer.CityId);
+                ViewBag.BankAccountId = new SelectList(db.BankAccounts.Where(a => !a.Deleted), "BankAccountId", "AccountName", customer.BankAccountId);
+                ViewBag.CityId = new SelectList(db.Cities.Where(a => !a.Deleted), "CityId", "CityName", customer.CityId);
                 return View(customer);
             }
             else
@@ -292,13 +292,14 @@ namespace KarlanTravels_Adm.Controllers
                         TempData["BankAccWarning"] = $"The bank account is already in use";
                         return RedirectToAction("Edit");
                     }
+
                     customer.UserPassword = SesCheck.HashPW(customer.UserPassword);
                     db.Entry(customer).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                ViewBag.BankAccountId = new SelectList(db.BankAccounts, "BankAccountId", "AccountName", customer.BankAccountId);
-                ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", customer.CityId);
+                ViewBag.BankAccountId = new SelectList(db.BankAccounts.Where(a => !a.Deleted), "BankAccountId", "AccountName", customer.BankAccountId);
+                ViewBag.CityId = new SelectList(db.Cities.Where(a => !a.Deleted), "CityId", "CityName", customer.CityId);
                 return View(customer);
             }
             else
