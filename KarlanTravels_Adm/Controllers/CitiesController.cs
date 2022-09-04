@@ -20,7 +20,7 @@ namespace KarlanTravels_Adm.Controllers
         {
             if (SesCheck.SessionChecking())
             {
-                var cities = db.Cities.Include(c => c.Country);
+                var cities = db.Cities.Include(c => c.Country).Where(c => c.CityId != "none");
 
                 if (String.IsNullOrEmpty(ShowDel))
                 {
@@ -124,7 +124,7 @@ namespace KarlanTravels_Adm.Controllers
         {
             if (SesCheck.SessionChecking())
             {
-                if (id == null)
+                if (id == null || id == "none")
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
@@ -197,7 +197,7 @@ namespace KarlanTravels_Adm.Controllers
         {
             if (SesCheck.SessionChecking())
             {
-                if (id == null)
+                if (id == null || id == "none")
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
@@ -248,7 +248,7 @@ namespace KarlanTravels_Adm.Controllers
         {
             if (SesCheck.SessionChecking())
             {
-                if (id == null)
+                if (id == null || id == "none")
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }

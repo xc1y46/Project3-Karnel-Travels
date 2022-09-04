@@ -241,6 +241,7 @@ INSERT INTO Country(CountryId, CountryName, Continent, RegionCode) VALUES
 
 
 INSERT INTO City(CityId, CityName, CountryId, PostalCode) VALUES
+(N'none', N'none', N'VN', N'0'),
 (N'VN_HN', N'Hà Nội', N'VN', N'100000'),
 (N'VN_CB', N'Cao Bằng', N'VN', N'270000'),
 (N'VN_MC', N'Mai Châu', N'VN', N'350000'),

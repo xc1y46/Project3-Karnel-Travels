@@ -42,11 +42,9 @@ namespace KarlanTravels_Adm.Models
         [DataType(DataType.Password)]
         public string UserPassword { get; set; }
 
-        [Required]
         [Column(TypeName = "money")]
         public decimal AmountToPay { get; set; }
 
-        [Required]
         [Column(TypeName = "money")]
         public decimal AmountToRefund { get; set; }
 

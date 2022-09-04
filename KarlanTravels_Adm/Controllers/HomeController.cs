@@ -24,15 +24,14 @@ namespace KarlanTravels.Controllers
         public ActionResult LoginStart(string AdminName, string AdminPassword)
         {
 
-            TempData["LoginResult"] = "";
-            var CurrentAdmin = db.Admins.Include(a => a.AdminRole);
-
             if (String.IsNullOrEmpty(AdminPassword))
             {
                 return RedirectToAction("Login");
             }
             else
             {
+                TempData["LoginResult"] = "";
+                var CurrentAdmin = db.Admins.Include(a => a.AdminRole);
                 string tempPw = SesCheck.HashPW(AdminPassword);
                 CurrentAdmin = CurrentAdmin.Where(a => a.AdminName == AdminName && a.AdminPassword == tempPw && a.Deleted == false);
 
